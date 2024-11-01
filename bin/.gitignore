@@ -15,6 +15,3 @@
 # Les fichiers/dossiers propres à Maven
 log/
 target/
-
-# errors files 
-.log
