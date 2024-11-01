@@ -1,0 +1,17 @@
+# Les fichiers/dossiers propres à Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# Les fichiers/dossiers propres à Intellij
+.idea/
+*.iml
+*.iws
+
+# Fichier système Mac
+.DS_Store
+
+# Les fichiers/dossiers propres à Maven
+log/
+target/
