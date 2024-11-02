@@ -18,3 +18,4 @@ target/
 
 # errors files 
 .log
+/bin/
