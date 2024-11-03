@@ -63,7 +63,7 @@ public class WireframeBasic {
 //		Image logoDisplay = new Image("file://logo.png");
 //		logo.setFill(new ImagePattern(logoDisplay));
 
-		Image logoDisplay = new Image(getClass().getResourceAsStream("logo.png"));
+		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
 
 		logo.setFill(new ImagePattern(logoDisplay));
 
