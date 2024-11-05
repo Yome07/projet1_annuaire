@@ -37,7 +37,7 @@ public class Intern {
 
 		if (lastNameLong.length() < STRING_MAX_LENGTH) {
 			for (int i = lastNameLong.length(); i < STRING_MAX_LENGTH; i++) {
-				lastNameLong += " ";
+				lastNameLong += "*";
 			}
 		} else {
 
@@ -51,7 +51,7 @@ public class Intern {
 
 		if (firstNameLong.length() < STRING_MAX_LENGTH) {
 			for (int i = firstNameLong.length(); i < STRING_MAX_LENGTH; i++) {
-				firstNameLong += " ";
+				firstNameLong += "*";
 			}
 		} else {
 
@@ -65,7 +65,7 @@ public class Intern {
 
 		if (departmentLong.length() < STRING_MAX_LENGTH) {
 			for (int i = departmentLong.length(); i < STRING_MAX_LENGTH; i++) {
-				departmentLong += " ";
+				departmentLong += "*";
 			}
 		} else {
 
@@ -79,7 +79,7 @@ public class Intern {
 
 		if (trainingLong.length() < STRING_MAX_LENGTH) {
 			for (int i = trainingLong.length(); i < STRING_MAX_LENGTH; i++) {
-				trainingLong += " ";
+				trainingLong += "*";
 			}
 		} else {
 

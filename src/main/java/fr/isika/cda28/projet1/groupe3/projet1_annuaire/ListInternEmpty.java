@@ -27,14 +27,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ListInternEmpty extends WireframeBasic {
-	
+
 	private Node root;
-	private List<Intern> interns;
 
 	public ListInternEmpty() {
 		super();
 		modScene();
-		this.root=null;
+		this.root = null;
 	}
 
 	public void modScene() {
@@ -65,13 +64,14 @@ public class ListInternEmpty extends WireframeBasic {
 					} catch (IOException ioException) {
 						System.out.println("Erreur lors de l'enregistrement du fichier : " + ioException.getMessage());
 					}
+					BinaryTree binaryTree = new BinaryTree();
+					binaryTree.createBinaryTree();
 				} else {
 					System.out.println("Aucun fichier sélectionné.");
 				}
 			}
 		});
-		
-		readDonFile();
+
 		uploadListInterns.setMinSize(140, 65);
 		uploadListInterns.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
 		uploadListInterns.setWrapText(true); // to center
@@ -82,69 +82,5 @@ public class ListInternEmpty extends WireframeBasic {
 		informationsDisplay.getChildren().add(uploadListInterns);
 
 	}
-	
-	public List<Intern> readDonFile() {
-		String filePath = "src/main/java/ressources/STAGIAIREs_EXTRAIT.DON";
-		interns= new ArrayList<Intern>();
 
-		try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
-			
-			List<String> lines = stream.collect(Collectors.toList());
-			Iterator<String> iterator = lines.iterator();
-
-			
-			while (iterator.hasNext()) {
-				String firstname = iterator.next();
-				String lastname = iterator.hasNext() ? iterator.next() : "";
-				String department = iterator.hasNext() ? iterator.next() : "";
-				String training = iterator.hasNext() ? iterator.next() : "";
-				int year = iterator.hasNext() ? Integer.parseInt(iterator.next()) : 0;
-				String separator = iterator.hasNext() ? iterator.next() : "";
-				
-
-				// Add intern to list 
-				interns.add(new Intern(firstname, lastname, department, training, year));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-
-		return interns;
-	}
-			
-	public void addRoot(Intern intern) {
-		try {
-			FileWriter listInterns = new FileWriter("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin",
-					true);
-			RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw"); 
-			raf.seek(0);
-//			for (Intern i :interns) {
-//				raf.writeChars(i.getLastNameLong());
-//				raf.writeChars(i.getFirstNameLong());
-//				raf.writeChars(i.getDepartmentLong());
-//				raf.writeChars(i.getTrainingLong());
-//				raf.writeInt(i.getYear());
-//				
-//			}
-			
-	
-			
-			
-			if (this.root == null) {
-				this.root = new Node(intern);
-				
-				System.out.println("racine ajoutée avec stagiaire : " + intern);
-			} else {
-				addIntern(intern);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-		
-		  
-	}
-	
+}

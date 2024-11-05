@@ -1,13 +1,16 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Iterator;
 
 /*
  * Cette classe décrit la contruction de l’arbre binaire dans un fichier binaire
  * @param raf : fichier binaire
  */
-public class BinaryTree {
+public class BinaryTree extends ListInterns {
+
 	public Node root;
 	public RandomAccessFile raf;
 	public final static int NODE_SIZE = Intern.BYTE_LENGTH_INTERN + 2 * 4;
@@ -24,37 +27,74 @@ public class BinaryTree {
 		try {
 			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
 		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void createBinaryTree() {
+		try {
+			int index = 0;
+
+			readDonFile();
+			createRaf();
+
+			for(int i = 0; i < interns.size() -1; i++) {
+				Node node = new Node(intern, -1, -1);
+
+				if (i > 0) {
+					insertNode(0, index, intern);
+				}
+
+				writeNode(node, i);
+			}
+			
+//			for (Intern intern : interns) {
+//				Node node = new Node(intern, -1, -1);
+//
+//				if (index > 0) {
+//					insertNode(0, index, intern);
+//				}
+//
+//				writeNode(node, index);
+//				index++;
+//			}
+
+			raf.close();
+
+		} catch (IOException e) {
+			// System.out.println("Erreur de creation d'arbre binaire : " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
 	/*
 	 * méthode pour insérer un nœud dans l’arbre
+	 * 
 	 * @param currentNode position du nœud actuel dans le fichier
+	 * 
 	 * @param indexToInsert position du nouveau nœud à insérer
 	 */
-	public void insertNode(int currentIndex, int indexToInsert) {
+	public void insertNode(int currentIndex, int indexToInsert, Intern intern) {
 
-		Node currentNode = readNode(currentIndex);
-		Node nodeToInsert = readNode(indexToInsert);
-		if (nodeToInsert.intern.getLastnameLong().compareTo(currentNode.intern.getLastnameLong()) == -1
+		Node currentNode = readNode(currentIndex, intern);
+		Node nodeToInsert = readNode(indexToInsert, intern);
+		if (nodeToInsert.intern.getLastnameLong().compareTo(currentNode.intern.getLastnameLong()) < 0
 				|| (nodeToInsert.intern.getLastnameLong() == currentNode.intern.getLastnameLong()
-					&& nodeToInsert.intern.getFirstnameLong().compareTo(currentNode.intern.getFirstnameLong()) == -1)
+						&& nodeToInsert.intern.getFirstnameLong().compareTo(currentNode.intern.getFirstnameLong()) < 0)
 				|| (nodeToInsert.intern.getFirstnameLong() == currentNode.intern.getFirstnameLong()
-					&& nodeToInsert.intern.getDepartmentLong().compareTo(currentNode.intern.getDepartmentLong()) == -1)
+						&& nodeToInsert.intern.getDepartmentLong()
+								.compareTo(currentNode.intern.getDepartmentLong()) < 0)
 				|| (nodeToInsert.intern.getDepartmentLong() == currentNode.intern.getDepartmentLong()
-					&& nodeToInsert.intern.getTrainingLong().compareTo(currentNode.intern.getTrainingLong()) == -1)
+						&& nodeToInsert.intern.getTrainingLong().compareTo(currentNode.intern.getTrainingLong()) < 0)
 				|| (nodeToInsert.intern.getTrainingLong() == currentNode.intern.getTrainingLong()
-					&& nodeToInsert.intern.getYear() < currentNode.intern.getYear())) {
+						&& nodeToInsert.intern.getYear() < currentNode.intern.getYear())) {
 
 			if (currentNode.getLeftSon() == -1) {
 				int left = currentNode.getLeftSon();
 				left = indexToInsert;
 				writeNode(currentNode, indexToInsert);
 			} else {
-				insertNode(currentNode.getLeftSon(), indexToInsert);
+				insertNode(currentNode.getLeftSon(), indexToInsert, intern);
 			}
 		} else {
 			if (currentNode.getRightSon() == -1) {
@@ -62,13 +102,13 @@ public class BinaryTree {
 				right = indexToInsert;
 				writeNode(currentNode, indexToInsert);
 			} else {
-				insertNode(currentNode.getRightSon(), indexToInsert);
+				insertNode(currentNode.getRightSon(), indexToInsert, intern);
 			}
 		}
 	}
-	
-	public Node readNode(int index) {
-		Node node = new Node();
+
+	public Node readNode(int index, Intern intern) {
+		Node node = new Node(intern);
 		try {
 			raf.seek(index * NODE_SIZE);
 			node.intern.lastname = readString();
@@ -81,13 +121,13 @@ public class BinaryTree {
 			int right = node.getRightSon();
 			right = raf.readInt();
 		} catch (IOException e) {
-			System.out.println("Erreur de lecture : " + e.getMessage());
-			//e.printStackTrace();
+			//System.out.println("Erreur de lecture : " + e.getMessage());
+			e.printStackTrace();
 		}
 		return node;
 
 	}
-	
+
 	public void writeNode(Node node, int index) {
 		try {
 			raf.seek(index * NODE_SIZE);
@@ -106,8 +146,8 @@ public class BinaryTree {
 			raf.writeInt(node.getRightSon());
 
 		} catch (IOException e) {
-			System.out.println("Erreur d’écriture : " + e.getMessage());
-			//e.printStackTrace();
+			// System.out.println("Erreur d’écriture : " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -120,8 +160,8 @@ public class BinaryTree {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		String myAttribute = new String(lengthAttributs, 0, buffer);
+		//System.out.println(lengthAttributs + " " + buffer);
+		String myAttribute = new String(lengthAttributs);
 
 		return myAttribute;
 	}
