@@ -6,14 +6,14 @@ import java.io.RandomAccessFile;
 public class BinaryTree {
 	public Node root;
 	public RandomAccessFile raf;
-	public final static int NODE_SIZE = Intern.LENGTH_INTERN_BYTE + 2 * 4;
+	public final static int NODE_SIZE = Intern.BYTE_LENGTH_INTERN + 2 * 4;
 
 	public BinaryTree() {
 		this.root = null;
 	}
 
 	public String readString() {
-		byte[] lengthAttributs = new byte[100];
+		byte[] lengthAttributs = new byte[2 * Intern.STRING_MAX_LENGTH];
 		int buffer = 0;
 		try {
 			buffer = this.raf.read(lengthAttributs);
