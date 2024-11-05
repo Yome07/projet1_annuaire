@@ -118,15 +118,17 @@ public class ListInternEmpty extends WireframeBasic {
 			FileWriter listInterns = new FileWriter("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin",
 					true);
 			RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw"); 
+			raf.seek(0);
+//			for (Intern i :interns) {
+//				raf.writeChars(i.getLastNameLong());
+//				raf.writeChars(i.getFirstNameLong());
+//				raf.writeChars(i.getDepartmentLong());
+//				raf.writeChars(i.getTrainingLong());
+//				raf.writeInt(i.getYear());
+//				
+//			}
 			
-			for (Intern i :interns) {
-				raf.writeChars(i.getLastNameLong());
-				raf.writeChars(i.getFirstNameLong());
-				raf.writeChars(i.getDepartmentLong());
-				raf.writeChars(i.getTrainingLong());
-				raf.writeInt(i.getYear());
-				
-			}
+	
 			
 			
 			if (this.root == null) {

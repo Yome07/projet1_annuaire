@@ -32,101 +32,98 @@ public class Intern {
 		this.firstname = firstname;
 		this.department = department;
 		this.training = training;
-		this.year = year; 
-		
-		
+		this.year = year;
+
 	}
-	
-	public String getLastNameLong() {
-        String lastNameLong = this.lastname;
 
-        if (lastNameLong.length() < LENGTH_MAX_LASTNAME) {
-            for (int i = lastNameLong.length(); i < LENGTH_MAX_LASTNAME; i++) {
-                lastNameLong += " ";
-            }
-        } else {
-            
-            lastNameLong = this.lastname.substring(0, LENGTH_MAX_LASTNAME);
-        }
-        return lastNameLong;
-    }
-	
-	
-	public String getFirstNameLong() {
-        String firstNameLong = this.firstname;
+	public void setLastNameLong() {
+		String lastNameLong = this.lastname;
 
-        if (firstNameLong.length() < LENGTH_MAX_FIRSTNAME) {
-            for (int i = firstNameLong.length(); i < LENGTH_MAX_FIRSTNAME; i++) {
-                firstNameLong += " ";
-            }
-        } else {
-            
-            firstNameLong = this.firstname.substring(0, LENGTH_MAX_FIRSTNAME);
-        }
-        return firstNameLong;
-    }
+		if (lastNameLong.length() < LENGTH_MAX_LASTNAME) {
+			for (int i = lastNameLong.length(); i < LENGTH_MAX_LASTNAME; i++) {
+				lastNameLong += " ";
+			}
+		} else {
 
-	public String getDepartmentLong() {
-        String departmentLong = this.department;
+			lastNameLong = this.lastname.substring(0, LENGTH_MAX_LASTNAME);
+		}
 
-        if (departmentLong.length() < LENGTH_MAX_DEPARTMENT) {
-            for (int i = departmentLong.length(); i < LENGTH_MAX_DEPARTMENT; i++) {
-                departmentLong += " ";
-            }
-        } else {
-            
-            departmentLong = this.department.substring(0, LENGTH_MAX_DEPARTMENT);
-        }
-        return departmentLong;
-    }
-	
-	public String getTrainingLong() {
-        String trainingLong = this.training;
+	}
 
-        if (trainingLong.length() < LENGTH_MAX_TRAINING) {
-            for (int i = trainingLong.length(); i < LENGTH_MAX_TRAINING; i++) {
-                trainingLong += " ";
-            }
-        } else {
-            
-            trainingLong = this.training.substring(0, LENGTH_MAX_TRAINING);
-        }
-        return trainingLong;
-    }
-	
-	
+	public void setFirstNameLong() {
+		String firstNameLong = this.firstname;
+
+		if (firstNameLong.length() < LENGTH_MAX_FIRSTNAME) {
+			for (int i = firstNameLong.length(); i < LENGTH_MAX_FIRSTNAME; i++) {
+				firstNameLong += " ";
+			}
+		} else {
+
+			firstNameLong = this.firstname.substring(0, LENGTH_MAX_FIRSTNAME);
+		}
+
+	}
+
+	public void setDepartmentLong() {
+		String departmentLong = this.department;
+
+		if (departmentLong.length() < LENGTH_MAX_DEPARTMENT) {
+			for (int i = departmentLong.length(); i < LENGTH_MAX_DEPARTMENT; i++) {
+				departmentLong += " ";
+			}
+		} else {
+
+			departmentLong = this.department.substring(0, LENGTH_MAX_DEPARTMENT);
+		}
+
+	}
+
+	public void setTrainingLong() {
+		String trainingLong = this.training;
+
+		if (trainingLong.length() < LENGTH_MAX_TRAINING) {
+			for (int i = trainingLong.length(); i < LENGTH_MAX_TRAINING; i++) {
+				trainingLong += " ";
+			}
+		} else {
+
+			trainingLong = this.training.substring(0, LENGTH_MAX_TRAINING);
+		}
+
+	}
 
 //getters et setters
-	public String getLastname() {
+
+	public String getLastnameLong() {
 		return lastname;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-
-	public String getFirstname() {
+	public String getFirstnameLong() {
 		return firstname;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getDepartment() {
+	public String getDepartmentLong() {
 		return department;
 	}
 
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getTraining() {
+	public String getTrainingLong() {
 		return training;
 	}
 
-	public void setTraining(String training) {
-		this.training = training;
+	public String getLastname() {
+		return lastname.trim();
+	}
+
+	public String getFirstname() {
+		return firstname.trim();
+	}
+
+	public String getDepartment() {
+		return department.trim();
+	}
+
+	public String getTraining() {
+		return training.trim();
 	}
 
 	public int getYear() {
