@@ -12,66 +12,17 @@ public class BinaryTree {
 		this.root = null;
 	}
 
-	public String readString() {
-		byte[] lengthAttributs = new byte[2 * Intern.STRING_MAX_LENGTH];
-		int buffer = 0;
+	public void createRaf() {
 		try {
-			buffer = this.raf.read(lengthAttributs);
+			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
 		} catch (IOException e) {
+
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		String myAttribute = new String(lengthAttributs, 0, buffer);
-
-		return myAttribute;
 	}
-
-	public Node readNode(int index) {
-		Node node = new Node();
-		try {
-			raf.seek(index * NODE_SIZE);
-			node.intern.lastname = readString();
-			node.intern.firstname = readString();
-			node.intern.department = readString();
-			node.intern.training = readString();
-			node.intern.year = raf.readInt();
-			int left = node.getLeftSon();
-			left = raf.readInt();
-			int right = node.getRightSon();
-			right = raf.readInt();
-		} catch (IOException e) {
-			System.out.println("Erreur de lecture : " + e.getMessage());
-			//e.printStackTrace();
-		}
-		return node;
-
-	}
-
-	public void writeNode(Node node, int index) {
-		try {
-			raf.seek(index * NODE_SIZE);
-			String lastname = node.intern.getLastnameLong();
-			raf.writeChars(lastname);
-			String firstname = node.intern.getFirstnameLong();
-			raf.writeChars(firstname);
-			String department = node.intern.getDepartmentLong();
-			raf.writeChars(department);
-			String training = node.intern.getTrainingLong();
-			raf.writeChars(training);
-			int year = node.intern.getYear();
-			raf.writeInt(year);
-
-			raf.writeInt(node.getLeftSon());
-			raf.writeInt(node.getRightSon());
-
-		} catch (IOException e) {
-			System.out.println("Erreur d’écriture : " + e.getMessage());
-			//e.printStackTrace();
-		}
-	}
-
-	public void addNode(int currentIndex, int indexToInsert) {
+	
+	public void insertNode(int currentIndex, int indexToInsert) {
 
 		Node currentNode = readNode(currentIndex);
 		Node nodeToInsert = readNode(indexToInsert);
@@ -102,15 +53,64 @@ public class BinaryTree {
 			}
 		}
 	}
-
-	public void createRaf() {
+	
+	public Node readNode(int index) {
+		Node node = new Node();
 		try {
-			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
+			raf.seek(index * NODE_SIZE);
+			node.intern.lastname = readString();
+			node.intern.firstname = readString();
+			node.intern.department = readString();
+			node.intern.training = readString();
+			node.intern.year = raf.readInt();
+			int left = node.getLeftSon();
+			left = raf.readInt();
+			int right = node.getRightSon();
+			right = raf.readInt();
 		} catch (IOException e) {
+			System.out.println("Erreur de lecture : " + e.getMessage());
+			//e.printStackTrace();
+		}
+		return node;
 
+	}
+	
+	public void writeNode(Node node, int index) {
+		try {
+			raf.seek(index * NODE_SIZE);
+			String lastname = node.intern.getLastnameLong();
+			raf.writeChars(lastname);
+			String firstname = node.intern.getFirstnameLong();
+			raf.writeChars(firstname);
+			String department = node.intern.getDepartmentLong();
+			raf.writeChars(department);
+			String training = node.intern.getTrainingLong();
+			raf.writeChars(training);
+			int year = node.intern.getYear();
+			raf.writeInt(year);
+
+			raf.writeInt(node.getLeftSon());
+			raf.writeInt(node.getRightSon());
+
+		} catch (IOException e) {
+			System.out.println("Erreur d’écriture : " + e.getMessage());
+			//e.printStackTrace();
+		}
+	}
+	
+	public String readString() {
+		byte[] lengthAttributs = new byte[2 * Intern.STRING_MAX_LENGTH];
+		int buffer = 0;
+		try {
+			buffer = this.raf.read(lengthAttributs);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		String myAttribute = new String(lengthAttributs, 0, buffer);
+
+		return myAttribute;
 	}
 
 }
