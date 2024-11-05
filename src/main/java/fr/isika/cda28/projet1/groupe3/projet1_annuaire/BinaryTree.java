@@ -5,6 +5,7 @@ public class BinaryTree {
 	Node root;
 	
 	public BinaryTree() {
+		super();
 		this.root = null;
 	}
 
