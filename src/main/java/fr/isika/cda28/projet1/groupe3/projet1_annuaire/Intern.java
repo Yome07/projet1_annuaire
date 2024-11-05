@@ -2,12 +2,8 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
 public class Intern {
 
-	public final static int LENGTH_MAX_LASTNAME = 50;
-	public final static int LENGTH_MAX_FIRSTNAME = 50;
-	public final static int LENGTH_MAX_DEPARTMENT = 50;
-	public final static int LENGTH_MAX_TRAINING = 50;
-	public final static int LENGTH_INTERN_BYTE = 2 * LENGTH_MAX_LASTNAME + 2 * LENGTH_MAX_FIRSTNAME
-			+ 2 * LENGTH_MAX_DEPARTMENT + 2 * LENGTH_MAX_TRAINING + 4;
+	public final static int STRING_MAX_LENGTH = 50;
+	public final static int BYTE_LENGTH_INTERN = 2 * 4 * STRING_MAX_LENGTH + 4;
 
 	// attributs
 	public String lastname;
@@ -39,13 +35,13 @@ public class Intern {
 	public void setLastNameLong() {
 		String lastNameLong = this.lastname;
 
-		if (lastNameLong.length() < LENGTH_MAX_LASTNAME) {
-			for (int i = lastNameLong.length(); i < LENGTH_MAX_LASTNAME; i++) {
+		if (lastNameLong.length() < STRING_MAX_LENGTH) {
+			for (int i = lastNameLong.length(); i < STRING_MAX_LENGTH; i++) {
 				lastNameLong += " ";
 			}
 		} else {
 
-			lastNameLong = this.lastname.substring(0, LENGTH_MAX_LASTNAME);
+			lastNameLong = this.lastname.substring(0, STRING_MAX_LENGTH);
 		}
 
 	}
@@ -53,13 +49,13 @@ public class Intern {
 	public void setFirstNameLong() {
 		String firstNameLong = this.firstname;
 
-		if (firstNameLong.length() < LENGTH_MAX_FIRSTNAME) {
-			for (int i = firstNameLong.length(); i < LENGTH_MAX_FIRSTNAME; i++) {
+		if (firstNameLong.length() < STRING_MAX_LENGTH) {
+			for (int i = firstNameLong.length(); i < STRING_MAX_LENGTH; i++) {
 				firstNameLong += " ";
 			}
 		} else {
 
-			firstNameLong = this.firstname.substring(0, LENGTH_MAX_FIRSTNAME);
+			firstNameLong = this.firstname.substring(0, STRING_MAX_LENGTH);
 		}
 
 	}
@@ -67,13 +63,13 @@ public class Intern {
 	public void setDepartmentLong() {
 		String departmentLong = this.department;
 
-		if (departmentLong.length() < LENGTH_MAX_DEPARTMENT) {
-			for (int i = departmentLong.length(); i < LENGTH_MAX_DEPARTMENT; i++) {
+		if (departmentLong.length() < STRING_MAX_LENGTH) {
+			for (int i = departmentLong.length(); i < STRING_MAX_LENGTH; i++) {
 				departmentLong += " ";
 			}
 		} else {
 
-			departmentLong = this.department.substring(0, LENGTH_MAX_DEPARTMENT);
+			departmentLong = this.department.substring(0, STRING_MAX_LENGTH);
 		}
 
 	}
@@ -81,13 +77,13 @@ public class Intern {
 	public void setTrainingLong() {
 		String trainingLong = this.training;
 
-		if (trainingLong.length() < LENGTH_MAX_TRAINING) {
-			for (int i = trainingLong.length(); i < LENGTH_MAX_TRAINING; i++) {
+		if (trainingLong.length() < STRING_MAX_LENGTH) {
+			for (int i = trainingLong.length(); i < STRING_MAX_LENGTH; i++) {
 				trainingLong += " ";
 			}
 		} else {
 
-			trainingLong = this.training.substring(0, LENGTH_MAX_TRAINING);
+			trainingLong = this.training.substring(0, STRING_MAX_LENGTH);
 		}
 
 	}
