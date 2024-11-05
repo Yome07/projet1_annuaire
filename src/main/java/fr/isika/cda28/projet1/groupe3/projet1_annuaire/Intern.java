@@ -94,8 +94,8 @@ public class Intern {
 		String lastNameLong = this.lastname;
 
 		if (lastNameLong.length() < STRING_MAX_LENGTH) {
-			for (int i = lastNameLong.length(); i < STRING_MAX_LENGTH; i++) {
-				lastNameLong += "*";
+			for (int i = this.lastname.length(); i < STRING_MAX_LENGTH; i++) {
+				lastNameLong += " ";
 			}
 		} else {
 
@@ -108,8 +108,8 @@ public class Intern {
 		String firstNameLong = this.firstname;
 
 		if (firstNameLong.length() < STRING_MAX_LENGTH) {
-			for (int i = firstNameLong.length(); i < STRING_MAX_LENGTH; i++) {
-				firstNameLong += "*";
+			for (int i = this.firstname.length(); i < STRING_MAX_LENGTH; i++) {
+				firstNameLong += " ";
 			}
 		} else {
 
@@ -122,8 +122,8 @@ public class Intern {
 		String departmentLong = this.department;
 
 		if (departmentLong.length() < STRING_MAX_LENGTH) {
-			for (int i = departmentLong.length(); i < STRING_MAX_LENGTH; i++) {
-				departmentLong += "*";
+			for (int i = this.department.length(); i < STRING_MAX_LENGTH; i++) {
+				departmentLong += " ";
 			}
 		} else {
 
@@ -136,8 +136,8 @@ public class Intern {
 		String trainingLong = this.training;
 
 		if (trainingLong.length() < STRING_MAX_LENGTH) {
-			for (int i = trainingLong.length(); i < STRING_MAX_LENGTH; i++) {
-				trainingLong += "*";
+			for (int i = this.training.length(); i < STRING_MAX_LENGTH; i++) {
+				trainingLong += " ";
 			}
 		} else {
 

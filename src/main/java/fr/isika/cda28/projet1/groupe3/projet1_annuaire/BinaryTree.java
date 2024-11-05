@@ -31,22 +31,32 @@ public class BinaryTree extends ListInterns {
 		}
 	}
 
+	/*
+	 * méthode pour créer un arbre binaire
+	 */
 	public void createBinaryTree() {
 		try {
-
+			// Lecture du fichier fourni
 			readDonFile();
+			// Création du fichier binaire
 			createRaf();
 
+			// On parcourt la liste de stagiaires
 			for(int i = 0; i < interns.size() -1; i++) {
+				// Création du nœud avec le stagiaire n°i et les index de nœud sans fils
 				Node node = new Node(interns.get(i), -1, -1);
 				
+				// Si ce n’est pas le premier stagiaire, on doit l’insérer dans l’arbre.
+				// appel de la méthode inserNode permettant de déterminer à quel endroit il sera insérer
 				if (i > 0) {
 					insertNode(0, i, interns.get(i));
 				}
 
+				// Écriture du nœud à la fin du fichier
 				writeNode(node, i);
 			}
 
+			// Fermeture du fichier
 			raf.close();
 
 		} catch (IOException e) {
@@ -61,6 +71,7 @@ public class BinaryTree extends ListInterns {
 	 * @param currentNode position du nœud actuel dans le fichier
 	 * 
 	 * @param indexToInsert position du nouveau nœud à insérer
+	 * @param intern stagiaire 
 	 */
 	public void insertNode(int currentIndex, int indexToInsert, Intern intern) {
 
@@ -70,8 +81,7 @@ public class BinaryTree extends ListInterns {
 				|| (nodeToInsert.intern.getLastnameLong() == currentNode.intern.getLastnameLong()
 						&& nodeToInsert.intern.getFirstnameLong().compareTo(currentNode.intern.getFirstnameLong()) < 0)
 				|| (nodeToInsert.intern.getFirstnameLong() == currentNode.intern.getFirstnameLong()
-						&& nodeToInsert.intern.getDepartmentLong()
-								.compareTo(currentNode.intern.getDepartmentLong()) < 0)
+						&& nodeToInsert.intern.getDepartmentLong().compareTo(currentNode.intern.getDepartmentLong()) < 0)
 				|| (nodeToInsert.intern.getDepartmentLong() == currentNode.intern.getDepartmentLong()
 						&& nodeToInsert.intern.getTrainingLong().compareTo(currentNode.intern.getTrainingLong()) < 0)
 				|| (nodeToInsert.intern.getTrainingLong() == currentNode.intern.getTrainingLong()
