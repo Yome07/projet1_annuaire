@@ -13,16 +13,7 @@ public class Node {
 		this.intern = intern;
 		this.left = left;
 		this.right = right;
-	}
-
-	public Node(Intern intern) {
-		super();
-		this.intern = intern;
-		this.left = 0;
-		this.right = 0;
-	}
-	
-	
+	}	
 
 	public Node() {
 		super();

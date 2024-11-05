@@ -17,5 +17,5 @@ log/
 target/
 
 # errors files 
-.log
+*.log
 /bin/
