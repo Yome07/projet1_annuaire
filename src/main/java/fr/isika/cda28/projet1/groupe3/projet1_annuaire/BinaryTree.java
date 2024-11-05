@@ -3,6 +3,10 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
+/*
+ * Cette classe décrit la contruction de l’arbre binaire dans un fichier binaire
+ * @param raf : fichier binaire
+ */
 public class BinaryTree {
 	public Node root;
 	public RandomAccessFile raf;
@@ -12,6 +16,9 @@ public class BinaryTree {
 		this.root = null;
 	}
 
+	/*
+	 * méthode pour créer le fichier binaire
+	 */
 	public void createRaf() {
 		try {
 			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
@@ -22,6 +29,11 @@ public class BinaryTree {
 		}
 	}
 	
+	/*
+	 * méthode pour insérer un nœud dans l’arbre
+	 * @param currentNode position du nœud actuel dans le fichier
+	 * @param indexToInsert position du nouveau nœud à insérer
+	 */
 	public void insertNode(int currentIndex, int indexToInsert) {
 
 		Node currentNode = readNode(currentIndex);
@@ -41,7 +53,7 @@ public class BinaryTree {
 				left = indexToInsert;
 				writeNode(currentNode, indexToInsert);
 			} else {
-				addNode(currentNode.getLeftSon(), indexToInsert);
+				insertNode(currentNode.getLeftSon(), indexToInsert);
 			}
 		} else {
 			if (currentNode.getRightSon() == -1) {
@@ -49,7 +61,7 @@ public class BinaryTree {
 				right = indexToInsert;
 				writeNode(currentNode, indexToInsert);
 			} else {
-				addNode(currentNode.getRightSon(), indexToInsert);
+				insertNode(currentNode.getRightSon(), indexToInsert);
 			}
 		}
 	}
