@@ -33,31 +33,19 @@ public class BinaryTree extends ListInterns {
 
 	public void createBinaryTree() {
 		try {
-			int index = 0;
 
 			readDonFile();
 			createRaf();
 
 			for(int i = 0; i < interns.size() -1; i++) {
-				Node node = new Node(intern, -1, -1);
-
+				Node node = new Node(interns.get(i), -1, -1);
+				
 				if (i > 0) {
-					insertNode(0, index, intern);
+					insertNode(0, i, interns.get(i));
 				}
 
 				writeNode(node, i);
 			}
-			
-//			for (Intern intern : interns) {
-//				Node node = new Node(intern, -1, -1);
-//
-//				if (index > 0) {
-//					insertNode(0, index, intern);
-//				}
-//
-//				writeNode(node, index);
-//				index++;
-//			}
 
 			raf.close();
 

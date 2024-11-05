@@ -91,19 +91,59 @@ public class Intern {
 //getters et setters
 
 	public String getLastnameLong() {
-		return lastname;
+		String lastNameLong = this.lastname;
+
+		if (lastNameLong.length() < STRING_MAX_LENGTH) {
+			for (int i = lastNameLong.length(); i < STRING_MAX_LENGTH; i++) {
+				lastNameLong += "*";
+			}
+		} else {
+
+			lastNameLong = this.lastname.substring(0, STRING_MAX_LENGTH);
+		}
+		return lastNameLong;
 	}
 
 	public String getFirstnameLong() {
-		return firstname;
+		String firstNameLong = this.firstname;
+
+		if (firstNameLong.length() < STRING_MAX_LENGTH) {
+			for (int i = firstNameLong.length(); i < STRING_MAX_LENGTH; i++) {
+				firstNameLong += "*";
+			}
+		} else {
+
+			firstNameLong = this.firstname.substring(0, STRING_MAX_LENGTH);
+		}
+		return firstNameLong;
 	}
 
 	public String getDepartmentLong() {
-		return department;
+		String departmentLong = this.department;
+
+		if (departmentLong.length() < STRING_MAX_LENGTH) {
+			for (int i = departmentLong.length(); i < STRING_MAX_LENGTH; i++) {
+				departmentLong += "*";
+			}
+		} else {
+
+			departmentLong = this.department.substring(0, STRING_MAX_LENGTH);
+		}
+		return departmentLong;
 	}
 
 	public String getTrainingLong() {
-		return training;
+		String trainingLong = this.training;
+
+		if (trainingLong.length() < STRING_MAX_LENGTH) {
+			for (int i = trainingLong.length(); i < STRING_MAX_LENGTH; i++) {
+				trainingLong += "*";
+			}
+		} else {
+
+			trainingLong = this.training.substring(0, STRING_MAX_LENGTH);
+		}
+		return trainingLong;
 	}
 
 	public String getLastname() {
