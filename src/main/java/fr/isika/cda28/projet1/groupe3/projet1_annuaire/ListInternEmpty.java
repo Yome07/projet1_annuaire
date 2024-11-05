@@ -3,7 +3,9 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,10 +27,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ListInternEmpty extends WireframeBasic {
+	
+	private Node root;
+	private List<Intern> interns;
 
 	public ListInternEmpty() {
 		super();
 		modScene();
+		this.root=null;
 	}
 
 	public void modScene() {
@@ -77,9 +83,9 @@ public class ListInternEmpty extends WireframeBasic {
 
 	}
 	
-	public void readDonFile() {
+	public List<Intern> readDonFile() {
 		String filePath = "src/main/java/ressources/STAGIAIREs_EXTRAIT.DON";
-		List<Intern> interns = new ArrayList<>();
+		interns= new ArrayList<Intern>();
 
 		try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
 			
@@ -104,10 +110,40 @@ public class ListInternEmpty extends WireframeBasic {
 		}
 
 
-		interns.forEach(System.out::println);
+		return interns;
 	}
 			
+	public void addRoot(Intern intern) {
+		try {
+			FileWriter listInterns = new FileWriter("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin",
+					true);
+			RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw"); 
+			raf.seek(0);
+//			for (Intern i :interns) {
+//				raf.writeChars(i.getLastNameLong());
+//				raf.writeChars(i.getFirstNameLong());
+//				raf.writeChars(i.getDepartmentLong());
+//				raf.writeChars(i.getTrainingLong());
+//				raf.writeInt(i.getYear());
+//				
+//			}
+			
+	
+			
+			
+			if (this.root == null) {
+				this.root = new Node(intern);
+				
+				System.out.println("racine ajoutée avec stagiaire : " + intern);
+			} else {
+				addIntern(intern);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+	}
 		
 		  
 	}
