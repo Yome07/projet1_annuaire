@@ -77,16 +77,13 @@ public class BinaryTree {
 		Node nodeToInsert = readNode(indexToInsert);
 		if (nodeToInsert.intern.getLastnameLong().compareTo(currentNode.intern.getLastnameLong()) == -1
 				|| (nodeToInsert.intern.getLastnameLong() == currentNode.intern.getLastnameLong()
-						&& nodeToInsert.intern.getFirstnameLong().compareTo(currentNode.intern.getFirstnameLong()) == -1
-						|| (nodeToInsert.intern.getFirstnameLong() == currentNode.intern.getFirstnameLong()
-								&& nodeToInsert.intern.getDepartmentLong()
-										.compareTo(currentNode.intern.getDepartmentLong()) == -1
-								|| (nodeToInsert.intern.getDepartmentLong() == currentNode.intern.getDepartmentLong()
-										&& nodeToInsert.intern.getTrainingLong()
-												.compareTo(currentNode.intern.getTrainingLong()) == -1
-										|| (nodeToInsert.intern.getTrainingLong() == currentNode.intern
-												.getTrainingLong()
-												&& nodeToInsert.intern.getYear() < currentNode.intern.getYear()))))) {
+					&& nodeToInsert.intern.getFirstnameLong().compareTo(currentNode.intern.getFirstnameLong()) == -1)
+				|| (nodeToInsert.intern.getFirstnameLong() == currentNode.intern.getFirstnameLong()
+					&& nodeToInsert.intern.getDepartmentLong().compareTo(currentNode.intern.getDepartmentLong()) == -1)
+				|| (nodeToInsert.intern.getDepartmentLong() == currentNode.intern.getDepartmentLong()
+					&& nodeToInsert.intern.getTrainingLong().compareTo(currentNode.intern.getTrainingLong()) == -1)
+				|| (nodeToInsert.intern.getTrainingLong() == currentNode.intern.getTrainingLong()
+					&& nodeToInsert.intern.getYear() < currentNode.intern.getYear())) {
 
 			if (currentNode.getLeftSon() == -1) {
 				int left = currentNode.getLeftSon();
@@ -103,20 +100,13 @@ public class BinaryTree {
 			} else {
 				addNode(currentNode.getRightSon(), indexToInsert);
 			}
-			
 		}
 	}
 
 	public void createRaf() {
-		try
-
-		{
-
+		try {
 			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
-
-		}
-
-		catch (IOException e) {
+		} catch (IOException e) {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
