@@ -1,9 +1,7 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Iterator;
 
 /*
  * Cette classe décrit la contruction de l’arbre binaire dans un fichier binaire
@@ -41,7 +39,7 @@ public class BinaryTree extends ListInterns {
 			createRaf();
 
 			// On parcourt la liste de stagiaires
-			for(int i = 0; i < interns.size() -1; i++) {
+			for(int i = 0; i < interns.size(); i++) {
 				// Création du nœud avec le stagiaire n°i et les index de nœud sans fils
 				Node node = new Node(interns.get(i), -1, -1); // creation du node a inserer
 				
@@ -83,10 +81,10 @@ public class BinaryTree extends ListInterns {
 		System.out.println("internToInsert avant appel de la methode read node : " +internToInsert);
 
 		
-		Node currentNode = readNode(currentIndex); // warning readNode modifie intern
+		Node currentNode = readNode(currentIndex); 
 		Intern currentIntern = currentNode.getIntern();
 		System.out.println(intern);
-
+		System.out.println("Le currentIntern est  : " + currentIntern);
 		System.out.println("FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
 		System.out.println("firstname currentIntern : " + currentIntern.getLastname());
 		System.out.println("firstname InternToInsert : " + internToInsert.getLastname());
@@ -109,9 +107,16 @@ public class BinaryTree extends ListInterns {
 			System.out.println("Je suis a gauche");
 			
 			if (currentNode.getLeftSon() == -1) {
-				int left = currentNode.getLeftSon(); // recuperer un parent ???
-				left = indexToInsert;
-				writeNode(currentNode, indexToInsert);
+
+				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
+//				currentNode.setLeftSon(indexToInsert);
+				writeIndex(indexToInsert, currentIndex, 8);
+				writeNode(nodeToInsert, indexToInsert);
+				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " " + currentIntern.getFirstname() + " du " + currentIntern.getDepartment() + ". Il est en " + currentIntern.getTraining() + " de " + currentIntern.getYear());
+				System.out.println("Methode insertNode - Le internToInsert s'appelle " + internToInsert.getLastname() + " " + internToInsert.getFirstname() + " du " + internToInsert.getDepartment() + ". Il est en " + internToInsert.getTraining() + " de " + internToInsert.getYear());
+				System.out.println("Index à insérer à gauche " + indexToInsert);
+				System.out.println("Après writeNode - FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
+				
 			} else {
 				insertNode(currentNode.getLeftSon(), indexToInsert, intern, node);
 			}
@@ -120,9 +125,15 @@ public class BinaryTree extends ListInterns {
 			System.out.println("Je suis a droite");
 			
 			if (currentNode.getRightSon() == -1) {
-				int right = currentNode.getRightSon();
-				right = indexToInsert;
+
+				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
+//				currentNode.setLeftSon(indexToInsert);
+				writeIndex(indexToInsert, currentIndex, 4);
 				writeNode(currentNode, indexToInsert);
+				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " " + currentIntern.getFirstname() + " du " + currentIntern.getDepartment() + ". Il est en " + currentIntern.getTraining() + " de " + currentIntern.getYear());
+				System.out.println("Methode insertNode - Le stagiaire s'appelle " + internToInsert.getLastname() + " " + internToInsert.getFirstname() + " du " + internToInsert.getDepartment() + ". Il est en " + internToInsert.getTraining() + " de " + internToInsert.getYear());
+				System.out.println("Index à insérer à droite " + indexToInsert);
+				System.out.println("Après writeIndex - FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
 			} else {
 				insertNode(currentNode.getRightSon(), indexToInsert, intern, node);
 			}
@@ -150,7 +161,8 @@ public class BinaryTree extends ListInterns {
 			node.setLeftSon(raf.readInt());
 			node.setRightSon(raf.readInt());
 
-			System.out.println("CurretnIntern - FG : " +  node.getLeftSon() + " FD : " + node.getRightSon());
+			System.out.println("Département : " + node.getIntern().getDepartment());
+			System.out.println(" - FG : " +  node.getLeftSon() + " FD : " + node.getRightSon());
 
 	
 		} catch (IOException e) {
@@ -162,6 +174,19 @@ public class BinaryTree extends ListInterns {
 		return node;
 
 	}
+	
+	public void  writeIndex(int indexToInsert, int currentIndex, int position) {
+		try {
+			
+            raf.seek((currentIndex + 1) * Node.BYTE_LENGTH_NODE - position);
+            raf.writeInt(indexToInsert);
+        } catch (IOException e) {
+            // System.out.println("Erreur d’écriture : " + e.getMessage());
+            e.printStackTrace();
+        }
+	}
+	
+	
 
 	public void writeNode(Node node, int index) {
 		try {
@@ -177,7 +202,7 @@ public class BinaryTree extends ListInterns {
 			raf.writeChars(training);
 			int year = node.getIntern().getYear();
 			raf.writeInt(year);
-			//System.out.println("Methode writeNode - Le stagiaire s'appelle " + lastname + firstname + " du " + department + ". Il est en " + training + " de " + year);
+			System.out.println("Methode writeNode - Le stagiaire s'appelle " + lastname + firstname + " du " + department + ". Il est en " + training + " de " + year);
 
 			raf.writeInt(node.getLeftSon());
 			raf.writeInt(node.getRightSon());
@@ -191,17 +216,19 @@ public class BinaryTree extends ListInterns {
 	
 	public String readString() {
 		System.out.println("----- Methode readString() -----");
-		byte[] lengthAttributs = new byte[2 * Intern.STRING_MAX_LENGTH];
-		int buffer = 0;
-		try {
-			buffer = this.raf.read(lengthAttributs);
-		} catch (IOException e) {
+		char[] chars = new char[Intern.STRING_MAX_LENGTH];
+	    try {
+	        for (int i = 0; i < Intern.STRING_MAX_LENGTH; i++) {
+	            chars[i] = raf.readChar();
+	        }
+	    }
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		String myAttribute = new String(lengthAttributs);
-		System.out.println(myAttribute);
+	    String myAttribute = new String(chars).trim();
+		System.out.println("l’attribut readString est " + myAttribute);
 		System.out.println("----- Fin Methode -----");
 		return myAttribute;
 	}

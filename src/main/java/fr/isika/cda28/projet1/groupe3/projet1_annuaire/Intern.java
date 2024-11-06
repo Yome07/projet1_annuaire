@@ -8,7 +8,7 @@ public class Intern {
 	// attributs
 	private String lastname;
 	private String firstname;
-	private String department;
+	public String department;
 	private String training;
 	private int year;
 
