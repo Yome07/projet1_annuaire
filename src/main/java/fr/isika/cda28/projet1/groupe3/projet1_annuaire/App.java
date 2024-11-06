@@ -14,8 +14,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        ListinternEmpty listeVide = new ListinternEmpty(); 
+        ListInternEmpty listeVide = new ListInternEmpty(); 
         Scene scene = listeVide.createScene(); 
+        stage.setTitle("Stud'Index");
         stage.setScene(scene);
         stage.show();
     }
