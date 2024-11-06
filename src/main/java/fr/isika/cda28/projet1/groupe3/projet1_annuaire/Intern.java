@@ -2,15 +2,15 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
 public class Intern {
 
-	public final static int STRING_MAX_LENGTH = 50;
+	public final static int STRING_MAX_LENGTH = 25;
 	public final static int BYTE_LENGTH_INTERN = 2 * 4 * STRING_MAX_LENGTH + 4;
 
 	// attributs
-	public String lastname;
-	public String firstname;
-	public String department;
-	public String training;
-	public int year;
+	private String lastname;
+	private String firstname;
+	private String department;
+	private String training;
+	private int year;
 
 	public Intern() {
 		super();
@@ -18,7 +18,7 @@ public class Intern {
 		firstname = "";
 		department = "";
 		training = "";
-
+		year = 0;
 	}
 
 	// constructor
@@ -32,61 +32,61 @@ public class Intern {
 
 	}
 
-	public void setLastNameLong() {
-		String lastNameLong = this.lastname;
-
-		if (lastNameLong.length() < STRING_MAX_LENGTH) {
-			for (int i = lastNameLong.length(); i < STRING_MAX_LENGTH; i++) {
-				lastNameLong += "*";
-			}
-		} else {
-
-			lastNameLong = this.lastname.substring(0, STRING_MAX_LENGTH);
-		}
-
-	}
-
-	public void setFirstNameLong() {
-		String firstNameLong = this.firstname;
-
-		if (firstNameLong.length() < STRING_MAX_LENGTH) {
-			for (int i = firstNameLong.length(); i < STRING_MAX_LENGTH; i++) {
-				firstNameLong += "*";
-			}
-		} else {
-
-			firstNameLong = this.firstname.substring(0, STRING_MAX_LENGTH);
-		}
-
-	}
-
-	public void setDepartmentLong() {
-		String departmentLong = this.department;
-
-		if (departmentLong.length() < STRING_MAX_LENGTH) {
-			for (int i = departmentLong.length(); i < STRING_MAX_LENGTH; i++) {
-				departmentLong += "*";
-			}
-		} else {
-
-			departmentLong = this.department.substring(0, STRING_MAX_LENGTH);
-		}
-
-	}
-
-	public void setTrainingLong() {
-		String trainingLong = this.training;
-
-		if (trainingLong.length() < STRING_MAX_LENGTH) {
-			for (int i = trainingLong.length(); i < STRING_MAX_LENGTH; i++) {
-				trainingLong += "*";
-			}
-		} else {
-
-			trainingLong = this.training.substring(0, STRING_MAX_LENGTH);
-		}
-
-	}
+//	public void setLastNameLong() {
+//		String lastNameLong = this.lastname;
+//
+//		if (lastNameLong.length() < STRING_MAX_LENGTH) {
+//			for (int i = lastNameLong.length(); i < STRING_MAX_LENGTH; i++) {
+//				lastNameLong += "*";
+//			}
+//		} else {
+//
+//			lastNameLong = this.lastname.substring(0, STRING_MAX_LENGTH);
+//		}
+//
+//	}
+//
+//	public void setFirstNameLong() {
+//		String firstNameLong = this.firstname;
+//
+//		if (firstNameLong.length() < STRING_MAX_LENGTH) {
+//			for (int i = firstNameLong.length(); i < STRING_MAX_LENGTH; i++) {
+//				firstNameLong += "*";
+//			}
+//		} else {
+//
+//			firstNameLong = this.firstname.substring(0, STRING_MAX_LENGTH);
+//		}
+//
+//	}
+//
+//	public void setDepartmentLong() {
+//		String departmentLong = this.department;
+//
+//		if (departmentLong.length() < STRING_MAX_LENGTH) {
+//			for (int i = departmentLong.length(); i < STRING_MAX_LENGTH; i++) {
+//				departmentLong += "*";
+//			}
+//		} else {
+//
+//			departmentLong = this.department.substring(0, STRING_MAX_LENGTH);
+//		}
+//
+//	}
+//
+//	public void setTrainingLong() {
+//		String trainingLong = this.training;
+//
+//		if (trainingLong.length() < STRING_MAX_LENGTH) {
+//			for (int i = trainingLong.length(); i < STRING_MAX_LENGTH; i++) {
+//				trainingLong += "*";
+//			}
+//		} else {
+//
+//			trainingLong = this.training.substring(0, STRING_MAX_LENGTH);
+//		}
+//
+//	}
 
 //getters et setters
 
@@ -165,14 +165,31 @@ public class Intern {
 	public int getYear() {
 		return year;
 	}
+	
 
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public void setTraining(String training) {
+		this.training = training;
+	}
+	
 	public void setYear(int year) {
 		this.year = year;
 	}
 
 	@Override
 	public String toString() {
-		return "Intern : " + lastname + " " + firstname + ", departement : " + department + ", promo : " + training
+		return "toString Intern : " + lastname + " " + firstname + ", departement : " + department + ", promo : " + training
 				+ " en " + year;
 	}
 

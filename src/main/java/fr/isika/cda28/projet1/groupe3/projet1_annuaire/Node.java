@@ -2,10 +2,10 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
 public class Node {
 
-	public Intern intern;
-
+	public final static int BYTE_LENGTH_NODE = Intern.BYTE_LENGTH_INTERN + 8;
+	
+	private Intern intern;
 	private int left;
-
 	private int right;
 
 	public Node(Intern intern, int left, int right) {
