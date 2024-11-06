@@ -64,8 +64,8 @@ public class ListInternEmpty extends WireframeBasic {
 					} catch (IOException ioException) {
 						System.out.println("Erreur lors de l'enregistrement du fichier : " + ioException.getMessage());
 					}
-					BinaryTree binaryTree = new BinaryTree();
-					binaryTree.createBinaryTree();
+					BinaryFile binaryTree = new BinaryFile();
+					binaryTree.createBinaryFile();
 				} else {
 					System.out.println("Aucun fichier sélectionné.");
 				}

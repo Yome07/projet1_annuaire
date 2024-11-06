@@ -7,12 +7,12 @@ import java.io.RandomAccessFile;
  * Cette classe décrit la contruction de l’arbre binaire dans un fichier binaire
  * @param raf : fichier binaire
  */
-public class BinaryTree extends ListInterns {
+public class BinaryFile extends ListInterns {
 
 	public Node root;
 	public RandomAccessFile raf;
 
-	public BinaryTree() {
+	public BinaryFile() {
 		super();
 		this.root = null;
 	}
@@ -31,7 +31,7 @@ public class BinaryTree extends ListInterns {
 	/*
 	 * méthode pour créer un arbre binaire
 	 */
-	public void createBinaryTree() {
+	public void createBinaryFile() {
 		try {
 			// Lecture du fichier fourni
 			readDonFile();
@@ -232,5 +232,7 @@ public class BinaryTree extends ListInterns {
 		System.out.println("----- Fin Methode -----");
 		return myAttribute;
 	}
+	
+	
 
 }
