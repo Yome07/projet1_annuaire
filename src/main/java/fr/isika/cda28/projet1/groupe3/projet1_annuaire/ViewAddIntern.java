@@ -1,5 +1,8 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -17,6 +20,8 @@ import javafx.scene.text.Text;
 public class ViewAddIntern extends WireframeBasic {
 
 	// Attributs
+	
+	
 
 	// Constructors
 	public ViewAddIntern() {
@@ -31,6 +36,8 @@ public class ViewAddIntern extends WireframeBasic {
 		firstLetter += rest;
 		return firstLetter;
 	}
+	
+	
 	
 	public void modScene() {
 		VBox formVBox = new VBox();
@@ -91,15 +98,31 @@ public class ViewAddIntern extends WireframeBasic {
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
 		formVBox.getChildren().addAll(titleHBox, formGridPane, buttonHBox);
+		
+		
 
 		buttonValidateForm.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				String lastname = lastnameTF.getText().toUpperCase().trim();
+				System.out.println(lastname);
 				String firstname = firstnameTF.getText();
 				firstname = toUpperCaseFirst(firstname);
-				String department = departmentTF.getText().trim().substring(0, 3).toUpperCase();
+				System.out.println(firstname);
+				
+				
+				String department = departmentTF.getText().trim().toUpperCase();
+				String departmentPattern = "^(0[1-9]|[1-8][0-9]|9[0-5]|2[A-B]|2[a-b]|97[1-6])$";
+				Pattern compiledPattern = Pattern.compile(departmentPattern);
+				Matcher matcher = compiledPattern.matcher(department);
+				if (matcher.matches()) {
+					System.out.println("Departement valide");
+				}else {
+					System.out.println("Departement invalide");
+				}
+				
+				
 				String training = trainingTF.getText().trim().toUpperCase();
 
 				int year = Integer.parseInt(yearTF.getText());
@@ -113,7 +136,8 @@ public class ViewAddIntern extends WireframeBasic {
 		informationsDisplay.setCenter(formVBox);
 
 	}
-
+	
+	}
 	
 
-}
+
