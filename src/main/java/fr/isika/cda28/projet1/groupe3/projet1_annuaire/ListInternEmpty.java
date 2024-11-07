@@ -72,7 +72,10 @@ public class ListInternEmpty extends WireframeBasic {
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
-					InternsTableView internsTableView = new InternsTableView(new ArrayList<Intern>());
+				    ServiceNodeList test = new ServiceNodeList();
+				    test.readList(test.createListAlpha(0));
+					//InternsTableView internsTableView = new InternsTableView(new ArrayList<Intern>());
+					//Scene scene = internsTableView.createScene();
 
 				} else {
 					System.out.println("Aucun fichier sélectionné.");

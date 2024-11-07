@@ -3,19 +3,27 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.util.ArrayList;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.IntegerStringConverter;
 
-public class InternsTableView extends VBox {
+public class InternsTableView extends WireframeBasic {
 
 	private ArrayList<Intern> interns;
 	public TableView<Intern> internTableView;
 	public InternsTableView(ArrayList<Intern> interns) {
 
+		VBox vbox = new VBox();
+		Label label = new Label("ggggggggggg");
+		Button handleUsers = new Button("Gestion des utilisateurs");
+		
+		
 		this.internTableView = new TableView<Intern>();
 		this.interns = interns;
 		internTableView.setEditable(true);
@@ -34,17 +42,17 @@ public class InternsTableView extends VBox {
 
 //		// gestionnaire d'évènement pour les cellules
 //		
-//		nameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
-//			@Override
-//			public void handle(CellEditEvent<Intern, String> event) {
-//				// Je récupère l'objet qui correspond à la ligne modifiée
-//				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
-//						.setName(event.getNewValue());// On récupère la nouvelle valeur dans l'event
-//			}
-//		});
-//		nameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-//																		// Textfield
-//		nameColumn.setEditable(true);// on autorise la modification des colonnes
+		lastnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
+			@Override
+			public void handle(CellEditEvent<Intern, String> event) {
+				// Je récupère l'objet qui correspond à la ligne modifiée
+				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
+						.setLastname(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+			}
+		});
+		lastnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+																		// Textfield
+		lastnameColumn.setEditable(true);// on autorise la modification des colonnes
 
 		
 		//colonne prenom
@@ -57,7 +65,20 @@ public class InternsTableView extends VBox {
 		// ajouter la colonne à la table view
 
 		internTableView.getColumns().add(firstnameColumn);
-		
+		// gestionnaire d'évènement pour les cellules
+//		
+		firstnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
+			@Override
+			public void handle(CellEditEvent<Intern, String> event) {
+				// Je récupère l'objet qui correspond à la ligne modifiée
+				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
+						.setFirstname(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+			}
+		});
+		firstnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+																		// Textfield
+		firstnameColumn.setEditable(true);// on autorise la modification des colonnes
+
 		// colonne department
 		TableColumn<Intern, String> departmentColumn = new TableColumn<Intern, String>("Département");
 		
@@ -68,7 +89,20 @@ public class InternsTableView extends VBox {
 		// ajouter la colonne à la table view
 
 		internTableView.getColumns().add(departmentColumn);
-		
+		// gestionnaire d'évènement pour les cellules
+//		
+		departmentColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
+			@Override
+			public void handle(CellEditEvent<Intern, String> event) {
+				// Je récupère l'objet qui correspond à la ligne modifiée
+				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
+						.setDepartment(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+			}
+		});
+		departmentColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+																		// Textfield
+		departmentColumn.setEditable(true);// on autorise la modification des colonnes
+
 		// training
 		
 		TableColumn<Intern, String> trainingColumn = new TableColumn<Intern, String>("Formation");
@@ -80,7 +114,20 @@ public class InternsTableView extends VBox {
 		// ajouter la colonne à la table view
 
 		internTableView.getColumns().add(trainingColumn);
-		
+		// gestionnaire d'évènement pour les cellules
+//		
+		trainingColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
+			@Override
+			public void handle(CellEditEvent<Intern, String> event) {
+				// Je récupère l'objet qui correspond à la ligne modifiée
+				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
+						.setTraining(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+			}
+		});
+		trainingColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+																		// Textfield
+		trainingColumn.setEditable(true);// on autorise la modification des colonnes
+
 		// year
 		
 		TableColumn<Intern, Integer> yearColumn = new TableColumn<Intern, Integer>("année");
@@ -92,9 +139,22 @@ public class InternsTableView extends VBox {
 		// ajouter la colonne à la table view
 
 		internTableView.getColumns().add(yearColumn);
-		
-		this.getChildren().add(internTableView);
-		
+		// gestionnaire d'évènement pour les cellules
+//		
+		yearColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, Integer>>() {
+			@Override
+			public void handle(CellEditEvent<Intern, Integer> event) {
+				// Je récupère l'objet qui correspond à la ligne modifiée
+				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
+						.setYear(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+			}
+		});
+		yearColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter())); // On autotrise à transformer la case en
+																	
+		yearColumn.setEditable(true);// on autorise la modification des colonnes
+
+		//this.getChildren().add(internTableView);
+		vbox.getChildren().addAll(label,handleUsers,internTableView);
 		
 	}
 }

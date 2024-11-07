@@ -13,14 +13,15 @@ import javafx.stage.Stage;
  * JavaFX App
  */
 public class App extends Application {
-	ArrayList<Intern> interns;
+	
     @Override
     public void start(Stage stage) {
         ListInternEmpty listeVide = new ListInternEmpty(); 
-        InternsTableView internsTableView = new  InternsTableView(interns);
-        ServiceNodeList test = new ServiceNodeList();
-        test.readList(test.createListAlpha(0));
-        Scene scene = listeVide.createScene(); 
+       InternsTableView internsTableView = new  InternsTableView(new ArrayList<Intern>());
+      //  ServiceNodeList test = new ServiceNodeList();
+      // test.readList(test.createListAlpha(0));
+       // Scene scene = listeVide.createScene(); 
+       Scene scene = internsTableView.createScene(); 
         stage.setTitle("Stud'Index");
         stage.setScene(scene);
         stage.show();
