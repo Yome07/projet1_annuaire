@@ -21,7 +21,7 @@ public class WireframeBasic {
 //	4C4B16 kaki foncé
 
 	protected BorderPane root;
-	protected Pane informationsDisplay;
+	protected BorderPane informationsDisplay;
 
 	public WireframeBasic() {
 
@@ -53,15 +53,13 @@ public class WireframeBasic {
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
 
-		informationsDisplay = new Pane();
+		informationsDisplay = new BorderPane();
 		informationsDisplay.setMinWidth(630);
 		informationsDisplay.setStyle("-fx-background-color: #E6C767;");
 
 		// Logo Stud'Index
 
 		Circle logo = new Circle(65);
-//		Image logoDisplay = new Image("file://logo.png");
-//		logo.setFill(new ImagePattern(logoDisplay));
 
 		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
 

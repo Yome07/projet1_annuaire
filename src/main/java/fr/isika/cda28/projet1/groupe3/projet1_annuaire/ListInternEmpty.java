@@ -19,10 +19,12 @@ import java.util.stream.Stream;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -38,7 +40,8 @@ public class ListInternEmpty extends WireframeBasic {
 
 	public void modScene() {
 
-		Button uploadListInterns = new Button("Charger une liste de statiaires");
+		VBox centerComponentsVbox = new VBox();
+		Button uploadListInterns = new Button("Charger une liste de stagiaires");
 
 		uploadListInterns.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -53,21 +56,26 @@ public class ListInternEmpty extends WireframeBasic {
 					Path destinationDirPath = Paths.get("src/main/java/ressources/").toAbsolutePath();
 
 					try {
+						centerComponentsVbox.getChildren().remove(1);
+						
 						Files.createDirectories(destinationDirPath);
-
+						
 						Path destinationFilePath = destinationDirPath.resolve(selectedFile.getName());
-
 						Files.copy(selectedFile.toPath(), destinationFilePath);
 
-						System.out.println("Fichier enregistré avec succès dans : " + destinationFilePath);
-
-					} catch (IOException ioException) {
-						System.out.println("Erreur lors de l'enregistrement du fichier : " + ioException.getMessage());
+					} catch (IOException e) {
+						Label errorUploadFile = new Label("Erreur lors de l'enregistrement du fichier");
+						if (centerComponentsVbox.getChildren().size() == 1) {
+							centerComponentsVbox.getChildren().add(errorUploadFile);
+						}
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
 				} else {
-					System.out.println("Aucun fichier sélectionné.");
+					Label noSuchFile = new Label("Aucun fichier sélectionné");
+					if (centerComponentsVbox.getChildren().size() == 1) {
+						centerComponentsVbox.getChildren().add(noSuchFile);
+					}
 				}
 			}
 		});
@@ -77,9 +85,9 @@ public class ListInternEmpty extends WireframeBasic {
 		uploadListInterns.setWrapText(true); // to center
 
 //		Label test = new Label("Hello John Doe");
-		uploadListInterns.setLayoutX(20);
-		uploadListInterns.setLayoutY(20);
-		informationsDisplay.getChildren().add(uploadListInterns);
+		centerComponentsVbox.getChildren().add(uploadListInterns);
+		centerComponentsVbox.setAlignment(Pos.CENTER);
+		informationsDisplay.setCenter(centerComponentsVbox);
 
 	}
 
