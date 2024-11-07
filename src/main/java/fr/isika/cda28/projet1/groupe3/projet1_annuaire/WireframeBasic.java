@@ -21,7 +21,7 @@ public class WireframeBasic {
 //	4C4B16 kaki foncé
 
 	protected BorderPane root;
-	protected Pane informationsDisplay;
+	protected BorderPane informationsDisplay;
 
 	public WireframeBasic() {
 
@@ -53,7 +53,7 @@ public class WireframeBasic {
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
 
-		informationsDisplay = new Pane();
+		informationsDisplay = new BorderPane();
 		informationsDisplay.setMinWidth(630);
 		informationsDisplay.setStyle("-fx-background-color: #E6C767;");
 

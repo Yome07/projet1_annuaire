@@ -155,6 +155,6 @@ public class InternsTableView extends WireframeBasic {
 
 		//this.getChildren().add(internTableView);
 		vbox.getChildren().addAll(label,handleUsers,internTableView);
-		
-	}
+		informationsDisplay.setCenter(vbox);
+}
 }
