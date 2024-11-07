@@ -6,25 +6,28 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    @Override
-    public void start(Stage stage) {
-        ListInternEmpty listeVide = new ListInternEmpty(); 
-        ServiceNodeList test = new ServiceNodeList();
-        test.readList(test.createListAlpha(0));
-        Scene scene = listeVide.createScene(); 
-        stage.setTitle("Stud'Index");
-        stage.setScene(scene);
-        stage.show();
-    }
+	@Override
+	public void start(Stage stage) {
+		ViewAddIntern formAddIntern = new ViewAddIntern();
 
-    public static void main(String[] args) {
-        launch();
-    }
+		ViewListInternEmpty listeVide = new ViewListInternEmpty();
+
+		ServiceNodeList test = new ServiceNodeList();
+		test.readList(test.createListAlpha(0));
+		//Scene scene = listeVide.createScene();
+		Scene scene = formAddIntern.createScene();
+		stage.setTitle("Stud'Index");
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public static void main(String[] args) {
+		launch();
+	}
 
 }

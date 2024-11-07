@@ -28,11 +28,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class ListInternEmpty extends WireframeBasic {
+public class ViewListInternEmpty extends WireframeBasic {
 
 	private Node root;
 
-	public ListInternEmpty() {
+	public ViewListInternEmpty() {
 		super();
 		modScene();
 		this.root = null;
@@ -71,6 +71,7 @@ public class ListInternEmpty extends WireframeBasic {
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
+					
 				} else {
 					Label noSuchFile = new Label("Aucun fichier sélectionné");
 					if (centerComponentsVbox.getChildren().size() == 1) {
