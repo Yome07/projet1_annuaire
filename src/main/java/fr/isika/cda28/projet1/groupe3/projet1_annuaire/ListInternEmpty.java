@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,11 +24,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ListInternEmpty extends WireframeBasic {
-
+	//ArrayList<Intern> interns; 
 	private Node root;
 
 	public ListInternEmpty() {
@@ -39,7 +41,11 @@ public class ListInternEmpty extends WireframeBasic {
 	public void modScene() {
 
 		Button uploadListInterns = new Button("Charger une liste de statiaires");
-
+//		Button displayTableView = new Button("Afficher la liste des stagiaires");
+//		// tableView
+//		VBox tableViewBox = new VBox();
+//		InternsTableView internTableView = new InternsTableView(interns);
+		
 		uploadListInterns.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -66,21 +72,33 @@ public class ListInternEmpty extends WireframeBasic {
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
+					InternsTableView internsTableView = new InternsTableView(new ArrayList<Intern>());
+
 				} else {
 					System.out.println("Aucun fichier sélectionné.");
 				}
 			}
+
 		});
+//		displayTableView.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent event) {
+//				scene.setRoot(tableViewBox);
+//				internTableView.internTableView.setItems(FXCollections.observableArrayList(interns));
+//			}
+//		});
 
 		uploadListInterns.setMinSize(140, 65);
 		uploadListInterns.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
 		uploadListInterns.setWrapText(true); // to center
 
 //		Label test = new Label("Hello John Doe");
+
 		uploadListInterns.setLayoutX(20);
 		uploadListInterns.setLayoutY(20);
 		informationsDisplay.getChildren().add(uploadListInterns);
 
 	}
 
+	
 }
