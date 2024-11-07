@@ -48,6 +48,15 @@ public class ServiceNodeList {
 			
 		}
 	}
+	
+	public void readListInterns(List<Node> list) {
+		for (Node node : list) {
+			System.out.println(node.getIntern());
+
+		}
+	}
+	
+	
 
 //	public void createListAlpha(int index) { //1
 //

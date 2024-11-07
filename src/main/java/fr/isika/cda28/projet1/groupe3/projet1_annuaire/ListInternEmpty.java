@@ -1,32 +1,14 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class ListInternEmpty extends WireframeBasic {
 	//ArrayList<Intern> interns; 
@@ -72,8 +54,8 @@ public class ListInternEmpty extends WireframeBasic {
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
-				    ServiceNodeList test = new ServiceNodeList();
-				    test.readList(test.createListAlpha(0));
+//				    ServiceNodeList test = new ServiceNodeList();
+//				    test.readList(test.createListAlpha(0));
 					//InternsTableView internsTableView = new InternsTableView(new ArrayList<Intern>());
 					//Scene scene = internsTableView.createScene();
 

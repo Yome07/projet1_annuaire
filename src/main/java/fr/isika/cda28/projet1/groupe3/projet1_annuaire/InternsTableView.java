@@ -1,9 +1,10 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -15,17 +16,26 @@ import javafx.util.converter.IntegerStringConverter;
 
 public class InternsTableView extends WireframeBasic {
 
-	private ArrayList<Intern> interns;
+	private List<Intern> internsList = new ArrayList<>();
+	private List<Node> nodesInterns;
 	public TableView<Intern> internTableView;
 
-	public InternsTableView(ArrayList<Intern> interns) {
+	public InternsTableView(List<Intern> internsList) {
 
-		VBox vbox = new VBox();
-		Label label = new Label("Liste des Stagiaires");
+		this.internsList = internsList;
+		VBox conteneurVBox = new VBox();
+		Label internsListLabel = new Label("Liste des Stagiaires");
 
 		this.internTableView = new TableView<Intern>();
-		this.interns = interns;
 		internTableView.setEditable(true);
+		
+		// Création de la liste des stagiaires
+		ServiceNodeList nodeList = new ServiceNodeList();
+		nodesInterns = nodeList.createListAlpha(0);
+		for (Node node : nodesInterns) {
+			internsList.add(node.getIntern());
+			
+		}
 		
 		// colonne nom
 		TableColumn<Intern, String> lastnameColumn = new TableColumn<Intern, String>("Nom");
@@ -33,7 +43,7 @@ public class InternsTableView extends WireframeBasic {
 		// largeur colonne
 		lastnameColumn.setMinWidth(100);
 
-		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Nom"));
+		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("lastname"));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(lastnameColumn);
@@ -56,7 +66,7 @@ public class InternsTableView extends WireframeBasic {
 
 		firstnameColumn.setMinWidth(100);
 
-		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Prénom"));
+		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("firstname"));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(firstnameColumn);
@@ -81,7 +91,7 @@ public class InternsTableView extends WireframeBasic {
 
 		departmentColumn.setMinWidth(100);
 
-		departmentColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Département"));
+		departmentColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("department"));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(departmentColumn);
@@ -105,7 +115,7 @@ public class InternsTableView extends WireframeBasic {
 
 		trainingColumn.setMinWidth(100);
 
-		trainingColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Formation"));
+		trainingColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("training"));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(trainingColumn);
@@ -128,7 +138,7 @@ public class InternsTableView extends WireframeBasic {
 
 		yearColumn.setMinWidth(100);
 
-		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("Année"));
+		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("year"));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(yearColumn);
@@ -146,9 +156,14 @@ public class InternsTableView extends WireframeBasic {
 		yearColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter())); 
 		
 		yearColumn.setEditable(true);// on autorise la modification des colonnes
+		
+		// Je donne à mon tableau la liste de stagiaires à afficher
+		// observable list permet de lever des alertes quand la liste est modifier. Si
+		// il y a une modification dans la liste le tableau sera modifié
+		internTableView.setItems(FXCollections.observableArrayList(this.internsList));
 
 		// this.getChildren().add(internTableView);
-		vbox.getChildren().addAll(label, internTableView);
-		informationsDisplay.setCenter(vbox);
+		conteneurVBox.getChildren().addAll(internsListLabel, internTableView);
+		informationsDisplay.setCenter(conteneurVBox);
 	}
 }
