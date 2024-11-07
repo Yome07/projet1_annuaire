@@ -17,31 +17,28 @@ public class InternsTableView extends WireframeBasic {
 
 	private ArrayList<Intern> interns;
 	public TableView<Intern> internTableView;
+
 	public InternsTableView(ArrayList<Intern> interns) {
 
 		VBox vbox = new VBox();
-		Label label = new Label("ggggggggggg");
-		Button handleUsers = new Button("Gestion des utilisateurs");
-		
-		
+		Label label = new Label("Liste des Stagiaires");
+
 		this.internTableView = new TableView<Intern>();
 		this.interns = interns;
 		internTableView.setEditable(true);
+		
 		// colonne nom
-		TableColumn<Intern, String> lastnameColumn = new TableColumn<Intern, String>("nom");
+		TableColumn<Intern, String> lastnameColumn = new TableColumn<Intern, String>("Nom");
 
 		// largeur colonne
-
 		lastnameColumn.setMinWidth(100);
 
-		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("nom"));
+		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Nom"));
 
 		// ajouter la colonne à la table view
-
 		internTableView.getColumns().add(lastnameColumn);
 
-//		// gestionnaire d'évènement pour les cellules
-//		
+		// gestionnaire d'évènement pour les cellules
 		lastnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
@@ -51,22 +48,20 @@ public class InternsTableView extends WireframeBasic {
 			}
 		});
 		lastnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-																		// Textfield
+		// Textfield
 		lastnameColumn.setEditable(true);// on autorise la modification des colonnes
 
-		
-		//colonne prenom
-		TableColumn<Intern, String> firstnameColumn = new TableColumn<Intern, String>("prénom");
-		
+		// colonne prenom
+		TableColumn<Intern, String> firstnameColumn = new TableColumn<Intern, String>("Prénom");
+
 		firstnameColumn.setMinWidth(100);
 
-		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("prénom"));
+		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Prénom"));
 
 		// ajouter la colonne à la table view
-
 		internTableView.getColumns().add(firstnameColumn);
-		// gestionnaire d'évènement pour les cellules
-//		
+		
+		// gestionnaire d'évènement pour les cellules	
 		firstnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
@@ -75,22 +70,23 @@ public class InternsTableView extends WireframeBasic {
 						.setFirstname(event.getNewValue());// On récupère la nouvelle valeur dans l'event
 			}
 		});
+		
 		firstnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-																		// Textfield
+		
+		// Textfield
 		firstnameColumn.setEditable(true);// on autorise la modification des colonnes
 
 		// colonne department
 		TableColumn<Intern, String> departmentColumn = new TableColumn<Intern, String>("Département");
-		
+
 		departmentColumn.setMinWidth(100);
 
 		departmentColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Département"));
 
 		// ajouter la colonne à la table view
-
 		internTableView.getColumns().add(departmentColumn);
-		// gestionnaire d'évènement pour les cellules
-//		
+		
+		// gestionnaire d'évènement pour les cellules		
 		departmentColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
@@ -100,22 +96,21 @@ public class InternsTableView extends WireframeBasic {
 			}
 		});
 		departmentColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-																		// Textfield
+		
+		// Textfield
 		departmentColumn.setEditable(true);// on autorise la modification des colonnes
 
-		// training
-		
+		// colonne training
 		TableColumn<Intern, String> trainingColumn = new TableColumn<Intern, String>("Formation");
-		
+
 		trainingColumn.setMinWidth(100);
 
 		trainingColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("Formation"));
 
 		// ajouter la colonne à la table view
-
 		internTableView.getColumns().add(trainingColumn);
-		// gestionnaire d'évènement pour les cellules
-//		
+	
+		// gestionnaire d'évènement pour les cellules	
 		trainingColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
@@ -125,22 +120,20 @@ public class InternsTableView extends WireframeBasic {
 			}
 		});
 		trainingColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-																		// Textfield
+		// Textfield
 		trainingColumn.setEditable(true);// on autorise la modification des colonnes
 
-		// year
-		
-		TableColumn<Intern, Integer> yearColumn = new TableColumn<Intern, Integer>("année");
-				
+		// colonne année
+		TableColumn<Intern, Integer> yearColumn = new TableColumn<Intern, Integer>("Année");
+
 		yearColumn.setMinWidth(100);
 
-		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("année"));
+		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("Année"));
 
 		// ajouter la colonne à la table view
-
 		internTableView.getColumns().add(yearColumn);
-		// gestionnaire d'évènement pour les cellules
-//		
+		
+		// gestionnaire d'évènement pour les cellules		
 		yearColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, Integer>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, Integer> event) {
@@ -149,12 +142,13 @@ public class InternsTableView extends WireframeBasic {
 						.setYear(event.getNewValue());// On récupère la nouvelle valeur dans l'event
 			}
 		});
-		yearColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter())); // On autotrise à transformer la case en
-																	
+	
+		yearColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter())); 
+		
 		yearColumn.setEditable(true);// on autorise la modification des colonnes
 
-		//this.getChildren().add(internTableView);
-		vbox.getChildren().addAll(label,handleUsers,internTableView);
+		// this.getChildren().add(internTableView);
+		vbox.getChildren().addAll(label, internTableView);
 		informationsDisplay.setCenter(vbox);
-}
+	}
 }
