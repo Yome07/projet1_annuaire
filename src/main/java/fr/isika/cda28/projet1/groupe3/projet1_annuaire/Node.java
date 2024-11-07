@@ -43,20 +43,12 @@ public class Node {
 		this.right = right;
 	}
 
-	// Méthode récursive
+	@Override
+	public String toString() {
+		return "Node [intern=" + intern + ", left=" + left + ", right=" + right + "]";
+	}
+	
+	
 
-//	public void addIntern(Intern newIntern) {
-//		int nextNode = (this.intern.lastname.compareTo(newIntern.lastname) < 0) ? this.right : this.left;
-//
-//		if (nextNode == 0) {
-//			if (this.intern.lastname.compareTo(newIntern.lastname) < 0) {
-//				this.right = new Node(intern, null, null);
-//			} else {
-//				this.left = new Node(intern, null, null);
-//			}
-//		}else {
-//			nextNode.addIntern(newIntern);
-//		}
-//	}
-
+	
 }
