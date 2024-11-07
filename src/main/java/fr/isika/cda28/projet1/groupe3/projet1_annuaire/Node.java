@@ -43,13 +43,6 @@ public class Node {
 		this.right = right;
 	}
 
-	
-	//méthode to string
-	@Override
-	public String toString() {
-		return "Node [intern=" + intern + "\n, left=" + left + "\n, right=" + right + "]";
-	}
-
 	// Méthode récursive
 
 //	public void addIntern(Intern newIntern) {
@@ -65,8 +58,5 @@ public class Node {
 //			nextNode.addIntern(newIntern);
 //		}
 //	}
-	
-	 
-	
 
 }
