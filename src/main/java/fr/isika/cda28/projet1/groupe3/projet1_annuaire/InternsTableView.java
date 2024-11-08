@@ -200,10 +200,15 @@ public class InternsTableView extends WireframeBasic {
 		// il y a une modification dans la liste le tableau sera modifié
 		internTableView.setItems(FXCollections.observableArrayList(this.internsList));
 		
+		Button print = new Button("Imprimer en PDF");
 		
+		print.setOnAction(event -> {
+			// TODO Auto-generated method stub
+			System.out.println("Impression en cours");
+		});
 
 		// this.getChildren().add(internTableView);
-		conteneurVBox.getChildren().addAll(internsListLabel, internTableView);
+		conteneurVBox.getChildren().addAll(internsListLabel, internTableView, print);
 		informationsDisplay.setCenter(conteneurVBox);
 	}
 }
