@@ -23,7 +23,7 @@ public class ViewAddIntern extends WireframeBasic {
 
 	// Attributs
 	
-	VBox errorVBox = new VBox(15);
+	VBox infoVBox = new VBox(15);
 	Label errorIsEmpty = new Label("Veuillez remplir tous les champs en respectant les cases.");
 	Label infoAdd = new Label ();
 	
@@ -38,8 +38,8 @@ public class ViewAddIntern extends WireframeBasic {
 	public String toUpperCaseFirst(String firstnameGetText) {
 
 		if (firstnameGetText=="") {
-			if (!(errorVBox.getChildren().contains(errorIsEmpty))) {
-				errorVBox.getChildren().add(0, errorIsEmpty);// errorIsNull
+			if (!(infoVBox.getChildren().contains(errorIsEmpty))) {
+				infoVBox.getChildren().add(0, errorIsEmpty);// errorIsNull
 				
 			}
 			
@@ -120,7 +120,7 @@ public class ViewAddIntern extends WireframeBasic {
 
 		// Handle Error when completed form
 		
-		errorVBox.setAlignment(Pos.CENTER);
+		infoVBox.setAlignment(Pos.CENTER);
 
 		Label errorLastname = new Label(
 				"Erreur dans le Nom : veuillez entrer uniquement des lettres avec ou sans accents.");
@@ -136,13 +136,13 @@ public class ViewAddIntern extends WireframeBasic {
 		
 		//Success add
 		 
-		errorVBox.getChildren().add(infoAdd);
+		infoVBox.getChildren().add(infoAdd);
 		
 		
 
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
-		formVBox.getChildren().addAll(titleHBox, formGridPane, errorVBox, buttonHBox);
+		formVBox.getChildren().addAll(titleHBox, formGridPane, infoVBox, buttonHBox);
 
 		buttonValidateForm.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -162,11 +162,11 @@ public class ViewAddIntern extends WireframeBasic {
 				// allows all in the expression
 				String lastnamePattern = "(?i)^(?:(?![×Þß÷þø])[-'ŒA-ZÀ-ÿ]){2,25}$";
 				if (testRegex(lastnamePattern, lastname)) {
-					errorVBox.getChildren().remove(errorLastname);
+					infoVBox.getChildren().remove(errorLastname);
 					lastnameVerified = lastname;
 				} else {
-					if (!(errorVBox.getChildren().contains(errorLastname))) {
-						errorVBox.getChildren().add(errorLastname);
+					if (!(infoVBox.getChildren().contains(errorLastname))) {
+						infoVBox.getChildren().add(errorLastname);
 					}
 				}
 
@@ -179,11 +179,11 @@ public class ViewAddIntern extends WireframeBasic {
 				 */
 				String firstnamePattern = "(?i)^(?:(?![×Þß÷þø])[-'œa-zÀ-ÿ]){2,25}$";
 				if (testRegex(firstnamePattern, firstname)) {
-					errorVBox.getChildren().remove(errorFirstname);
+					infoVBox.getChildren().remove(errorFirstname);
 					firstnameVerified = firstname;
 				} else {
-					if (!(errorVBox.getChildren().contains(errorFirstname))) {
-						errorVBox.getChildren().add(errorFirstname);
+					if (!(infoVBox.getChildren().contains(errorFirstname))) {
+						infoVBox.getChildren().add(errorFirstname);
 					}
 				}
 
@@ -194,11 +194,11 @@ public class ViewAddIntern extends WireframeBasic {
 				 */
 				String departmentPattern = "^(0[1-9]|[1-8][0-9]|9[0-5]|2[A-B]||97[1-6])${2,3}";
 				if (testRegex(departmentPattern, department)) {
-					errorVBox.getChildren().remove(errorDepartment);
+					infoVBox.getChildren().remove(errorDepartment);
 					departmentVerified = department;
 				} else {
-					if (!(errorVBox.getChildren().contains(errorDepartment))) {
-						errorVBox.getChildren().add(errorDepartment);
+					if (!(infoVBox.getChildren().contains(errorDepartment))) {
+						infoVBox.getChildren().add(errorDepartment);
 					}
 				}
 
@@ -210,16 +210,17 @@ public class ViewAddIntern extends WireframeBasic {
 				 */
 				String trainingPattern = "^[a-zA-Z]{2,10}[1-9]{1,2}$";
 				if (testRegex(trainingPattern, training)) {
-					errorVBox.getChildren().remove(errorTraining);
+					infoVBox.getChildren().remove(errorTraining);
 					trainingVerified = training;
 				} else {
-					if (!(errorVBox.getChildren().contains(errorTraining))) {
-						errorVBox.getChildren().add(errorTraining);
+					if (!(infoVBox.getChildren().contains(errorTraining))) {
+						infoVBox.getChildren().add(errorTraining);
 					}
 				}
 
 				// VERIFY YEAR
-				String yearString = yearTF.getText();
+				// if pour verifier si c est que des int dans year
+					String yearString = yearTF.getText();
 				int yearInt = Integer.parseInt(yearTF.getText());
 
 				int currentYear = LocalDate.now().getYear();
@@ -227,43 +228,35 @@ public class ViewAddIntern extends WireframeBasic {
 				Pattern compiledYearPattern = Pattern.compile(yearPattern);
 				Matcher matcherYear = compiledYearPattern.matcher(yearString);
 				if (matcherYear.matches()) {
-					System.out.println("Bon pattern");
-					errorVBox.getChildren().remove(errorYear);
+					infoVBox.getChildren().remove(errorYear);
 					if (yearInt <= currentYear) {
-						System.out.println("1900-2024");
-						errorVBox.getChildren().remove(errorYear);
+						infoVBox.getChildren().remove(errorYear);
 						yearVerified = yearInt;
 					} else {
-						if (!(errorVBox.getChildren().contains(errorYear))) {
-							System.out.println("en dehors de 1900-2024");
-							errorVBox.getChildren().add(errorYear);
+						if (!(infoVBox.getChildren().contains(errorYear))) {
+							infoVBox.getChildren().add(errorYear);
 						}
 					}
 				} else {
-					if (!(errorVBox.getChildren().contains(errorYear))) {
-						System.out.println("mauvais pattern");
-						errorVBox.getChildren().add(errorYear);
+					if (!(infoVBox.getChildren().contains(errorYear))) {
+						infoVBox.getChildren().add(errorYear);
 					}
 				}
 
 				// serveur
 				if (lastnameVerified != "" && firstnameVerified != "" && departmentVerified != ""
 						&& trainingVerified != "" && yearVerified != 0) {
-					errorVBox.getChildren().remove(errorIsEmpty);
+					infoVBox.getChildren().remove(errorIsEmpty);
 
 					Intern newIntern = new Intern(lastnameVerified, firstnameVerified, departmentVerified,
 							trainingVerified, yearVerified);
 					
-					System.out.println("infoAdd vaut : " + infoAdd);
 					infoAdd.setText("stagiaire ajouté avec succès");
-					System.out.println("infoAdd vaut : " + infoAdd);
 					
 					System.out.println(newIntern);
 
 				} else {
-					System.out.println("Je suis dans le else, infoAdd vaut : " + infoAdd);
 					infoAdd.setText("Le stagiaire n'as pas été ajouté");
-					System.out.println("infoAdd vaut : " + infoAdd);
 				
 				}
 
