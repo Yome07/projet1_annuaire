@@ -1,5 +1,6 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +19,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class WireframeBasic {
 
@@ -31,10 +35,10 @@ public class WireframeBasic {
 
 	public WireframeBasic() {
 
-		// Pane Root
+		// ----- ROOT -----
 		root = new BorderPane();
 
-		// Components
+		// ----- COMPONENTS -----
 		// NavBarMenu
 		HBox navBarMenu = new HBox();
 		navBarMenu.setStyle("-fx-background-color: #898121;");
@@ -71,6 +75,8 @@ public class WireframeBasic {
 
 		navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList, addInterns);
 
+		
+
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
 
@@ -79,16 +85,16 @@ public class WireframeBasic {
 		informationsDisplay.setStyle("-fx-background-color: #E6C767;");
 
 		// Logo Stud'Index
-
 		Circle logo = new Circle(65);
-//		Image logoDisplay = new Image("file://logo.png");
-//		logo.setFill(new ImagePattern(logoDisplay));
-
 		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
-
 		logo.setFill(new ImagePattern(logoDisplay));
 
-		// disposition of the anchorPane
+		// Default content
+		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
+
+		informationsDisplay.setCenter(defaultContent);
+
+		// layout anchorPane
 		areaDisplay.getChildren().addAll(logo, informationsDisplay);
 		areaDisplay.setLeftAnchor(logo, 30.00);
 		areaDisplay.setTopAnchor(logo, 30.00);
@@ -103,6 +109,59 @@ public class WireframeBasic {
 
 		// layout mac
 		root.setStyle("-fx-font-family: 'Proxima Nova'");
+		
+		// -----NAVIGATION -----
+		
+		
+		//toHome
+		home.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewHome viewHome = new ViewHome();
+//				informationsDisplay.setCenter(viewHome.modScene());
+			}
+		});
+		
+		// toHandleUsers
+		handleUsers.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewHandleUsers viewHandleUsers = new ViewHandleUsers();
+//				informationsDisplay.setCenter(viewHandleUsers.modScene());
+			}
+		});
+		
+		// toSearchInterns
+		searchInterns.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewSearchInterns viewSearchInterns = new ViewSearchInterns();
+//				informationsDisplay.setCenter(viewSearchInterns.modScene());
+			}
+		});
+		
+		// toViewInternsList
+		internsList.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				ListInternEmpty viewListInterns = new ListInternEmpty();
+				informationsDisplay.setCenter(viewListInterns.modScene());
+			}
+		});
+		
+		//toAddInterns
+		addInterns.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewAddInterns viewAddInterns = new ViewAddInterns();
+//				informationsDisplay.setCenter(ViewAddInterns.modScene());
+			}
+		});
 	}
 
 	public Scene createScene() {

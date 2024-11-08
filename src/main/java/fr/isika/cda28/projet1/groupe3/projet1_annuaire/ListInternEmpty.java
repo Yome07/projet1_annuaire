@@ -10,20 +10,24 @@ import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-public class ListInternEmpty extends WireframeBasic {
+public class ListInternEmpty extends VBox {
 
 	private Node root;
 
 	public ListInternEmpty() {
 		super();
-		modScene();
+
 		this.root = null;
+
 	}
 
-	public void modScene() {
+	public Button modScene() {
 
 		Button uploadListInterns = new Button("Charger une liste de statiaires");
 
@@ -66,13 +70,10 @@ public class ListInternEmpty extends WireframeBasic {
 
 		uploadListInterns.setMinSize(140, 65);
 		uploadListInterns.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
-		uploadListInterns.setWrapText(true); // to center
+		uploadListInterns.setWrapText(true);
 
-//		Label test = new Label("Hello John Doe");
-		uploadListInterns.setLayoutX(20);
-		uploadListInterns.setLayoutY(20);
-		informationsDisplay.getChildren().add(uploadListInterns);
-
+		return uploadListInterns;
 	}
+	
 
 }
