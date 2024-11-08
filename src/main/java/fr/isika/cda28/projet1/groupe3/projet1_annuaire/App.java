@@ -15,12 +15,8 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage) {
 
-		ListInternEmpty listeVide = new ListInternEmpty();
-		ServiceNodeList serviceNodeList = new ServiceNodeList();
-		List interns = new ArrayList();
-		InternsTableView internsTableView = new InternsTableView(interns);
-
-		Scene scene = internsTableView.createScene();
+		WireframeBasic wireframe = new WireframeBasic();
+		Scene scene = new Scene(wireframe.root, 1000, 800);
 
 		stage.setTitle("Stud'Index");
 		stage.setScene(scene);
