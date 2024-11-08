@@ -22,11 +22,11 @@ import javafx.scene.text.Text;
 public class ViewAddIntern extends WireframeBasic {
 
 	// Attributs
-	String lastnameVerified = "";
-	String firstnameVerified = "";
-	String departmentVerified = "";
-	String trainingVerified = "";
-	int yearVerified = 0;
+	
+	VBox errorVBox = new VBox(15);
+	Label errorIsEmpty = new Label("Veuillez remplir tous les champs en respectant les cases.");
+	Label infoAdd = new Label ();
+	
 
 	// Constructors
 	public ViewAddIntern() {
@@ -34,8 +34,17 @@ public class ViewAddIntern extends WireframeBasic {
 		modScene();
 	}
 
-	// Methods
+//	 Methods
 	public String toUpperCaseFirst(String firstnameGetText) {
+
+		if (firstnameGetText=="") {
+			if (!(errorVBox.getChildren().contains(errorIsEmpty))) {
+				errorVBox.getChildren().add(0, errorIsEmpty);// errorIsNull
+				
+			}
+			
+			return "";
+		}
 		String firstLetterToUpper = firstnameGetText.substring(0, 1).toUpperCase();
 		String rest = firstnameGetText.substring(1, firstnameGetText.length()).toLowerCase();
 		firstLetterToUpper += rest;
@@ -110,7 +119,7 @@ public class ViewAddIntern extends WireframeBasic {
 		buttonHBox.setPadding(new Insets(50, 0, 0, 0));
 
 		// Handle Error when completed form
-		VBox errorVBox = new VBox(15);
+		
 		errorVBox.setAlignment(Pos.CENTER);
 
 		Label errorLastname = new Label(
@@ -123,7 +132,13 @@ public class ViewAddIntern extends WireframeBasic {
 				"Erreur dans la promotion : veuillez entrer uniquement le sigle suivi du numero de la promotion.");
 		Label errorYear = new Label(
 				"Erreur dans l'annee : Veuillez entrer uniquement une annee comprise entre 1900 et l'annee en cours.");
-		Label errorIsNull = new Label("Veuillez remplir tous les champs en respectant les cases.");
+		
+		
+		//Success add
+		 
+		errorVBox.getChildren().add(infoAdd);
+		
+		
 
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
@@ -133,7 +148,14 @@ public class ViewAddIntern extends WireframeBasic {
 
 			@Override
 			public void handle(ActionEvent event) {
-
+				
+				String lastnameVerified = "";
+				String firstnameVerified = "";
+				String departmentVerified = "";
+				String trainingVerified = "";
+				int yearVerified = 0;
+				
+				
 				// VERIFY LASTNAME
 				String lastname = lastnameTF.getText().toUpperCase().trim();
 				// (?i) insensitive case --- (?![×Þß÷þø]) not in the string --- [-'ŒA-ZÀ-ÿ]
@@ -143,7 +165,7 @@ public class ViewAddIntern extends WireframeBasic {
 					errorVBox.getChildren().remove(errorLastname);
 					lastnameVerified = lastname;
 				} else {
-					if(!(errorVBox.getChildren().contains(errorLastname))) {
+					if (!(errorVBox.getChildren().contains(errorLastname))) {
 						errorVBox.getChildren().add(errorLastname);
 					}
 				}
@@ -160,7 +182,7 @@ public class ViewAddIntern extends WireframeBasic {
 					errorVBox.getChildren().remove(errorFirstname);
 					firstnameVerified = firstname;
 				} else {
-					if(!(errorVBox.getChildren().contains(errorFirstname))) {
+					if (!(errorVBox.getChildren().contains(errorFirstname))) {
 						errorVBox.getChildren().add(errorFirstname);
 					}
 				}
@@ -175,7 +197,7 @@ public class ViewAddIntern extends WireframeBasic {
 					errorVBox.getChildren().remove(errorDepartment);
 					departmentVerified = department;
 				} else {
-					if(!(errorVBox.getChildren().contains(errorDepartment))) {
+					if (!(errorVBox.getChildren().contains(errorDepartment))) {
 						errorVBox.getChildren().add(errorDepartment);
 					}
 				}
@@ -191,7 +213,7 @@ public class ViewAddIntern extends WireframeBasic {
 					errorVBox.getChildren().remove(errorTraining);
 					trainingVerified = training;
 				} else {
-					if(!(errorVBox.getChildren().contains(errorTraining))) {
+					if (!(errorVBox.getChildren().contains(errorTraining))) {
 						errorVBox.getChildren().add(errorTraining);
 					}
 				}
@@ -212,29 +234,37 @@ public class ViewAddIntern extends WireframeBasic {
 						errorVBox.getChildren().remove(errorYear);
 						yearVerified = yearInt;
 					} else {
-						if(!(errorVBox.getChildren().contains(errorYear))) {
+						if (!(errorVBox.getChildren().contains(errorYear))) {
 							System.out.println("en dehors de 1900-2024");
 							errorVBox.getChildren().add(errorYear);
 						}
 					}
 				} else {
-					if(!(errorVBox.getChildren().contains(errorYear))) {
+					if (!(errorVBox.getChildren().contains(errorYear))) {
 						System.out.println("mauvais pattern");
 						errorVBox.getChildren().add(errorYear);
 					}
 				}
 
 				// serveur
-				if(!(lastnameVerified != null) && ) {
-					errorVBox.getChildren().remove(errorIsNull);
-					System.out.println(
-							lastnameVerified + firstnameVerified + departmentVerified + trainingVerified + yearVerified);
-					Intern newIntern = new Intern(lastnameVerified, firstnameVerified, departmentVerified, trainingVerified,
-							yearVerified);
+				if (lastnameVerified != "" && firstnameVerified != "" && departmentVerified != ""
+						&& trainingVerified != "" && yearVerified != 0) {
+					errorVBox.getChildren().remove(errorIsEmpty);
+
+					Intern newIntern = new Intern(lastnameVerified, firstnameVerified, departmentVerified,
+							trainingVerified, yearVerified);
+					
+					System.out.println("infoAdd vaut : " + infoAdd);
+					infoAdd.setText("stagiaire ajouté avec succès");
+					System.out.println("infoAdd vaut : " + infoAdd);
+					
 					System.out.println(newIntern);
-					Node newNode = new Node(newIntern, -1, -1);
+
 				} else {
-					errorVBox.getChildren().add(0, errorIsNull);// errorIsNull 
+					System.out.println("Je suis dans le else, infoAdd vaut : " + infoAdd);
+					infoAdd.setText("Le stagiaire n'as pas été ajouté");
+					System.out.println("infoAdd vaut : " + infoAdd);
+				
 				}
 
 			}
