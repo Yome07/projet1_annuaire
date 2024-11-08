@@ -47,21 +47,6 @@ public class WireframeBasic {
 		Button handleUsers = new Button("Gestion des utilisateurs");
 		Button searchInterns = new Button("Recherche de stagiaires");
 		Button internsList = new Button("Liste des stagiaires");
-		
-		internsList.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-            	List<Intern> internsList = new ArrayList<>();
-				InternsTableView internsTableView = new InternsTableView(internsList);
-								
-				Scene scene = internsTableView.createScene();
-				
-            }
-		});
-                
-      
 		Button addInterns = new Button("Ajout de stagiaire");
 
 		Button[] buttonNavBarMenu = { home, handleUsers, searchInterns, internsList, addInterns };
@@ -148,6 +133,7 @@ public class WireframeBasic {
 
 			@Override
 			public void handle(ActionEvent event) {
+				
 				ListInternEmpty viewListInterns = new ListInternEmpty();
 				informationsDisplay.setCenter(viewListInterns.modScene());
 			}
