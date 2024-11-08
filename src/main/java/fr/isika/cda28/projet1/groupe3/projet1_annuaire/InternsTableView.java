@@ -3,9 +3,11 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -13,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.scene.control.Button;
 
 public class InternsTableView extends WireframeBasic {
 
@@ -157,10 +160,55 @@ public class InternsTableView extends WireframeBasic {
 		
 		yearColumn.setEditable(true);// on autorise la modification des colonnes
 		
+	
+		
+		
+		
+		
+		
+		
+		
+		// colonne supprimer
+		TableColumn<Intern, Void> deleteColumn = new TableColumn<>("Supprimer");
+		
+//		deleteColumn.setCellValueFactory(
+//			    param -> new ReadOnlyObjectWrapper<>(param.getValue())
+//			);
+		
+		deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
+		    private final Button deleteButton = new Button("Supprimer");
+		    {
+		        // Configuration du bouton Supprimer
+//		    	deleteButton.setOnAction(event -> {
+//		            // Récupérer le Stagiaire de la ligne courante
+//		    		Intern intern = getTableView().getItems().get(getIndex());
+//		            
+//		            // Supprimer la ligne du TableView
+////		            getTableView().getItems().remove(intern);
+//		        });
+		    }
+
+		    @Override
+		    protected void updateItem(Void item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty) {
+		            setGraphic(null);
+		        } else {
+		            setGraphic(deleteButton);
+		        }
+		    }
+		});
+
+
+		// Ajouter la colonne au TableView
+		internTableView.getColumns().add(deleteColumn);
+		
 		// Je donne à mon tableau la liste de stagiaires à afficher
 		// observable list permet de lever des alertes quand la liste est modifier. Si
 		// il y a une modification dans la liste le tableau sera modifié
 		internTableView.setItems(FXCollections.observableArrayList(this.internsList));
+		
+		
 
 		// this.getChildren().add(internTableView);
 		conteneurVBox.getChildren().addAll(internsListLabel, internTableView);
