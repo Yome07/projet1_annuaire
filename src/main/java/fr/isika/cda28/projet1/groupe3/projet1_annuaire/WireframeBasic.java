@@ -1,6 +1,5 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -31,10 +30,10 @@ public class WireframeBasic {
 
 	public WireframeBasic() {
 
-		// BorderPane Root
+		// ----- ROOT -----
 		root = new BorderPane();
 
-		// Components
+		// ----- COMPONENTS -----
 		// NavBarMenu
 		HBox navBarMenu = new HBox();
 		navBarMenu.setStyle("-fx-background-color: #898121;");
@@ -55,16 +54,8 @@ public class WireframeBasic {
 		}
 
 		navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList, addInterns);
+
 		
-		internsList.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				ListInternEmpty viewListInterns = new ListInternEmpty();
-				
-				informationsDisplay.setCenter(viewListInterns.modScene());
-			}
-		});
 
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
@@ -77,14 +68,13 @@ public class WireframeBasic {
 		Circle logo = new Circle(65);
 		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
 		logo.setFill(new ImagePattern(logoDisplay));
-		
-		// contenu par défaut
+
+		// Default content
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
-		
+
 		informationsDisplay.setCenter(defaultContent);
 
-
-		// disposition of the anchorPane
+		// layout anchorPane
 		areaDisplay.getChildren().addAll(logo, informationsDisplay);
 		areaDisplay.setLeftAnchor(logo, 30.00);
 		areaDisplay.setTopAnchor(logo, 30.00);
@@ -96,10 +86,62 @@ public class WireframeBasic {
 		// Add components to the pane
 		root.setTop(navBarMenu);
 		root.setCenter(areaDisplay);
-	
 
 		// layout mac
 		root.setStyle("-fx-font-family: 'Proxima Nova'");
+		
+		// -----NAVIGATION -----
+		
+		
+		//toHome
+		home.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewHome viewHome = new ViewHome();
+//				informationsDisplay.setCenter(viewHome.modScene());
+			}
+		});
+		
+		// toHandleUsers
+		handleUsers.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewHandleUsers viewHandleUsers = new ViewHandleUsers();
+//				informationsDisplay.setCenter(viewHandleUsers.modScene());
+			}
+		});
+		
+		// toSearchInterns
+		searchInterns.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewSearchInterns viewSearchInterns = new ViewSearchInterns();
+//				informationsDisplay.setCenter(viewSearchInterns.modScene());
+			}
+		});
+		
+		// toViewInternsList
+		internsList.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				ListInternEmpty viewListInterns = new ListInternEmpty();
+				informationsDisplay.setCenter(viewListInterns.modScene());
+			}
+		});
+		
+		//toAddInterns
+		addInterns.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				ViewAddInterns viewAddInterns = new ViewAddInterns();
+//				informationsDisplay.setCenter(ViewAddInterns.modScene());
+			}
+		});
 	}
 
 	public Scene createScene() {
