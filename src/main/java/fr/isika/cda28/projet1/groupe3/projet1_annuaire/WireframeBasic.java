@@ -1,5 +1,10 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -21,7 +27,7 @@ public class WireframeBasic {
 //	4C4B16 kaki foncé
 
 	protected BorderPane root;
-	protected Pane informationsDisplay;
+	protected BorderPane informationsDisplay;
 
 	public WireframeBasic() {
 
@@ -37,6 +43,21 @@ public class WireframeBasic {
 		Button handleUsers = new Button("Gestion des utilisateurs");
 		Button searchInterns = new Button("Recherche de stagiaires");
 		Button internsList = new Button("Liste des stagiaires");
+		
+		internsList.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+            	List<Intern> internsList = new ArrayList<>();
+				InternsTableView internsTableView = new InternsTableView(internsList);
+								
+				Scene scene = internsTableView.createScene();
+				
+            }
+		});
+                
+      
 		Button addInterns = new Button("Ajout de stagiaire");
 
 		Button[] buttonNavBarMenu = { home, handleUsers, searchInterns, internsList, addInterns };
@@ -53,7 +74,7 @@ public class WireframeBasic {
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
 
-		informationsDisplay = new Pane();
+		informationsDisplay = new BorderPane();
 		informationsDisplay.setMinWidth(630);
 		informationsDisplay.setStyle("-fx-background-color: #E6C767;");
 

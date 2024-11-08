@@ -36,6 +36,7 @@ public class InternsTableView extends WireframeBasic {
 		nodesInterns = nodeList.createListAlpha(0);
 		for (Node node : nodesInterns) {
 			internsList.add(node.getIntern());
+			System.out.println(node.getIntern());
 			
 		}
 		
@@ -203,6 +204,6 @@ public class InternsTableView extends WireframeBasic {
 
 		// this.getChildren().add(internTableView);
 		conteneurVBox.getChildren().addAll(internsListLabel, internTableView);
-		informationsDisplay.setCenterShape(true);
+		informationsDisplay.setCenter(conteneurVBox);
 	}
 }

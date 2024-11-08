@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -52,6 +55,9 @@ public class ListInternEmpty extends WireframeBasic {
 					binaryTree.createBinaryTree();
 			        ServiceNodeList test = new ServiceNodeList();
 			        test.readList(test.createListAlpha(0));
+			        List<Intern> interns = new ArrayList<>();
+			        InternsTableView internsTableView = new InternsTableView(interns);
+//			        informationsDisplay.getChildren().add(internsTableView);
 				} else {
 					System.out.println("Aucun fichier sélectionné.");
 				}
