@@ -14,21 +14,38 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 	
-	ArrayList<Intern> interns;
+//	ArrayList<Intern> interns;
 	
-	@Override
-	public void init() {
-        interns = new ArrayList<Intern>();
-	}
+//	@Override
+//	public void init() {
+//        interns = new ArrayList<Intern>();
+//	}
 
 	@Override
 	public void start(Stage stage) {
-		ListInternEmpty listeVide = new ListInternEmpty();
-		InternsTableView internsTableView = new InternsTableView(interns);
-		ServiceNodeList test = new ServiceNodeList();
+		
+		ListInternEmpty listeVide = new ListInternEmpty(); 
+//		ServiceNodeList test = new ServiceNodeList();
 //		test.readList(test.createListAlpha(0));
-//		Scene scene = listeVide.createScene();
-		Scene scene = internsTableView.createScene();
+		Scene scene = listeVide.createScene(); 
+		
+        
+        
+        
+		
+//		ListInternEmpty emptyList = new ListInternEmpty();
+////		InternsTableView internsTableView = new InternsTableView(interns);
+////		System.out.println(interns);
+//		
+////		if (interns.isEmpty()) {
+////			ServiceNodeList serviceNodeList = new ServiceNodeList();
+////			serviceNodeList.readList(serviceNodeList.createListAlpha(0));
+//			Scene scene = emptyList.createScene();
+////		} else {
+//////			scene = internsTableView.createScene();
+////		}
+
+		
 		stage.setTitle("Stud'Index");
 		stage.setScene(scene);
 		stage.show();

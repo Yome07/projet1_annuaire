@@ -3,7 +3,6 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -161,19 +160,11 @@ public class InternsTableView extends WireframeBasic {
 		yearColumn.setEditable(true);// on autorise la modification des colonnes
 		
 	
-		
-		
-		
-		
-		
-		
-		
+
 		// colonne supprimer
 		TableColumn<Intern, Void> deleteColumn = new TableColumn<>("Supprimer");
 		
-//		deleteColumn.setCellValueFactory(
-//			    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-//			);
+		deleteColumn.setMinWidth(100);
 		
 		deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
 		    private final Button deleteButton = new Button("Supprimer");
