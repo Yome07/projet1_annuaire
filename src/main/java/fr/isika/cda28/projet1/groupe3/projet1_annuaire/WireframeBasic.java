@@ -27,11 +27,11 @@ public class WireframeBasic {
 //	4C4B16 kaki foncé
 
 	protected BorderPane root;
-	protected Pane informationsDisplay;
+	protected BorderPane informationsDisplay;
 
 	public WireframeBasic() {
 
-		// Pane Root
+		// BorderPane Root
 		root = new BorderPane();
 
 		// Components
@@ -60,37 +60,29 @@ public class WireframeBasic {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				ListInternEmpty listInterns = new ListInternEmpty();
-//				Scene newScene = new Scene(listInterns, 1000, 800);
+				ListInternEmpty viewListInterns = new ListInternEmpty();
 				
-				root.getScene().getRoot();
-				root.setCenter(listInterns);
-				
+				informationsDisplay.setCenter(viewListInterns.modScene());
 			}
 		});
 
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
 
-		informationsDisplay = new Pane();
+		informationsDisplay = new BorderPane();
 		informationsDisplay.setMinWidth(630);
 		informationsDisplay.setStyle("-fx-background-color: #E6C767;");
 
 		// Logo Stud'Index
-
 		Circle logo = new Circle(65);
-//		Image logoDisplay = new Image("file://logo.png");
-//		logo.setFill(new ImagePattern(logoDisplay));
-
 		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
-
 		logo.setFill(new ImagePattern(logoDisplay));
 		
 		// contenu par défaut
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
 		
-//		informationsDisplay.getChildren().add(defaultContent);
-		root.setCenter(defaultContent);
+		informationsDisplay.setCenter(defaultContent);
+
 
 		// disposition of the anchorPane
 		areaDisplay.getChildren().addAll(logo, informationsDisplay);
@@ -103,8 +95,7 @@ public class WireframeBasic {
 
 		// Add components to the pane
 		root.setTop(navBarMenu);
-		root.setLeft(logo);
-//		root.setCenter(areaDisplay);
+		root.setCenter(areaDisplay);
 	
 
 		// layout mac

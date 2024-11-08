@@ -19,11 +19,12 @@ public class ListInternEmpty extends VBox {
 
 	public ListInternEmpty() {
 		super();
-		modScene();
+
 		this.root = null;
+
 	}
 
-	public void modScene() {
+	public Button modScene() {
 
 		Button uploadListInterns = new Button("Charger une liste de statiaires");
 
@@ -63,13 +64,9 @@ public class ListInternEmpty extends VBox {
 
 		uploadListInterns.setMinSize(140, 65);
 		uploadListInterns.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
-		uploadListInterns.setWrapText(true); // to center
+		uploadListInterns.setWrapText(true);
 
-//		Label test = new Label("Hello John Doe");
-		uploadListInterns.setLayoutX(20);
-		uploadListInterns.setLayoutY(20);
-//		informationsDisplay.getChildren().add(uploadListInterns);
-
+		return uploadListInterns;
 	}
 	
 
