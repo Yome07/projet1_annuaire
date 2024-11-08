@@ -7,10 +7,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-public class ListInternEmpty extends WireframeBasic {
+public class ListInternEmpty extends VBox {
 
 	private Node root;
 
@@ -65,8 +68,9 @@ public class ListInternEmpty extends WireframeBasic {
 //		Label test = new Label("Hello John Doe");
 		uploadListInterns.setLayoutX(20);
 		uploadListInterns.setLayoutY(20);
-		informationsDisplay.getChildren().add(uploadListInterns);
+//		informationsDisplay.getChildren().add(uploadListInterns);
 
 	}
+	
 
 }

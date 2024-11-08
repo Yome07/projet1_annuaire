@@ -1,9 +1,13 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -11,6 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 public class WireframeBasic {
 
@@ -49,6 +55,19 @@ public class WireframeBasic {
 		}
 
 		navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList, addInterns);
+		
+		internsList.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				ListInternEmpty listInterns = new ListInternEmpty();
+//				Scene newScene = new Scene(listInterns, 1000, 800);
+				
+				root.getScene().getRoot();
+				root.setCenter(listInterns);
+				
+			}
+		});
 
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
@@ -66,6 +85,12 @@ public class WireframeBasic {
 		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
 
 		logo.setFill(new ImagePattern(logoDisplay));
+		
+		// contenu par défaut
+		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
+		
+//		informationsDisplay.getChildren().add(defaultContent);
+		root.setCenter(defaultContent);
 
 		// disposition of the anchorPane
 		areaDisplay.getChildren().addAll(logo, informationsDisplay);
@@ -78,7 +103,9 @@ public class WireframeBasic {
 
 		// Add components to the pane
 		root.setTop(navBarMenu);
-		root.setCenter(areaDisplay);
+		root.setLeft(logo);
+//		root.setCenter(areaDisplay);
+	
 
 		// layout mac
 		root.setStyle("-fx-font-family: 'Proxima Nova'");
