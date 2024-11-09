@@ -1,7 +1,9 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,12 +15,16 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 public class InternsTableView extends VBox {
@@ -26,21 +32,21 @@ public class InternsTableView extends VBox {
 	private List<Intern> internsList = new ArrayList<>();
 	private List<Node> nodesInterns;
 	public TableView<Intern> internTableView;
-	private Window parentWindow;
+	private PDFExportService pdfExportService;
 
 	public InternsTableView() {
 		super();
 		modScene();
 	}
-	
-	public InternsTableView(Window parentWindow) {
+
+	public InternsTableView(List<Intern> internsList) {
 		super();
-		this.parentWindow = parentWindow;
+		this.internsList = internsList;
 		modScene();
 	}
 
 	public VBox modScene() {
-
+		this.pdfExportService = new PDFExportService();
 //		this.internsList = internsList;
 		VBox conteneurVBox = new VBox();
 		Label internsListLabel = new Label("Liste des Stagiaires");
@@ -55,8 +61,12 @@ public class InternsTableView extends VBox {
 		internTableView.setEditable(true);
 
 		// Création de la liste des stagiaires
-		createInternsList();
-		
+//		createInternsList();
+		ServiceNodeList nodeList = new ServiceNodeList();
+		nodesInterns = nodeList.createListAlpha(0);
+		for (Node node : nodesInterns) {
+			internsList.add(node.getIntern());
+		}
 
 		// colonne nom
 		TableColumn<Intern, String> lastnameColumn = new TableColumn<Intern, String>("Nom");
@@ -182,8 +192,6 @@ public class InternsTableView extends VBox {
 		TableColumn<Intern, Void> deleteColumn = new TableColumn<>("Supprimer");
 
 		deleteColumn.setMinWidth(100);
-		
-
 
 		deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
 			private final Button deleteButton = new Button("Supprimer");
@@ -220,15 +228,12 @@ public class InternsTableView extends VBox {
 		internTableView.setItems(FXCollections.observableArrayList(this.internsList));
 
 		Button printButton = new Button("Imprimer en PDF");
-		
+
 		printButton.setOnAction(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("Impression en cours");
-//				JavaFXPDFGenerator.generatePDF(internsList, "Liste des stagiaires", parentWindow);
-				System.out.println("Liste des stagiaires");
-				System.out.println(internsList.toString());
+				handleExport();
 			}
 		});
 
@@ -239,14 +244,12 @@ public class InternsTableView extends VBox {
 		buttonHBox.setAlignment(Pos.CENTER_RIGHT);
 		buttonHBox.setPadding(new Insets(30, 30, 30, 0));
 
-		
-
 		// this.getChildren().add(internTableView);
 		conteneurVBox.getChildren().addAll(titleHBox, internTableView, buttonHBox);
 //		informationsDisplay.setCenter(conteneurVBox);
 		return conteneurVBox;
 	}
-	
+
 	// création de la liste des stagiaires
 	public void createInternsList() {
 		ServiceNodeList nodeList = new ServiceNodeList();
@@ -254,6 +257,53 @@ public class InternsTableView extends VBox {
 		for (Node node : nodesInterns) {
 			internsList.add(node.getIntern());
 		}
-		
+
+	}
+
+	private void handleExport() {
+		try {
+
+			// Demander le nom du fichier
+			TextInputDialog dialog = new TextInputDialog("stagiaires.pdf");
+			dialog.setTitle("Nom du fichier");
+			dialog.setHeaderText(null);
+			dialog.setContentText("Entrez le nom du fichier :");
+
+			Optional<String> fileName = dialog.showAndWait();
+			if (!fileName.isPresent()) {
+				return;
+			}
+
+			DirectoryChooser directoryChooser = new DirectoryChooser();
+			directoryChooser.setTitle("Choisir le dossier d’enregistrement");
+
+			// Sélection du dossier
+			File directory = directoryChooser.showDialog((Window) internTableView.getScene().getWindow());
+
+			if (directory != null) {
+				// Création du fichier dans le dossier sélectionné
+				File file = new File(directory, fileName.get());
+
+				System.out.println("Début de l'export pour " + internsList.size() + " stagiaires");
+
+				pdfExportService.exportInterns(internsList, file);
+
+				// Afficher une confirmation
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("Export réussi");
+				alert.setHeaderText(null);
+				alert.setContentText(
+						"La liste des stagiaires a été exportée avec succès dans : " + file.getAbsolutePath());
+				alert.showAndWait();
+			}
+		} catch (Exception e) {
+			// Afficher une erreur
+			e.printStackTrace();
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Erreur lors de l'export");
+			alert.setContentText("Une erreur est survenue lors de l'export : " + e.getMessage());
+			alert.showAndWait();
+		}
 	}
 }
