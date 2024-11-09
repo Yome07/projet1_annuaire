@@ -1,4 +1,4 @@
-package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
+package fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 
 public class ListInterns {
 

@@ -4,6 +4,8 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.InternsTableView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -30,7 +32,7 @@ public class WireframeBasic {
 //	898121 kaki
 //	4C4B16 kaki foncé
 
-	protected BorderPane root;
+	public BorderPane root;
 	protected BorderPane informationsDisplay;
 	private List<Node> nodesInterns;
 	

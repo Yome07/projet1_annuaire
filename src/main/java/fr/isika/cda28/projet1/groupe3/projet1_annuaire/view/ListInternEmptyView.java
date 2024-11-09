@@ -1,4 +1,4 @@
-package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
+package fr.isika.cda28.projet1.groupe3.projet1_annuaire.view;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.BinaryTreeToFile;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -17,11 +18,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-public class ListInternEmpty extends VBox {
+public class ListInternEmptyView extends VBox {
 
 	private Node root;
 
-	public ListInternEmpty() {
+	public ListInternEmptyView() {
 		super();
 
 		this.root = null;

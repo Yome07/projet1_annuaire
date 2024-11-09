@@ -1,8 +1,11 @@
-package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
+package fr.isika.cda28.projet1.groupe3.projet1_annuaire.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.ServiceNodeList;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
