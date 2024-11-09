@@ -32,6 +32,8 @@ public class WireframeBasic {
 
 	protected BorderPane root;
 	protected BorderPane informationsDisplay;
+	private List<Node> nodesInterns;
+	
 
 	public WireframeBasic() {
 
@@ -133,9 +135,18 @@ public class WireframeBasic {
 
 			@Override
 			public void handle(ActionEvent event) {
+				/*
+				 * Test pour savoir si la liste de stagiaires est vide ou non à faire
+				 */
+//				ServiceNodeList serviceNodeList = new ServiceNodeList();
+//				if (nodesInterns.isEmpty()) {
+//					ListInternEmpty listInternEmpty = new ListInternEmpty();
+//					informationsDisplay.setCenter(listInternEmpty.modScene());
+//				} else {
+					InternsTableView viewListInterns = new InternsTableView();
+					informationsDisplay.setCenter(viewListInterns.modScene());
+//				}
 				
-				ListInternEmpty viewListInterns = new ListInternEmpty();
-				informationsDisplay.setCenter(viewListInterns.modScene());
 			}
 		});
 		

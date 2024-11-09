@@ -18,6 +18,11 @@ public class ServiceNodeList {
 		this.binaryTreeToFile = new BinaryTreeToFile();
 		// this.raf = BinaryTreeToFile.createRaf();
 	}
+	
+	// getters setters
+	public List<Node> getNodesInterns() {
+		return nodesInterns;
+	}
 
 	// methods
 
@@ -48,6 +53,8 @@ public class ServiceNodeList {
 			
 		}
 	}
+	
+	
 
 //	public void createListAlpha(int index) { //1
 //
