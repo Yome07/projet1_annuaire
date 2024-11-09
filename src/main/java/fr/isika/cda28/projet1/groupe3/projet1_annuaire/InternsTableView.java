@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Window;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.Button;
 
@@ -24,9 +26,16 @@ public class InternsTableView extends VBox {
 	private List<Intern> internsList = new ArrayList<>();
 	private List<Node> nodesInterns;
 	public TableView<Intern> internTableView;
+	private Window parentWindow;
 
 	public InternsTableView() {
 		super();
+		modScene();
+	}
+	
+	public InternsTableView(Window parentWindow) {
+		super();
+		this.parentWindow = parentWindow;
 		modScene();
 	}
 
@@ -46,13 +55,8 @@ public class InternsTableView extends VBox {
 		internTableView.setEditable(true);
 
 		// Création de la liste des stagiaires
-		ServiceNodeList nodeList = new ServiceNodeList();
-		nodesInterns = nodeList.createListAlpha(0);
-		for (Node node : nodesInterns) {
-			internsList.add(node.getIntern());
-			System.out.println(node.getIntern());
-
-		}
+		createInternsList();
+		
 
 		// colonne nom
 		TableColumn<Intern, String> lastnameColumn = new TableColumn<Intern, String>("Nom");
@@ -184,7 +188,7 @@ public class InternsTableView extends VBox {
 		deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
 			private final Button deleteButton = new Button("Supprimer");
 			{
-				deleteButton.setMinSize(100, 30);
+				deleteButton.setMinSize(90, 30);
 				deleteButton.setStyle("-fx-background-color: #F87A53; -fx-font-size: 12;");
 				// Configuration du bouton Supprimer
 //		    	deleteButton.setOnAction(event -> {
@@ -216,6 +220,17 @@ public class InternsTableView extends VBox {
 		internTableView.setItems(FXCollections.observableArrayList(this.internsList));
 
 		Button printButton = new Button("Imprimer en PDF");
+		
+		printButton.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("Impression en cours");
+//				JavaFXPDFGenerator.generatePDF(internsList, "Liste des stagiaires", parentWindow);
+				System.out.println("Liste des stagiaires");
+				System.out.println(internsList.toString());
+			}
+		});
 
 		printButton.setMinSize(150, 50);
 		printButton.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
@@ -224,14 +239,21 @@ public class InternsTableView extends VBox {
 		buttonHBox.setAlignment(Pos.CENTER_RIGHT);
 		buttonHBox.setPadding(new Insets(30, 30, 30, 0));
 
-		printButton.setOnAction(event -> {
-			// TODO Auto-generated method stub
-			System.out.println("Impression en cours");
-		});
+		
 
 		// this.getChildren().add(internTableView);
 		conteneurVBox.getChildren().addAll(titleHBox, internTableView, buttonHBox);
 //		informationsDisplay.setCenter(conteneurVBox);
 		return conteneurVBox;
+	}
+	
+	// création de la liste des stagiaires
+	public void createInternsList() {
+		ServiceNodeList nodeList = new ServiceNodeList();
+		nodesInterns = nodeList.createListAlpha(0);
+		for (Node node : nodesInterns) {
+			internsList.add(node.getIntern());
+		}
+		
 	}
 }
