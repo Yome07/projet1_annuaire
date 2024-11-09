@@ -11,18 +11,18 @@ public class PDFExportService {
 		try (FileWriter fileWriter = new FileWriter(file)){
 			//En-tête
 			fileWriter.write("Liste des stagiaires : \n");
-			fileWriter.write("Nom\tPrénom\tDépartement\tPromotion\tAnnée\n");
-			fileWriter.write("------------------------------------------------\n");
+			fileWriter.write("Nom\t\tPrénom\t\tDépartement\t\tPromotion\t\tAnnée\n");
+			fileWriter.write("------------------------------------------------------------\n");
 			
 			//Données
 			for (Intern intern : internsList) {
-				String ligne = String.format("%s\t%s\t%s\t%s\t%s\n",
+				String line = String.format("%s\t\t%s\t\t%s\t\t%s\t\t%s\n",
                 		intern.getLastname(),
                 		intern.getFirstname(),
                 		intern.getDepartment(),
                 		intern.getTraining(),
                 		intern.getYear());
-				fileWriter.write(ligne);
+				fileWriter.write(line);
 				
 			}
 		} catch (Exception e) {
