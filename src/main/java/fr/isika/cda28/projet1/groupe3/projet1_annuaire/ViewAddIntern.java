@@ -281,9 +281,18 @@ public class ViewAddIntern extends WireframeBasic {
 
 					Intern newIntern = new Intern(lastnameVerified, firstnameVerified, departmentVerified,
 							trainingVerified, yearVerified);
-
-					infoAdd.setText("Stagiaire ajouté avec succès !");
-
+					Node newNode = new Node(newIntern, -1, -1);
+					
+					
+					
+					try {
+						int index = numberInternsTree(WireframeBasic.file);
+						insertNode(0, index, newIntern, newNode);
+						infoAdd.setText("Stagiaire ajouté avec succès !");
+					} catch (Exception e) {
+						infoAdd.setText("Les donnees sont correctes mais il y a eu une erreur pendant l'ajout :\n le stagiaire n'a pas ete ajouté.");
+					}
+					
 					System.out.println(newIntern);
 
 				} else {

@@ -1,5 +1,7 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
+import java.io.File;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,6 +24,7 @@ public class WireframeBasic {
 
 	protected BorderPane root;
 	protected BorderPane informationsDisplay;
+	protected File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
 
 	public WireframeBasic() {
 
