@@ -38,7 +38,7 @@ public class ViewListInternEmpty extends WireframeBasic {
 		this.root = null;
 	}
 
-	public void modScene() {
+	public VBox modScene() {
 
 		VBox centerComponentsVbox = new VBox();
 		Button uploadListInterns = new Button("Charger une liste de stagiaires");
@@ -88,7 +88,8 @@ public class ViewListInternEmpty extends WireframeBasic {
 //		Label test = new Label("Hello John Doe");
 		centerComponentsVbox.getChildren().add(uploadListInterns);
 		centerComponentsVbox.setAlignment(Pos.CENTER);
-		informationsDisplay.setCenter(centerComponentsVbox);
+		
+		return centerComponentsVbox;
 
 	}
 
