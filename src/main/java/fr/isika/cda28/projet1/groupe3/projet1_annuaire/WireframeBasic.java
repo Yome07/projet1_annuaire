@@ -4,6 +4,8 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.util.List;
 
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.FileChecker;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.ServiceNodeList;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.InternsTableView;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewAddIntern;
@@ -11,6 +13,7 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewListInternEmpty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import java.io.File;
+import java.io.IOException;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -82,7 +85,6 @@ public class WireframeBasic {
 
 		// Default content
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
-
 		informationsDisplay.setCenter(defaultContent);
 
 		// layout anchorPane
