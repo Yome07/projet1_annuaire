@@ -13,11 +13,13 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 
+
 	@Override
 	public void start(Stage stage) {
 
 		WireframeBasic wireframe = new WireframeBasic();
 		Scene scene = new Scene(wireframe.root, 1000, 800);
+
 
 		stage.setTitle("Stud'Index");
 		stage.setScene(scene);

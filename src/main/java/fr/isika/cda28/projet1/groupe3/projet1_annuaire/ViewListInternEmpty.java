@@ -1,4 +1,4 @@
-package fr.isika.cda28.projet1.groupe3.projet1_annuaire.view;
+package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,26 +12,35 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.BinaryTreeToFi
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-public class ListInternEmptyView extends VBox {
+
+public class ViewListInternEmpty extends VBox {
 
 	private Node root;
 
-	public ListInternEmptyView() {
+	public ViewListInternEmpty() {
+
 		super();
 
 		this.root = null;
 
 	}
 
-	public Button modScene() {
 
-		Button uploadListInterns = new Button("Charger une liste de statiaires");
+	public VBox modScene() {
+
+		VBox centerComponentsVbox = new VBox();
+		Button uploadListInterns = new Button("Charger une liste de stagiaires");
 
 		uploadListInterns.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -46,31 +55,42 @@ public class ListInternEmptyView extends VBox {
 					Path destinationDirPath = Paths.get("src/main/java/ressources/").toAbsolutePath();
 
 					try {
+						centerComponentsVbox.getChildren().remove(1);
+						
 						Files.createDirectories(destinationDirPath);
-
+						
 						Path destinationFilePath = destinationDirPath.resolve(selectedFile.getName());
-
 						Files.copy(selectedFile.toPath(), destinationFilePath);
 
-						System.out.println("Fichier enregistré avec succès dans : " + destinationFilePath);
-
-					} catch (IOException ioException) {
-						System.out.println("Erreur lors de l'enregistrement du fichier : " + ioException.getMessage());
+					} catch (IOException e) {
+						Label errorUploadFile = new Label("Erreur lors de l'enregistrement du fichier");
+						if (centerComponentsVbox.getChildren().size() == 1) {
+							centerComponentsVbox.getChildren().add(errorUploadFile);
+						}
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
 			        
+					
 				} else {
-					System.out.println("Aucun fichier sélectionné.");
+					Label noSuchFile = new Label("Aucun fichier sélectionné");
+					if (centerComponentsVbox.getChildren().size() == 1) {
+						centerComponentsVbox.getChildren().add(noSuchFile);
+					}
 				}
 			}
 		});
 
 		uploadListInterns.setMinSize(140, 65);
 		uploadListInterns.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
-		uploadListInterns.setWrapText(true);
+		uploadListInterns.setWrapText(true); // to center
 
-		return uploadListInterns;
+//		Label test = new Label("Hello John Doe");
+		centerComponentsVbox.getChildren().add(uploadListInterns);
+		centerComponentsVbox.setAlignment(Pos.CENTER);
+		
+		return centerComponentsVbox;
+
 	}
 	
 

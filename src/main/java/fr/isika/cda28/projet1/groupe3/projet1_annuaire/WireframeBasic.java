@@ -6,9 +6,10 @@ import java.util.List;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.FileChecker;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.InternsTableView;
-import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ListInternEmptyView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import java.io.File;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,10 +30,16 @@ public class WireframeBasic {
 //	898121 kaki
 //	4C4B16 kaki foncé
 
-	public BorderPane root;
-	protected BorderPane informationsDisplay;
-	private List<Node> nodesInterns;
 	
+	protected BorderPane root;
+	protected BorderPane informationsDisplay;
+	protected File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
+	
+	public int numbersInternsFile(File file) {
+		int lengthFile = (int)file.length();
+		int index = lengthFile / Node.BYTE_LENGTH_NODE; 
+		return index;
+		}
 
 	public WireframeBasic() {
 
@@ -142,7 +149,7 @@ public class WireframeBasic {
 				if (binFileExists) {
 					informationsDisplay.setCenter(new InternsTableView().modScene());
 				} else {
-					informationsDisplay.setCenter(new ListInternEmptyView().modScene());
+					informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 				}
 				
 			}
