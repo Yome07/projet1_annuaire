@@ -1,6 +1,5 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -73,22 +72,22 @@ public class BinaryTreeToFile extends ListInterns {
 	 * @param indexToInsert position du nouveau nœud à insérer
 	 * @param intern stagiaire 
 	 */
-	// inertNode(0, index, node.getIntern(), node
+	
 	public void insertNode(int currentIndex, int indexToInsert, Intern intern, Node node) {
 		System.out.println("intern avant readNode : " + intern); // Intern ok 
 		
 		Node nodeToInsert = new Node(intern, -1, -1);
 		Intern internToInsert = nodeToInsert.getIntern();
-//		System.out.println("internToInsert avant appel de la methode read node : " +internToInsert);
+		System.out.println("internToInsert avant appel de la methode read node : " +internToInsert);
 
 		
 		Node currentNode = readNode(currentIndex); 
 		Intern currentIntern = currentNode.getIntern();
-//		System.out.println(intern);
-//		System.out.println("Le currentIntern est  : " + currentIntern);
-//		System.out.println("FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
-//		System.out.println("firstname currentIntern : " + currentIntern.getLastname());
-//		System.out.println("firstname InternToInsert : " + internToInsert.getLastname());
+		System.out.println(intern);
+		System.out.println("Le currentIntern est  : " + currentIntern);
+		System.out.println("FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
+		System.out.println("firstname currentIntern : " + currentIntern.getLastname());
+		System.out.println("firstname InternToInsert : " + internToInsert.getLastname());
 		
 		if (internToInsert.getLastname().compareTo(currentIntern.getLastname()) < 0
 				
@@ -205,6 +204,8 @@ public class BinaryTreeToFile extends ListInterns {
 			raf.writeInt(year);
 			System.out.println("Methode writeNode - Le stagiaire s'appelle " + lastname + firstname + " du " + department + ". Il est en " + training + " de " + year);
 
+			System.out.println("Le node est " + node.getLeftSon());
+			System.out.println("Le node est " + node.getRightSon());
 			raf.writeInt(node.getLeftSon());
 			raf.writeInt(node.getRightSon());
 			
@@ -232,13 +233,6 @@ public class BinaryTreeToFile extends ListInterns {
 		System.out.println("l’attribut readString est " + myAttribute);
 		System.out.println("----- Fin Methode -----");
 		return myAttribute;
-	}
-	
-
-	public int numberInternsTree(File file) {
-		long sizeFile = file.length();
-		int index = (int) (sizeFile/Node.BYTE_LENGTH_NODE);
-		return index;
 	}
 
 }

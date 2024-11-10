@@ -25,6 +25,12 @@ public class WireframeBasic {
 	protected BorderPane root;
 	protected BorderPane informationsDisplay;
 	protected File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
+	
+	public int numbersInternsFile(File file) {
+		int lengthFile = (int)file.length();
+		int index = lengthFile / Node.BYTE_LENGTH_NODE; 
+		return index;
+		}
 
 	public WireframeBasic() {
 

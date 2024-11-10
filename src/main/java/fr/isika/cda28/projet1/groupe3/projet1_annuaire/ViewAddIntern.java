@@ -29,6 +29,11 @@ public class ViewAddIntern extends WireframeBasic {
 	VBox infoVBox = new VBox(5);
 	Label errorIsEmpty = new Label("Veuillez remplir tous les champs en respectant les cases.");
 	Label infoAdd = new Label();
+	BinaryTreeToFile instance = new BinaryTreeToFile();
+	WireframeBasic internFile = new WireframeBasic();
+	
+	
+
 
 	// *******************************************
 	// Constructor
@@ -164,6 +169,8 @@ public class ViewAddIntern extends WireframeBasic {
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
 		formVBox.getChildren().addAll(titleHBox, formGridPane, infoVBox, buttonHBox);
+		
+		
 
 		buttonValidateForm.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -274,6 +281,9 @@ public class ViewAddIntern extends WireframeBasic {
 					}
 				}
 
+				
+				
+				
 				// CREATE NEW INTERN
 				if (lastnameVerified != "" && firstnameVerified != "" && departmentVerified != ""
 						&& trainingVerified != "" && yearVerified != 0) {
@@ -286,8 +296,10 @@ public class ViewAddIntern extends WireframeBasic {
 					
 					
 					try {
-						int index = numberInternsTree(WireframeBasic.file);
-						insertNode(0, index, newIntern, newNode);
+						 WireframeBasic wireframe = new WireframeBasic(); 
+						 int index = internFile.numbersInternsFile(wireframe.file);
+//						int index = numberInternsTree(WireframeBasic.file);
+						instance.insertNode(0, index, newIntern, newNode);
 						infoAdd.setText("Stagiaire ajouté avec succès !");
 					} catch (Exception e) {
 						infoAdd.setText("Les donnees sont correctes mais il y a eu une erreur pendant l'ajout :\n le stagiaire n'a pas ete ajouté.");
