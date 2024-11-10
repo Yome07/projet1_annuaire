@@ -1,7 +1,6 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.FileChecker;
@@ -19,12 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 public class WireframeBasic {
 
@@ -144,14 +139,11 @@ public class WireframeBasic {
 				 */
 				boolean binFileExists = FileChecker.isBinFilePresent();
 		        System.out.println("Bin file present: " + binFileExists);
-//				ServiceNodeList serviceNodeList = new ServiceNodeList();
-//				if (nodesInterns.isEmpty()) {
-					ListInternEmptyView listInternEmpty = new ListInternEmptyView();
-					informationsDisplay.setCenter(listInternEmpty.modScene());
-//				} else {
-//					InternsTableView viewListInterns = new InternsTableView();
-//					informationsDisplay.setCenter(viewListInterns.modScene());
-//				}
+				if (binFileExists) {
+					informationsDisplay.setCenter(new InternsTableView().modScene());
+				} else {
+					informationsDisplay.setCenter(new ListInternEmptyView().modScene());
+				}
 				
 			}
 		});
