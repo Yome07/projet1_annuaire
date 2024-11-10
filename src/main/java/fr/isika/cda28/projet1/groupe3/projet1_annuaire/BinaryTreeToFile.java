@@ -129,7 +129,7 @@ public class BinaryTreeToFile extends ListInterns {
 				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
 //				currentNode.setLeftSon(indexToInsert);
 				writeIndex(indexToInsert, currentIndex, 4);
-				writeNode(currentNode, indexToInsert);
+				writeNode(nodeToInsert, indexToInsert);
 				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " " + currentIntern.getFirstname() + " du " + currentIntern.getDepartment() + ". Il est en " + currentIntern.getTraining() + " de " + currentIntern.getYear());
 				System.out.println("Methode insertNode - Le stagiaire s'appelle " + internToInsert.getLastname() + " " + internToInsert.getFirstname() + " du " + internToInsert.getDepartment() + ". Il est en " + internToInsert.getTraining() + " de " + internToInsert.getYear());
 				System.out.println("Index à insérer à droite " + indexToInsert);
