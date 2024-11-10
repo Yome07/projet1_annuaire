@@ -284,7 +284,6 @@ public class InternsTableView extends VBox {
 				// Création du fichier dans le dossier sélectionné
 				File file = new File(directory, fileName.get());
 
-				System.out.println("Début de l'export pour " + internsList.size() + " stagiaires");
 
 				pdfExportService.exportInterns(internsList, file);
 
