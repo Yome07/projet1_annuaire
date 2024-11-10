@@ -6,6 +6,8 @@ import java.util.List;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.FileChecker;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.InternsTableView;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewAddIntern;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewListInternEmpty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import java.io.File;
@@ -33,13 +35,9 @@ public class WireframeBasic {
 	
 	protected BorderPane root;
 	protected BorderPane informationsDisplay;
-	protected File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
 	
-	public int numbersInternsFile(File file) {
-		int lengthFile = (int)file.length();
-		int index = lengthFile / Node.BYTE_LENGTH_NODE; 
-		return index;
-		}
+	
+	
 
 	public WireframeBasic() {
 
@@ -79,8 +77,8 @@ public class WireframeBasic {
 
 		// Logo Stud'Index
 		Circle logo = new Circle(65);
-		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
-		logo.setFill(new ImagePattern(logoDisplay));
+//		Image logoDisplay = new Image(getClass().getResourceAsStream("ressources/logo.png"));
+//		logo.setFill(new ImagePattern(logoDisplay));
 
 		// Default content
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
@@ -160,8 +158,8 @@ public class WireframeBasic {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				ViewAddInterns viewAddInterns = new ViewAddInterns();
-//				informationsDisplay.setCenter(ViewAddInterns.modScene());
+				ViewAddIntern viewAddInterns = new ViewAddIntern();
+				informationsDisplay.setCenter( viewAddInterns.modScene());
 			}
 		});
 	}

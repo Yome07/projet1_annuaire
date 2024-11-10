@@ -1,11 +1,13 @@
-package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
+package fr.isika.cda28.projet1.groupe3.projet1_annuaire.view;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.WireframeBasic;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.BinaryTreeToFile;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
@@ -33,7 +35,6 @@ public class ViewAddIntern extends WireframeBasic {
 	Label errorIsEmpty = new Label("Veuillez remplir tous les champs en respectant les cases.");
 	Label infoAdd = new Label();
 	BinaryTreeToFile instance = new BinaryTreeToFile();
-	WireframeBasic internFile = new WireframeBasic();
 	
 	
 
@@ -97,7 +98,7 @@ public class ViewAddIntern extends WireframeBasic {
 	 * 
 	 * @return VVBox containing the form for adding a new intern.
 	 */
-	public void modScene() {
+	public VBox modScene() {
 		VBox formVBox = new VBox();
 		GridPane formGridPane = new GridPane();
 
@@ -154,7 +155,7 @@ public class ViewAddIntern extends WireframeBasic {
 		buttonHBox.setPadding(new Insets(50, 0, 0, 0));
 
 		infoVBox.setAlignment(Pos.CENTER);
-		infoVBox.getChildren().add(infoAdd);
+//		infoVBox.getChildren().add(infoAdd);
 
 		// errorHandle when you try to validate the entry
 		Label errorLastname = new Label(
@@ -299,9 +300,8 @@ public class ViewAddIntern extends WireframeBasic {
 					
 					
 					try {
-						 WireframeBasic wireframe = new WireframeBasic(); 
-						 int index = internFile.numbersInternsFile(wireframe.file);
-//						int index = numberInternsTree(WireframeBasic.file);
+						 File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin"); 
+						int index = instance.numbersInternsFile(file);
 						instance.insertNode(0, index, newIntern, newNode);
 						infoAdd.setText("Stagiaire ajouté avec succès !");
 					} catch (Exception e) {
@@ -319,7 +319,7 @@ public class ViewAddIntern extends WireframeBasic {
 
 		});
 
-		informationsDisplay.setCenter(formVBox);
+		return formVBox;
 
 	}
 
