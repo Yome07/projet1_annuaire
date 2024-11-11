@@ -116,6 +116,27 @@ public class ServiceNodeList {
 
 		return currentNode;
 	}
+	
+	public Node searchParentNode(Node sonNode, RandomAccessFile raf) {
+		
+		Node node = binaryTreeToFile.readNode(0);
+		if (node.getLeftSon() == sonNode.getLeftSon() || node.getRightSon() == sonNode.getRightSon()) {
+			return node;
+			
+		}
+		
+		if (node.compareTo(sonNode) < 0) {
+			Node rightSonNode = binaryTreeToFile.readNode(node.getRightSon());
+			searchParentNode(rightSonNode, raf);
+		}
+		
+		if (node.compareTo(sonNode) > 0) {
+			Node leftSonNode = binaryTreeToFile.readNode(node.getLeftSon());
+			searchParentNode(leftSonNode, raf);
+		}
+		return null;
+	}
+	
 
 	public int searchIndexIntern(int currentIndex, Intern searchedIntern) throws IOException { // 0, Lacroix
 		raf.seek(currentIndex * Node.BYTE_LENGTH_NODE);
@@ -145,7 +166,7 @@ public class ServiceNodeList {
 		}
 	}
 
-	public Node deleteRoot(Node currentNode) throws IOException { // chone
+	public Node deleteRoot(Node currentNode, RandomAccessFile raf) throws IOException { // chone
 		if (currentNode.getLeftSon() == -1 && currentNode.getRightSon() == -1) {// pas d’enfant
 			return null;
 		}
@@ -161,29 +182,45 @@ public class ServiceNodeList {
 		// 2 enfants
 		Node nextNode = previousNode(currentNode.getIntern());
 		currentNode = nextNode;
-		deleteNode(currentNode);
+		deleteNode(currentNode, raf);
 		return null; // return l’objet dans lequel on se trouve
 	}
 
-	public void deleteNode(Node nodeToDeleted) {
+	public void deleteNode(Node nodeToDelete, RandomAccessFile raf) throws IOException {
 		Node node = binaryTreeToFile.readNode(0);
-		if (node.getIntern().getLastname().compareTo(nodeToDeleted.getIntern().getLastname()) < 0) { // valeur < valeurRechercher ––> on va à droite
+		if (node.compareTo(nodeToDelete) < 0) { // valeur < valeurRechercher ––> on va à droite
 			if (node.getRightSon() == -1) {
 				return;
 			}
 			Node rightSonNode = binaryTreeToFile.readNode(node.getRightSon());
-			if (rightSonNode.getIntern().getLastname().compareTo(nodeToDeleted.getIntern().getLastname()) == 0) {
-				rightSonNode = deleteRoot(node);
+			if (rightSonNode.compareTo(nodeToDelete) == 0) {
+				rightSonNode = deleteRoot(node, raf);
+				//récupérer noeud parent
+				Node parentNode = searchParentNode(nodeToDelete, raf);
+				// mettre filsdroit à -1
+				raf.seek((parentNode.getRightSon() + 1)* Node.BYTE_LENGTH_NODE - 4);
+				raf.writeInt(-1);
 			} else {
-				this.filsDroit.supprimerNoeud(nodeToDeleted);
+				deleteNode(nodeToDelete, raf);
+				
+				
 			}
 		} else { // valeur > valeurRechercher ––> on va à gauche
-			if (this.filsGauche == null)
+			if (node.getLeftSon() == -1) {
 				return;
-			if (this.filsGauche.valeur.equals(nodeToDeleted))
-				this.filsGauche = this.filsGauche.supprimerRacine();
-			else
-				this.filsGauche.supprimerNoeud(nodeToDeleted);
+			}
+			Node leftSonNode = binaryTreeToFile.readNode(node.getLeftSon());
+			if (leftSonNode.compareTo(nodeToDelete) == 0) {
+				leftSonNode = deleteRoot(node, raf);
+				//récupérer noeud parent
+				Node parentNode = searchParentNode(nodeToDelete, raf);
+				// mettre filsdroit à -1
+				raf.seek((parentNode.getLeftSon() + 1)* Node.BYTE_LENGTH_NODE - 8);
+				raf.writeInt(-1);
+			} else {
+				deleteNode(nodeToDelete, raf);
+
+			}
 		}
 	}
 

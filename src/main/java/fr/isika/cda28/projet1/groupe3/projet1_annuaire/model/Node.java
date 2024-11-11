@@ -67,5 +67,34 @@ public class Node {
 		return intern.equals(node.intern);
 
 	}
+	
+	public int compareTo(Node node) {
+		if (this.intern.getLastname().compareTo(node.intern.getLastname()) < 0 ) {
+			return -1;
+		} else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) < 0) {
+			return -1;
+		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) < 0) {
+			return -1;
+		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) < 0) {
+			return -1;
+		} else if (this.intern.getYear() < node.intern.getYear()) {
+			return -1;
+		} 
+		
+		if (this.intern.getLastname().compareTo(node.intern.getLastname()) > 0 ) {
+			return 1;
+		} else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) > 0) {
+			return 1;
+		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) >0) {
+			return 1;
+		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) > 0) {
+			return 1;
+		} else if (this.intern.getYear() < node.intern.getYear()) {
+			return 1;
+		} 
+		
+		return 0;
+		
+	}
 
 }
