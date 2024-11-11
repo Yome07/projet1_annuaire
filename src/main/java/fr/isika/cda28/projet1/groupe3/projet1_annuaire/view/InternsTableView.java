@@ -9,6 +9,8 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.PDFExportServi
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.ServiceNodeList;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -78,7 +80,10 @@ public class InternsTableView extends VBox {
 		// largeur colonne
 		lastnameColumn.setMinWidth(100);
 
-		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("lastname"));
+//		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("lastname"));
+		lastnameColumn.setCellValueFactory(cellData -> 
+	    new SimpleStringProperty(cellData.getValue().getLastname()));
+
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(lastnameColumn);
@@ -101,7 +106,9 @@ public class InternsTableView extends VBox {
 
 		firstnameColumn.setMinWidth(100);
 
-		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("firstname"));
+//		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("firstname"));
+		firstnameColumn.setCellValueFactory(cellData -> 
+	    new SimpleStringProperty(cellData.getValue().getFirstname()));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(firstnameColumn);
@@ -126,7 +133,9 @@ public class InternsTableView extends VBox {
 
 		departmentColumn.setMinWidth(100);
 
-		departmentColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("department"));
+//		departmentColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("department"));
+		departmentColumn.setCellValueFactory(cellData -> 
+	    new SimpleStringProperty(cellData.getValue().getDepartment()));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(departmentColumn);
@@ -150,7 +159,9 @@ public class InternsTableView extends VBox {
 
 		trainingColumn.setMinWidth(100);
 
-		trainingColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("training"));
+//		trainingColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("training"));
+		trainingColumn.setCellValueFactory(cellData -> 
+	    new SimpleStringProperty(cellData.getValue().getTraining()));
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(trainingColumn);
@@ -173,7 +184,10 @@ public class InternsTableView extends VBox {
 
 		yearColumn.setMinWidth(100);
 
-		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("year"));
+//		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("year"));
+		yearColumn.setCellValueFactory(cellData -> 
+	    new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
+
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(yearColumn);
