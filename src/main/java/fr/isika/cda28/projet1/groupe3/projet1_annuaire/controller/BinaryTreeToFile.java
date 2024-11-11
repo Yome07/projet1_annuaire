@@ -156,12 +156,10 @@ public class BinaryTreeToFile extends ListInterns {
 	}
 
 	public Node readNode(int index) {
-		System.out.println("----- Methode readNode -----");
 		Node node = new Node();
 		Intern intern = new Intern();
 		try {
 
-			System.out.println("");
 
 			raf.seek(index * Node.BYTE_LENGTH_NODE);
 			node.setIntern(intern);
@@ -174,16 +172,9 @@ public class BinaryTreeToFile extends ListInterns {
 
 			node.setLeftSon(raf.readInt());
 			node.setRightSon(raf.readInt());
-
-			System.out.println("Département : " + node.getIntern().getDepartment());
-			System.out.println(" - FG : " + node.getLeftSon() + " FD : " + node.getRightSon());
-
 		} catch (IOException e) {
-			// System.out.println("Erreur de lecture : " + e.getMessage());
 			e.printStackTrace();
 		}
-		// System.out.println("Methode readNode - node.intern : " + node.intern);
-		System.out.println("----- Fin Methode -----");
 		return node;
 
 	}
@@ -213,11 +204,6 @@ public class BinaryTreeToFile extends ListInterns {
 			raf.writeChars(training);
 			int year = node.getIntern().getYear();
 			raf.writeInt(year);
-			System.out.println("Methode writeNode - Le stagiaire s'appelle " + lastname + firstname + " du "
-					+ department + ". Il est en " + training + " de " + year);
-
-			System.out.println("Le node est " + node.getLeftSon());
-			System.out.println("Le node est " + node.getRightSon());
 			raf.writeInt(node.getLeftSon());
 			raf.writeInt(node.getRightSon());
 
@@ -228,7 +214,6 @@ public class BinaryTreeToFile extends ListInterns {
 	}
 
 	public String readString() {
-		System.out.println("----- Methode readString() -----");
 		char[] chars = new char[Intern.STRING_MAX_LENGTH];
 		try {
 			for (int i = 0; i < Intern.STRING_MAX_LENGTH; i++) {
@@ -240,8 +225,6 @@ public class BinaryTreeToFile extends ListInterns {
 		}
 
 		String myAttribute = new String(chars).trim();
-		System.out.println("l’attribut readString est " + myAttribute);
-		System.out.println("----- Fin Methode -----");
 		return myAttribute;
 	}
 
