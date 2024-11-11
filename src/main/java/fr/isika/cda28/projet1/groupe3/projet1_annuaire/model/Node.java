@@ -65,6 +65,7 @@ public class Node {
 			return false;
 		Node node = (Node) obj;
 		return intern.equals(node.intern);
+
 	}
 
 }

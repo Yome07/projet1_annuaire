@@ -172,6 +172,7 @@ public class BinaryTreeToFile extends ListInterns {
 
 			node.setLeftSon(raf.readInt());
 			node.setRightSon(raf.readInt());
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -65,19 +65,18 @@ public class ServiceNodeList {
 		}
 	}
 
-	public int indexCalculation(int currentIndex, int position) {
+	public int indexCalculation(int currentIndex, int position) { // 0 8 || 1, 4
 		int index = 0;
-		try {
 
+		try {
+			System.out.println("le pointeur dans indexcalcuation est a " + raf.getFilePointer());
 			raf.seek((currentIndex + 1) * Node.BYTE_LENGTH_NODE - position);
 			index = raf.readInt();
+			System.out.println(index); // 1 || 2
 			if (position == 8) {
 				raf.seek(raf.getFilePointer() + 4);
-				System.out.println(
-						"si je suis a guache mon pointeur est deeplace de +4 dans la methode indexcalculation : "
-								+ raf.getFilePointer());
 			}
-			raf.seek(0);
+
 			System.out.println(raf.getFilePointer() + "<- pointeur ||| index -> " + index);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -85,93 +84,107 @@ public class ServiceNodeList {
 
 		return index;
 	}
-	
+
 	public int findNextIndex(Node currentNode) throws IOException {
 		List<Node> listNodes = createListAlpha(0);
-		
-		System.out.println(currentNode);
+
 		int index = listNodes.indexOf(currentNode);
-		System.out.println("index currentIndex dans la liste : " + index);
-		Node nextNode = listNodes.get(index +1);
-//		System.out.println("le parent du stagiaire a supprimer est : " + nextNode);
-//		System.out.println("index retourné : " +searchIndexIntern(0, nextNode.getIntern()));
+		Node nextNode = listNodes.get(index - 1);
+
+		System.out.println("int dans findNextIndex est : " + searchIndexIntern(0, nextNode.getIntern())
+				+ " l'intern est " + nextNode.getIntern());
 		return searchIndexIntern(0, nextNode.getIntern());
 	}
 
-	public Node nextNode(Intern searchedIntern) throws IOException {
+	public Node previousNode(Intern searchedIntern) throws IOException {
 		createRaf();
-		System.out.println("raf : " + raf);
-		int index = searchIndexIntern(0, searchedIntern); // augereau
-		System.out.println("l index de depart est : " + index);
+		int index = searchIndexIntern(0, searchedIntern);
+		System.out.println("index dans nextNode : " + index);
 		Node node = binaryTreeToFile.readNode(index);
-		System.out.println("le noeud du stagiaire a supprimer est : " + node);
-		System.out.println("index du fils droit est " + node.getRightSon());
-		
-		if(node.getRightSon() == -1) {
-			System.out.println("noeud garijo : " + raf.getFilePointer());
+
+		if (node.getRightSon() == -1) {
 			int nextIndex = findNextIndex(node);
-			System.out.println("nextIndex : " + nextIndex);
-			System.out.println(binaryTreeToFile.readNode(nextIndex));
+			System.out.println("la sortie de next node est : " + binaryTreeToFile.readNode(nextIndex));
 			return binaryTreeToFile.readNode(nextIndex);
 		}
-		
+
 		Node currentNode = binaryTreeToFile.readNode(node.getRightSon());
-		System.out.println("le fils droit du noeud a supprimer est : " + currentNode);
-		System.out.println("fils gauche du fils droit " + currentNode.getLeftSon());
 
 		while (currentNode.getLeftSon() != -1) {
-			System.out.println("le fils gauche du noeud a supprimer est : " + currentNode);
 			currentNode = binaryTreeToFile.readNode(currentNode.getLeftSon());
 		}
-		System.out.println("noeud courant " + currentNode);
 
-		return currentNode; //
+		return currentNode;
 	}
 
-	public int searchIndexIntern(int currentIndex, Intern searchedIntern) throws IOException {
-
-		Node root = binaryTreeToFile.readNode(currentIndex);
-		System.out.println("root de searchIntern  est " + root); // noeud lacroix
-		Intern internRoot = root.getIntern(); // lacroix
+	public int searchIndexIntern(int currentIndex, Intern searchedIntern) throws IOException { // 0, Lacroix
+		raf.seek(currentIndex * Node.BYTE_LENGTH_NODE);
+		Node root = binaryTreeToFile.readNode(currentIndex); // 0 noeud lacroix // 1 noeud cahveneau || 2 noeud garijo
+		Intern internRoot = root.getIntern(); // intern lacroix // intern chaveneau || intern garijo
 
 		if (searchedIntern.getLastname().compareTo(internRoot.getLastname()) == 0) {
-			System.out.println("le pointeurt est a " + raf.getFilePointer());
-			int index = (int) (raf.getFilePointer() / Node.BYTE_LENGTH_NODE);
-			
-			System.out.println("index quand searchIntern = intern de root : " + index);
 
-			return index;
+			System.out.println(raf.getFilePointer() + "<- pointeur || root est : " + root);
+			int index = (int) (raf.getFilePointer() / Node.BYTE_LENGTH_NODE);
+
+			return index; // 2
 		}
 		if ((searchedIntern.getLastname().compareTo(internRoot.getLastname())) < 0) {
-			System.out.println("a gauche dans search");
+			System.out.println("a gauche dans search"); // je suis ici parce que garijo est plus petit que lacroix
 			if (root.getLeftSon() == -1) {
 				return -1;
 			}
 
-			return searchIndexIntern(indexCalculation(currentIndex, 8), searchedIntern);
+			return searchIndexIntern(indexCalculation(currentIndex, 8), searchedIntern); // 1, garijo
 		} else {
 			System.out.println("a droite dans search");
 			if (root.getRightSon() == -1) {
 				return -1;
 			}
-			return searchIndexIntern(indexCalculation(currentIndex, 4), searchedIntern);
+			return searchIndexIntern(indexCalculation(currentIndex, 4), searchedIntern); // ?? garijo
 		}
 	}
-	
-//	public Node deleteRoot(Node currentNode) {
-//		if (currentNode.getLeftSon() == -1 && currentNode.getRightSon() == -1)  // pas d’enfant
-//			return null;
-//		
-//		if (currentNode.getLeftSon() == -1 && currentNode.getRightSon() != -1)  // un enfant à droite
-//			return binaryTreeToFile.readNode(currentNode.getRightSon());
-//		
-//		if (currentNode.getLeftSon() != -1 && currentNode.getRightSon() == -1)  // un enfant à gauche
-//			return binaryTreeToFile.readNode(currentNode.getLeftSon());
-//		
-//		Node nextNode = nextNode();
-//		this.valeur = noeudSuccesseur.valeur;
-//		this.supprimerNoeud(this.valeur);
-//		return this; // return l’objet dans lequel on se trouve
-//	}
+
+	public Node deleteRoot(Node currentNode) throws IOException { // chone
+		if (currentNode.getLeftSon() == -1 && currentNode.getRightSon() == -1) {// pas d’enfant
+			return null;
+		}
+
+		if (currentNode.getLeftSon() == -1 && currentNode.getRightSon() != -1) { // un enfant à droite
+			return binaryTreeToFile.readNode(currentNode.getRightSon());
+		}
+
+		if (currentNode.getLeftSon() != -1 && currentNode.getRightSon() == -1) { // un enfant à gauche
+			return binaryTreeToFile.readNode(currentNode.getLeftSon());
+		}
+
+		// 2 enfants
+		Node nextNode = previousNode(currentNode.getIntern());
+		currentNode = nextNode;
+		deleteNode(currentNode);
+		return null; // return l’objet dans lequel on se trouve
+	}
+
+	public void deleteNode(Node nodeToDeleted) {
+		Node node = binaryTreeToFile.readNode(0);
+		if (node.getIntern().getLastname().compareTo(nodeToDeleted.getIntern().getLastname()) < 0) { // valeur < valeurRechercher ––> on va à droite
+			if (node.getRightSon() == -1) {
+				return;
+			}
+			Node rightSonNode = binaryTreeToFile.readNode(node.getRightSon());
+			if (rightSonNode.getIntern().getLastname().compareTo(nodeToDeleted.getIntern().getLastname()) == 0) {
+				rightSonNode = deleteRoot(node);
+			} else {
+				this.filsDroit.supprimerNoeud(nodeToDeleted);
+			}
+		} else { // valeur > valeurRechercher ––> on va à gauche
+			if (this.filsGauche == null)
+				return;
+			if (this.filsGauche.valeur.equals(nodeToDeleted))
+				this.filsGauche = this.filsGauche.supprimerRacine();
+			else
+				this.filsGauche.supprimerNoeud(nodeToDeleted);
+		}
+	}
 
 }
