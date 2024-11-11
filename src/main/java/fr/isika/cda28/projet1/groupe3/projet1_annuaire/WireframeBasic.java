@@ -1,10 +1,12 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 
-
 import java.util.List;
 
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.FileChecker;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.User;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ConnectedInternsTableView;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ConnectionView;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.InternsTableView;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewAddIntern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewListInternEmpty;
@@ -32,12 +34,16 @@ public class WireframeBasic {
 //	898121 kaki
 //	4C4B16 kaki foncé
 
-	
 	protected BorderPane root;
 	protected BorderPane informationsDisplay;
+	User user;
+	ConnectionView connectionView;
 	
-	
-	
+
+	public WireframeBasic(User user) {
+		super();
+		this.user = user;
+	}
 
 	public WireframeBasic() {
 
@@ -53,9 +59,11 @@ public class WireframeBasic {
 		Button handleUsers = new Button("Gestion des utilisateurs");
 		Button searchInterns = new Button("Recherche de stagiaires");
 		Button internsList = new Button("Liste des stagiaires");
+		Button connectedInternsList = new Button("Liste des stagiaires");
 		Button addInterns = new Button("Ajout de stagiaire");
+		Button connection = new Button("Connexion");
 
-		Button[] buttonNavBarMenu = { home, handleUsers, searchInterns, internsList, addInterns };
+		Button[] buttonNavBarMenu = { home, handleUsers, searchInterns, internsList, addInterns, connection, connectedInternsList };
 		for (Button button : buttonNavBarMenu) {
 			button.setMinSize(140, 65);
 			navBarMenu.setMargin(button, new Insets(25));
@@ -63,10 +71,14 @@ public class WireframeBasic {
 			button.setWrapText(true); // to center
 
 		}
-
-		navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList, addInterns);
-
-		
+		connectionView.getUser();
+		System.out.println("Wireframbasic user : " + user);
+		if (user!= null ) {
+			navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, connectedInternsList, addInterns);
+		} else {
+			navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList,  connection);
+			
+		}
 
 		// Display area
 		AnchorPane areaDisplay = new AnchorPane();
@@ -100,11 +112,10 @@ public class WireframeBasic {
 
 		// layout mac
 		root.setStyle("-fx-font-family: 'Proxima Nova'");
-		
+
 		// -----NAVIGATION -----
-		
-		
-		//toHome
+
+		// toHome
 		home.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -113,7 +124,7 @@ public class WireframeBasic {
 //				informationsDisplay.setCenter(viewHome.modScene());
 			}
 		});
-		
+
 		// toHandleUsers
 		handleUsers.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -123,7 +134,7 @@ public class WireframeBasic {
 //				informationsDisplay.setCenter(viewHandleUsers.modScene());
 			}
 		});
-		
+
 		// toSearchInterns
 		searchInterns.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -133,7 +144,7 @@ public class WireframeBasic {
 //				informationsDisplay.setCenter(viewSearchInterns.modScene());
 			}
 		});
-		
+
 		// toViewInternsList
 		internsList.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -142,24 +153,53 @@ public class WireframeBasic {
 				/*
 				 * Test pour savoir si la liste de stagiaires est vide ou non à faire
 				 */
+				
 				boolean binFileExists = FileChecker.isBinFilePresent();
-		        System.out.println("Bin file present: " + binFileExists);
 				if (binFileExists) {
 					informationsDisplay.setCenter(new InternsTableView().modScene());
 				} else {
 					informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 				}
-				
+
 			}
 		});
 		
-		//toAddInterns
+		// toViewInternsList
+				connectedInternsList.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						/*
+						 * Test pour savoir si la liste de stagiaires est vide ou non à faire
+						 */
+						
+						boolean binFileExists = FileChecker.isBinFilePresent();
+						if (binFileExists) {
+							informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
+						} else {
+							informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
+						}
+
+					}
+				});
+
+		// toAddInterns
 		addInterns.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				ViewAddIntern viewAddInterns = new ViewAddIntern();
-				informationsDisplay.setCenter( viewAddInterns.modScene());
+				informationsDisplay.setCenter(viewAddInterns.modScene());
+			}
+		});
+
+		// connection
+		connection.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				ConnectionView connectionView = new ConnectionView();
+				informationsDisplay.setCenter(connectionView.modScene());
 			}
 		});
 	}

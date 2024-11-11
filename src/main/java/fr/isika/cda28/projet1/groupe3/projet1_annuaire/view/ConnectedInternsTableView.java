@@ -9,6 +9,7 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.PDFExportServi
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.ServiceNodeList;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.User;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -33,19 +34,20 @@ import javafx.util.converter.IntegerStringConverter;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
-public class InternsTableView extends VBox {
+public class ConnectedInternsTableView extends VBox {
 
 	private List<Intern> internsList = new ArrayList<>();
 	private List<Node> nodesInterns;
 	public TableView<Intern> internTableView;
 	private PDFExportService pdfExportService;
+	User user;
 
-	public InternsTableView() {
+	public ConnectedInternsTableView() {
 		super();
 		modScene();
 	}
 
-	public InternsTableView(List<Intern> internsList) {
+	public ConnectedInternsTableView(List<Intern> internsList) {
 		super();
 		this.internsList = internsList;
 		modScene();
@@ -64,7 +66,7 @@ public class InternsTableView extends VBox {
 		titleHBox.setPadding(new Insets(30, 0, 30, 0));
 
 		this.internTableView = new TableView<Intern>();
-		internTableView.setEditable(false);
+		internTableView.setEditable(true);
 
 		// Création de la liste des stagiaires
 //		createInternsList();
@@ -209,6 +211,36 @@ public class InternsTableView extends VBox {
 		// colonne supprimer
 		TableColumn<Intern, Void> deleteColumn = new TableColumn<>("Supprimer");
 
+		deleteColumn.setMinWidth(100);
+
+		deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
+			private final Button deleteButton = new Button("Supprimer");
+			{
+				deleteButton.setMinSize(90, 30);
+				deleteButton.setStyle("-fx-background-color: #F87A53; -fx-font-size: 12;");
+				// Configuration du bouton Supprimer
+//		    	deleteButton.setOnAction(event -> {
+//		            // Récupérer le Stagiaire de la ligne courante
+//		    		Intern intern = getTableView().getItems().get(getIndex());
+//		            
+//		            // Supprimer la ligne du TableView
+////		            getTableView().getItems().remove(intern);
+//		        });
+			}
+
+			@Override
+			protected void updateItem(Void item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty) {
+					setGraphic(null);
+				} else {
+					setGraphic(deleteButton);
+				}
+			}
+		});
+
+		// Ajouter la colonne au TableView
+		internTableView.getColumns().add(deleteColumn);
 
 		// Je donne à mon tableau la liste de stagiaires à afficher
 		// observable list permet de lever des alertes quand la liste est modifier. Si
