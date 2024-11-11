@@ -87,7 +87,8 @@ public class WireframeBasic {
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
 		
 		try {
-			Intern potin = new Intern("AUGEREAU", "Thomas", "75", "ATOD 21", 2002);
+			Intern potin = new Intern("GARIJO", "Rosie", "75", "AI 79", 2011);
+			Node garijoNode = new Node(potin, 7, -1);
 			ServiceNodeList SNL = new ServiceNodeList();
 			SNL.nextNode(potin);
 		} catch (IOException e) {
