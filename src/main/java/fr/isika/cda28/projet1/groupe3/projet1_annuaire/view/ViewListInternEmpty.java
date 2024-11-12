@@ -55,7 +55,7 @@ public class ViewListInternEmpty extends VBox {
 					Path destinationDirPath = Paths.get("src/main/java/ressources/").toAbsolutePath();
 
 					try {
-						centerComponentsVbox.getChildren().remove(1);
+						//centerComponentsVbox.getChildren().remove(1);
 						
 						Files.createDirectories(destinationDirPath);
 						
