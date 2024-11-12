@@ -39,23 +39,18 @@ public class ConnectionView extends WireframeBasic {
 	Label errorIsEmpty = new Label("Veuillez remplir tous les champs en respectant les cases.");
 	Label infoAdd = new Label("mot de passe et/ou email incorrects");
 	User user;
-	
-	
-
 
 	// *******************************************
 	// Constructor
 	// *******************************************
 	public ConnectionView() {
-		super();
+		super(new User(null, null));
 		modScene();
 	}
 
 	// *******************************************
 	// Public methods
 	// *******************************************
-
-
 
 	/**
 	 * Creates a form for adding a new intern and sets up the scene for user input.
@@ -83,13 +78,11 @@ public class ConnectionView extends WireframeBasic {
 		passwordTF.setPromptText("ex. : John");
 		passwordLabel.setPadding(new Insets(15, 0, 15, 0));
 
-		
 		formGridPane.add(emailLabel, 0, 0);
 		formGridPane.add(emailTF, 1, 0, 2, 1);
 		formGridPane.add(passwordLabel, 0, 1);
 		formGridPane.add(passwordTF, 1, 1, 2, 1);
-		
-		
+
 		formGridPane.setAlignment(Pos.CENTER);
 
 		Button buttonValidateForm = new Button("Valider");
@@ -103,33 +96,30 @@ public class ConnectionView extends WireframeBasic {
 		infoVBox.setAlignment(Pos.CENTER);
 //		infoVBox.getChildren().add(infoAdd);
 
-		
 		// layout general
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
 		formVBox.getChildren().addAll(titleHBox, formGridPane, infoVBox, buttonHBox);
-		
-		
 
 		buttonValidateForm.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				user = new User(emailTF.getText(), passwordTF.getText());
 				if (user.connection()) {
 					user.setConnected(true);
+					buttonValidateForm.getScene().setRoot(new WireframeBasic(user));
 					boolean binFileExists = FileChecker.isBinFilePresent();
-			        System.out.println("Bin file present: " + binFileExists);
+					System.out.println("Bin file present: " + binFileExists);
 					if (binFileExists) {
-						new WireframeBasic(user);
+						// new WireframeBasic(user);
 						System.out.println("connectionView user : " + user);
 						informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
 					} else {
 						informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 					}
-				}
-				else {
+				} else {
 					infoAdd.setText("mot de passe et/ou email incorrects");
 				}
 			}
@@ -139,9 +129,9 @@ public class ConnectionView extends WireframeBasic {
 		return formVBox;
 
 	}
-	
+
 	public User getUser() {
-        return this.user;
-    }
+		return this.user;
+	}
 
 }

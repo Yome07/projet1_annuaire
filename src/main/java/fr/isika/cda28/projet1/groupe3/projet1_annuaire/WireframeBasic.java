@@ -26,7 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
-public class WireframeBasic {
+public class WireframeBasic extends BorderPane {
 
 //	---- COLORS ----
 //	F87A53 orange
@@ -34,21 +34,29 @@ public class WireframeBasic {
 //	898121 kaki
 //	4C4B16 kaki foncé
 
-	protected BorderPane root;
+	// protected BorderPane root;
 	protected BorderPane informationsDisplay;
 	User user;
 	ConnectionView connectionView;
-	
 
-	public WireframeBasic(User user) {
-		super();
+	/*
+	 * public WireframeBasic(User user) { super(); this.user = user; this(); }
+	 */
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public WireframeBasic() {
+	public WireframeBasic(User user) {
 
 		// ----- ROOT -----
-		root = new BorderPane();
+		// root = new BorderPane();
+
+		this.user = user;
 
 		// ----- COMPONENTS -----
 		// NavBarMenu
@@ -63,7 +71,8 @@ public class WireframeBasic {
 		Button addInterns = new Button("Ajout de stagiaire");
 		Button connection = new Button("Connexion");
 
-		Button[] buttonNavBarMenu = { home, handleUsers, searchInterns, internsList, addInterns, connection, connectedInternsList };
+		Button[] buttonNavBarMenu = { home, handleUsers, searchInterns, internsList, addInterns, connection,
+				connectedInternsList };
 		for (Button button : buttonNavBarMenu) {
 			button.setMinSize(140, 65);
 			navBarMenu.setMargin(button, new Insets(25));
@@ -71,13 +80,13 @@ public class WireframeBasic {
 			button.setWrapText(true); // to center
 
 		}
-		connectionView.getUser();
-		System.out.println("Wireframbasic user : " + user);
-		if (user!= null ) {
+		// connectionView.getUser();
+		// System.out.println("Wireframbasic user : " + user);
+		if (user.getConnected() == true) {
 			navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, connectedInternsList, addInterns);
 		} else {
-			navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList,  connection);
-			
+			navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, internsList, connection);
+
 		}
 
 		// Display area
@@ -107,11 +116,11 @@ public class WireframeBasic {
 		areaDisplay.setLeftAnchor(informationsDisplay, 189.00);
 
 		// Add components to the pane
-		root.setTop(navBarMenu);
-		root.setCenter(areaDisplay);
+		this.setTop(navBarMenu);
+		this.setCenter(areaDisplay);
 
 		// layout mac
-		root.setStyle("-fx-font-family: 'Proxima Nova'");
+		this.setStyle("-fx-font-family: 'Proxima Nova'");
 
 		// -----NAVIGATION -----
 
@@ -153,7 +162,7 @@ public class WireframeBasic {
 				/*
 				 * Test pour savoir si la liste de stagiaires est vide ou non à faire
 				 */
-				
+
 				boolean binFileExists = FileChecker.isBinFilePresent();
 				if (binFileExists) {
 					informationsDisplay.setCenter(new InternsTableView().modScene());
@@ -163,25 +172,25 @@ public class WireframeBasic {
 
 			}
 		});
-		
+
 		// toViewInternsList
-				connectedInternsList.setOnAction(new EventHandler<ActionEvent>() {
+		connectedInternsList.setOnAction(new EventHandler<ActionEvent>() {
 
-					@Override
-					public void handle(ActionEvent event) {
-						/*
-						 * Test pour savoir si la liste de stagiaires est vide ou non à faire
-						 */
-						
-						boolean binFileExists = FileChecker.isBinFilePresent();
-						if (binFileExists) {
-							informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
-						} else {
-							informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
-						}
+			@Override
+			public void handle(ActionEvent event) {
+				/*
+				 * Test pour savoir si la liste de stagiaires est vide ou non à faire
+				 */
 
-					}
-				});
+				boolean binFileExists = FileChecker.isBinFilePresent();
+				if (binFileExists) {
+					informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
+				} else {
+					informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
+				}
+
+			}
+		});
 
 		// toAddInterns
 		addInterns.setOnAction(new EventHandler<ActionEvent>() {
@@ -205,7 +214,7 @@ public class WireframeBasic {
 	}
 
 	public Scene createScene() {
-		return new Scene(root, 1000, 800);
+		return new Scene(this, 1000, 800);
 	}
 
 }

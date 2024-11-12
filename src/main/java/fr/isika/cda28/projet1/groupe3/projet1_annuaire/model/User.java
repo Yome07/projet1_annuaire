@@ -12,6 +12,7 @@ public class User {
 	private String password;
 
 	private Boolean connected;	
+	
 	public User(String email, String password) {
 		super();
 		this.email = email;

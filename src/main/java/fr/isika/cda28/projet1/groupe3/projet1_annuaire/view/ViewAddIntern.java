@@ -11,6 +11,7 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.WireframeBasic;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.BinaryTreeToFile;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.User;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -43,7 +44,7 @@ public class ViewAddIntern extends WireframeBasic {
 	// Constructor
 	// *******************************************
 	public ViewAddIntern() {
-		super();
+		super(new User(null, null));
 		modScene();
 	}
 
