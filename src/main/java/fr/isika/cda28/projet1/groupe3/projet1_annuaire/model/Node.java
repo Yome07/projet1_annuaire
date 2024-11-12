@@ -15,14 +15,15 @@ public class Node {
 	private Intern intern;
 	private int left;
 	private int right;
-	private BinaryTreeToFile binaryTreeToFile;
+	private BinaryTreeToFile binaryTreeToFile = new BinaryTreeToFile();
+	private RandomAccessFile raf;
 
 	public Node(Intern intern, int left, int right) {
 		super();
 		this.intern = intern;
 		this.left = left;
 		this.right = right;
-		this.binaryTreeToFile = new BinaryTreeToFile();
+//		this.binaryTreeToFile;
 	}
 
 	public Node() {
@@ -70,6 +71,7 @@ public class Node {
 	}
 
 	public int compareTo(Node node) {
+		System.out.println(this);
 		if (this.intern.getLastname().compareTo(node.intern.getLastname()) < 0) {
 			return -1;
 		} else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) < 0) {
@@ -101,11 +103,12 @@ public class Node {
 	public void deleteNode(Node nodeToDelete, RandomAccessFile raf, int indexParent) throws IOException {
 
 		File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
-
+		raf = binaryTreeToFile.createRaf();
 		if (file.exists() && file.length() > 0) {
-			binaryTreeToFile.readNode(indexParent); // on lit la racine i= 0
+			
+			Node node = binaryTreeToFile.readNode(indexParent); // on lit la racine i= 0
+			
 			indexParent = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
-
 			if (this.compareTo(nodeToDelete) < 0) { // negatif -> droite
 				if (this.getRightSon() == -1) {
 					return;

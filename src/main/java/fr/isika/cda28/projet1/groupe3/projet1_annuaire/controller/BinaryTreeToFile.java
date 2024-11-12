@@ -162,7 +162,7 @@ public class BinaryTreeToFile extends ListInterns {
 		Intern intern = new Intern();
 		try {
 
-
+			
 			raf.seek(index * Node.BYTE_LENGTH_NODE);
 			node.setIntern(intern);
 
@@ -174,6 +174,7 @@ public class BinaryTreeToFile extends ListInterns {
 
 			node.setLeftSon(raf.readInt());
 			node.setRightSon(raf.readInt());
+		
 			
 		} catch (IOException e) {
 			e.printStackTrace();
