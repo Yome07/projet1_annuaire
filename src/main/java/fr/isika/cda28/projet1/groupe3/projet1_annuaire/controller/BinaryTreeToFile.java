@@ -25,12 +25,14 @@ public class BinaryTreeToFile extends ListInterns {
 	/*
 	 * méthode pour créer le fichier binaire
 	 */
-	public void createRaf() {
+	public RandomAccessFile createRaf() {
 		try {
 			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return raf;
 	}
 
 	/*

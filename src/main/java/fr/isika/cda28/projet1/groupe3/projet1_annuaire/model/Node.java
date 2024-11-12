@@ -13,11 +13,11 @@ public class Node {
 	public final static int BYTE_LENGTH_NODE = Intern.BYTE_LENGTH_INTERN + 8;
 
 	private Intern intern;
-	private Node left;
-	private Node right;
+	private int left;
+	private int right;
 	private BinaryTreeToFile binaryTreeToFile;
 
-	public Node(Intern intern, Node left, Node right) {
+	public Node(Intern intern, int left, int right) {
 		super();
 		this.intern = intern;
 		this.left = left;
@@ -37,19 +37,19 @@ public class Node {
 		this.intern = intern;
 	}
 
-	public Node getLeftSon() {
+	public int getLeftSon() {
 		return left;
 	}
 
-	public void setLeftSon(Node left) {
+	public void setLeftSon(int left) {
 		this.left = left;
 	}
 
-	public Node getRightSon() {
+	public int getRightSon() {
 		return right;
 	}
 
-	public void setRightSon(Node right) {
+	public void setRightSon(int right) {
 		this.right = right;
 	}
 
@@ -107,18 +107,24 @@ public class Node {
 			indexParent = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
 
 			if (this.compareTo(nodeToDelete) < 0) { // negatif -> droite
-				if (this.getRightSon() == null) {
+				if (this.getRightSon() == -1) {
 					return;
 				}
-				this.right.deleteNode(nodeToDelete, raf, indexParent);
+				raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 4);
+				int rightSon = raf.readInt();
+				
+				binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, indexParent);
 			} else if (this.compareTo(nodeToDelete) > 0) { // positif -> gauche
-				if (this.getLeftSon() == null) {
+				if (this.getLeftSon() == -1) {
 					return;
 				}
-				this.left.deleteNode(nodeToDelete, raf, indexParent);
+				raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 8);
+				int leftSon = raf.readInt();
+				raf.seek(raf.getFilePointer() + 4);
+				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, indexParent);
 			} else { // 0 -> a supprimer
 
-				if (this.right == null && this.left == null) { // feuille
+				if (this.right == -1 && this.left == -1) { // feuille
 					int indexEnfant = (int) raf.getFilePointer() / Node.BYTE_LENGTH_NODE;
 					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4); // position pere
 					int indexALire = raf.readInt(); // j ai avance de 4 octets
@@ -130,7 +136,7 @@ public class Node {
 						raf.writeInt(-1);
 					}
 
-				} else if (this.right == null || this.left == null) {// un enfant
+				} else if (this.right == -1 || this.left == -1) {// un enfant
 					int indexEnfant = (int) raf.getFilePointer() / Node.BYTE_LENGTH_NODE;
 					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4); // position pere
 					int indexALire = raf.readInt();
@@ -153,10 +159,18 @@ public class Node {
 		}
 	}
 
-	public Node nextNode() {
-		Node currentNode = this.right;
-		while (currentNode.left != null) {
-			currentNode = currentNode.left;
+	public Node nextNode() throws IOException {
+		RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
+		raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 4);
+		int rightSon = raf.readInt();
+		
+		
+		Node currentNode = binaryTreeToFile.readNode(rightSon);
+		while (currentNode.left != -1) {
+			raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 8);
+			int leftSon = raf.readInt();
+			raf.seek(raf.getFilePointer() + 4);
+			currentNode = binaryTreeToFile.readNode(leftSon);
 		}
 		return currentNode;
 	}

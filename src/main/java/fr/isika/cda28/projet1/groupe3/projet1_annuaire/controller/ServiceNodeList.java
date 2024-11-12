@@ -5,6 +5,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.WireframeBasic;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
@@ -33,20 +34,17 @@ public class ServiceNodeList {
 
 	public List<Node> createListAlpha(int index) throws IOException {
 		Node node = binaryTreeToFile.readNode(index); // lacroix index 0 || Chav index 1
+		raf = binaryTreeToFile.createRaf();
 		
-		if (node.getLeftSon() != null) {
-			raf.seek(raf.getFilePointer() - 8);
-			int newIndex = raf.readInt();
-			createListAlpha(newIndex);
+		if (node.getLeftSon() > -1) {
+			 createListAlpha(node.getLeftSon());
 		}
 //		}else if (node.getLeftSon()==-1) {
 
 		nodesInterns.add(node);
 
-		if (node.getRightSon() != null) {
-			raf.seek(raf.getFilePointer() - 4);
-			int newIndex = raf.readInt();
-			createListAlpha(newIndex);
+		if (node.getRightSon() > -1) {
+			 createListAlpha(node.getRightSon());
 		}
 
 		return nodesInterns;

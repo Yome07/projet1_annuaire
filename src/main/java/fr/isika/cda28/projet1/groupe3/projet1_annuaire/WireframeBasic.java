@@ -86,14 +86,7 @@ public class WireframeBasic {
 		// Default content
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
 		
-		try {
-			Intern leclerc = new Intern("ZAMBI", "Ret", "54", "CDA21", 1987);
-			ServiceNodeList SNL = new ServiceNodeList();
-			SNL.previousNode(leclerc);
-		} catch (IOException e) {
-			System.out.println("erreur" + e.getMessage());
-			e.printStackTrace();
-		}
+		
 		informationsDisplay.setCenter(defaultContent);
 
 		// layout anchorPane
@@ -156,7 +149,12 @@ public class WireframeBasic {
 				boolean binFileExists = FileChecker.isBinFilePresent();
 		        System.out.println("Bin file present: " + binFileExists);
 				if (binFileExists) {
-					informationsDisplay.setCenter(new InternsTableView().modScene());
+					try {
+						informationsDisplay.setCenter(new InternsTableView().modScene());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 				}
