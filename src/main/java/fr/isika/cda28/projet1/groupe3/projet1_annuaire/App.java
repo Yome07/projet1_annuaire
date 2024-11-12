@@ -35,12 +35,12 @@ public class App extends Application {
 		ServiceNodeList nodeList = new ServiceNodeList();
 		
 		nodes = nodeList.createListAlpha(0);
-		System.out.println(nodes.get(5));
-		for (Node n : nodes) {
-			System.out.println(n);
-		}
+//		System.out.println(nodes.get(5));
+//		for (Node n : nodes) {
+//			System.out.println(n);
+//		}
 		
-		node.deleteNode(nodes.get(5), raf, 0);
+		node.deleteNode(nodes.get(0), raf, 0);
 		System.out.println("Après suppression");
 		for (Node n : nodes) {
 			System.out.println(n);

@@ -71,30 +71,29 @@ public class Node {
 	}
 
 	public int compareTo(Node node) {
-		System.out.println(this);
 		if (this.intern.getLastname().compareTo(node.intern.getLastname()) < 0) {
 			return -1;
-		} else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) < 0) {
-			return -1;
-		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) < 0) {
-			return -1;
-		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) < 0) {
-			return -1;
-		} else if (this.intern.getYear() < node.intern.getYear()) {
-			return -1;
-		}
+		}// else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) < 0) {
+//			return -1;
+//		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) < 0) {
+//			return -1;
+//		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) < 0) {
+//			return -1;
+//		} else if (this.intern.getYear() < node.intern.getYear()) {
+//			return -1;
+//		}
 
 		if (this.intern.getLastname().compareTo(node.intern.getLastname()) > 0) {
 			return 1;
-		} else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) > 0) {
-			return 1;
-		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) > 0) {
-			return 1;
-		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) > 0) {
-			return 1;
-		} else if (this.intern.getYear() < node.intern.getYear()) {
-			return 1;
-		}
+		} //else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) > 0) {
+//			return 1;
+//		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) > 0) {
+//			return 1;
+//		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) > 0) {
+//			return 1;
+//		} else if (this.intern.getYear() < node.intern.getYear()) {
+//			return 1;
+//		}
 
 		return 0;
 
@@ -107,30 +106,39 @@ public class Node {
 		if (file.exists() && file.length() > 0) {
 			
 			Node node = binaryTreeToFile.readNode(indexParent); // on lit la racine i= 0
-			
+			System.out.println("poition " +raf.getFilePointer());
 			indexParent = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
 			if (this.compareTo(nodeToDelete) < 0) { // negatif -> droite
 				if (this.getRightSon() == -1) {
 					return;
 				}
-				raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 4);
+				System.out.println("je suis à droite" + this.compareTo(nodeToDelete));
+				raf.seek(raf.getFilePointer()  - 4);
 				int rightSon = raf.readInt();
 				
-				binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, indexParent);
+				binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, rightSon);
 			} else if (this.compareTo(nodeToDelete) > 0) { // positif -> gauche
 				if (this.getLeftSon() == -1) {
 					return;
 				}
-				raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 8);
+				System.out.println("je suis à gauche" + this.compareTo(nodeToDelete));
+				
+				raf.seek(raf.getFilePointer()  - 8);
 				int leftSon = raf.readInt();
+				System.out.println("leftSon : " + leftSon);
 				raf.seek(raf.getFilePointer() + 4);
-				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, indexParent);
+				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, leftSon);
 			} else { // 0 -> a supprimer
-
+				System.out.println("j’ai trouvé le noeud");
 				if (this.right == -1 && this.left == -1) { // feuille
-					int indexEnfant = (int) raf.getFilePointer() / Node.BYTE_LENGTH_NODE;
+					System.out.println("je suis une feuille");
+					int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE)/ Node.BYTE_LENGTH_NODE;
+					System.out.println("index enfant " + indexEnfant);
+					
 					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4); // position pere
 					int indexALire = raf.readInt(); // j ai avance de 4 octets
+					System.out.println("index a lire " + indexALire);
+					System.out.println("raf " + raf.getFilePointer());
 					if (indexEnfant == indexALire) {
 						raf.seek(raf.getFilePointer() - 4);
 						raf.writeInt(-1);
