@@ -205,6 +205,7 @@ public class BinaryTreeToFile extends ListInterns {
 			raf.writeChars(training);
 			int year = node.getIntern().getYear();
 			raf.writeInt(year);
+			
 			raf.writeInt(node.getLeftSon());
 			raf.writeInt(node.getRightSon());
 
