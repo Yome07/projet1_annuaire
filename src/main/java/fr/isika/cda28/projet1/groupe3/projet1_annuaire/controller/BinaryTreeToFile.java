@@ -27,7 +27,7 @@ public class BinaryTreeToFile extends ListInterns {
 	 */
 	public void createRaf() {
 		try {
-			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
+			this.raf = new RandomAccessFile("src/main/java/ressources/STAGIAIRES.bin", "rw");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -18,7 +18,7 @@ public class ListInterns {
 
 	// Methods
 	public List<Intern> readDonFile() {
-		String filePath = "src/main/java/ressources/STAGIAIREs_EXTRAIT.DON";
+		String filePath = "src/main/java/ressources/STAGIAIRES.DON";
 		interns = new ArrayList<Intern>();
 
 		try (Stream<String> stream = Files.lines(Paths.get(filePath))) {

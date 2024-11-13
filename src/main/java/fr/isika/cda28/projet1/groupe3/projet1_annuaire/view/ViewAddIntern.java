@@ -301,7 +301,7 @@ public class ViewAddIntern extends WireframeBasic {
 					
 					
 					try {
-						 File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin"); 
+						 File file = new File("src/main/java/ressources/STAGIAIRES.bin"); 
 						int index = instance.numbersInternsFile(file);
 						instance.insertNode(0, index, newIntern, newNode);
 						infoAdd.setText("Stagiaire ajouté avec succès !");
