@@ -92,37 +92,40 @@ public class Node {
 	 */
 	public void deleteNode(Node nodeToDelete, RandomAccessFile raf, int indexParent) throws IOException {
 
-		File file = new File("src/main/java/ressources/STAGIAIRES.bin");
-		raf = binaryTreeToFile.createRaf();
-		if (file.exists() && file.length() > 0) {
+			//this = noued courant
+			int indexCourant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
+		
 
-			Node node = binaryTreeToFile.readNode(indexParent);
-			indexParent = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
+			//Node node = binaryTreeToFile.readNode(indexParent);
+			
 			if (this.compareTo(nodeToDelete) < 0) {
 				if (this.getRightSon() == -1) {
+					System.out.println("noeud introuvable");
 					return;
+				
+				} else {
+					raf.seek(raf.getFilePointer()  - 4);
+					int rightSon = raf.readInt();
+					binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, indexCourant);					
 				}
-				raf.seek(raf.getFilePointer()  - 4);
 
-				int rightSon = raf.readInt();
 
-				binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, rightSon);
 			} else if (this.compareTo(nodeToDelete) > 0) {
 				if (this.getLeftSon() == -1) {
 					return;
+				} else {
+					raf.seek(raf.getFilePointer() + BYTE_LENGTH_NODE - 8);				
+					int leftSon = raf.readInt();
+				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, indexCourant);
 				}
-				
-				raf.seek(raf.getFilePointer()  - 8);
-				int leftSon = raf.readInt();
-				raf.seek(raf.getFilePointer() + 4);
-				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, leftSon);
 			} else { 
 				if (this.right == -1 && this.left == -1) {
-					int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE)/ Node.BYTE_LENGTH_NODE;
 					
-					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4);
-					int indexALire = raf.readInt();
-					if (indexEnfant == indexALire) {
+					//int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE)/ Node.BYTE_LENGTH_NODE;
+					
+					raf.seek(((indexParent +1) * Node.BYTE_LENGTH_NODE) - 4);
+					int indexFDParent = raf.readInt();
+					if (indexFDParent == indexCourant) {
 						raf.seek(raf.getFilePointer() - 4);
 						raf.writeInt(-1);
 					} else {
@@ -131,25 +134,33 @@ public class Node {
 					}
 
 				} else if (this.right == -1 || this.left == -1) {
-					int indexEnfant = (int) raf.getFilePointer() / Node.BYTE_LENGTH_NODE;
+					//int indexEnfant = (int) raf.getFilePointer() / Node.BYTE_LENGTH_NODE;
 					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4);
 					int indexALire = raf.readInt();
-					if (indexALire == -1) {
-						raf.seek(raf.getFilePointer() - 8);
-						raf.writeInt(-1);
+					if (indexALire == indexCourant) {
+						if(this.getRightSon() == -1) {
+							raf.seek(raf.getFilePointer() - 4);
+							raf.writeInt(this.getLeftSon());
+						} else {
+							raf.seek(raf.getFilePointer() - 4);
+							raf.writeInt(this.getRightSon());			
+						}
 					} else {
-						raf.seek(raf.getFilePointer() - 4);
-						raf.writeInt(-1);
+						if(this.getRightSon() == -1) {
+							raf.seek(raf.getFilePointer() - 8);
+							raf.writeInt(this.getLeftSon());
+						} else {
+							raf.seek(raf.getFilePointer() - 8);
+							raf.writeInt(this.getRightSon());			
+						}
 					}
 
 				} else {
 
-					this.deleteRoot(nodeToDelete, raf, indexParent);
+					this.deleteRoot(nodeToDelete, raf, indexParent, indexCourant);
 				}
 			}
-		} else {
-			System.out.println("Pas de fichier ou fichier vide");
-		}
+		
 	}
 
 	/**
@@ -158,17 +169,17 @@ public class Node {
 	 * @return Le nœud suivant dans l'arbre binaire.
 	 * @throws IOException En cas d'erreur d'entrée/sortie.
 	 */
-	public Node nextNode() throws IOException {
-		RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
-		raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 4);
-		int rightSon = raf.readInt();
+	public Node nextNode(RandomAccessFile raf) throws IOException {
+		//RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
+		//raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 4);
+		//int rightSon = raf.readInt();
 
-		Node currentNode = binaryTreeToFile.readNode(rightSon);
+		Node currentNode = binaryTreeToFile.readNode(this.right);
 		while (currentNode.left != -1) {
-			raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 8);
-			int leftSon = raf.readInt();
-			raf.seek(raf.getFilePointer() + 4);
-			currentNode = binaryTreeToFile.readNode(leftSon);
+			//raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 8);
+			//int leftSon = raf.readInt();
+			//raf.seek(raf.getFilePointer() + 4);
+			currentNode = binaryTreeToFile.readNode(currentNode.left);
 		}
 		return currentNode;
 	}
@@ -184,28 +195,31 @@ public class Node {
 	 * @return L'instance actuelle pour enchaîner les appels.
 	 * @throws IOException En cas d'erreur d'entrée/sortie.
 	 */
-	public Node deleteRoot(Node currentNode, RandomAccessFile raf, int indexParent) throws IOException {
+	public void deleteRoot(Node currentNode, RandomAccessFile raf, int indexParent, int currentIndex) throws IOException {
 
-		Node nextNode = nextNode();
-		currentNode = nextNode;
-		int currentIndex = (int) ((raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE);
-		raf.seek(currentIndex);
+		Node nextNode = nextNode(raf);
+		nextNode.setRightSon(this.right);
+		nextNode.setLeftSon(this.left);
+		//currentNode = nextNode;
+		//int currentIndex = (int) ((raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE);
+		raf.seek(currentIndex * Node.BYTE_LENGTH_NODE);
+		binaryTreeToFile.writeNode(nextNode, currentIndex);
+		
+		/*
+		 * String lastname = currentNode.getIntern().getLastnameLong();
+		 * raf.writeChars(lastname); String firstname =
+		 * currentNode.getIntern().getFirstnameLong(); raf.writeChars(firstname); String
+		 * department = currentNode.getIntern().getDepartmentLong();
+		 * raf.writeChars(department); String training =
+		 * currentNode.getIntern().getTrainingLong(); raf.writeChars(training); int year
+		 * = currentNode.getIntern().getYear(); raf.writeInt(year);
+		 */
 
-		String lastname = currentNode.getIntern().getLastnameLong();
-		raf.writeChars(lastname);
-		String firstname = currentNode.getIntern().getFirstnameLong();
-		raf.writeChars(firstname);
-		String department = currentNode.getIntern().getDepartmentLong();
-		raf.writeChars(department);
-		String training = currentNode.getIntern().getTrainingLong();
-		raf.writeChars(training);
-		int year = currentNode.getIntern().getYear();
-		raf.writeInt(year);
+		raf.seek(this.right);
+		Node rightSon = binaryTreeToFile.readNode(this.right);
+		rightSon.deleteNode(nextNode, raf, currentIndex);
+		//deleteNode(nextNode(), raf, indexParent);
 
-		raf.seek(raf.getFilePointer() + 8);
-		deleteNode(nextNode(), raf, indexParent);
-
-		return this;
 	}
 
 	// ******************************

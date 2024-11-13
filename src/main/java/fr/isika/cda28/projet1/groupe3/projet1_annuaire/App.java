@@ -27,7 +27,7 @@ public class App extends Application {
 
 		WireframeBasic wireframe = new WireframeBasic(new User(null, null));
 		Scene scene = new Scene(wireframe, 1000, 800);
-
+		
 		stage.setTitle("Stud'Index");
 		stage.setScene(scene);
 		stage.show();

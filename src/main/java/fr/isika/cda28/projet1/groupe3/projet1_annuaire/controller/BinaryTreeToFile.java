@@ -137,6 +137,22 @@ public class BinaryTreeToFile extends ListInterns {
 		}
 	}
 
+	
+	public void deleteNode(Intern internToDelete ) {
+		try {
+			if(raf.length() == 0) {
+				System.out.println("fichier binaire vide");
+			} else {
+				raf.seek(0);
+				Node racine = new Node();
+				racine  = readNode(0);
+				racine.deleteNode(new Node(internToDelete, -1, -1), raf, 0);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Lit un nœud depuis le fichier à l'index spécifié. Les informations du
 	 * stagiaire (nom, prénom, département, formation, année) ainsi que les indices
