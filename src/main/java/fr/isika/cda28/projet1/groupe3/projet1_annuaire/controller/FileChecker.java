@@ -12,7 +12,6 @@ public class FileChecker {
         File directory = new File("src/main/java/ressources");
         Path path = Paths.get("../src/main/java/ressources");
         
-        System.out.println("directory ressources exists ? : " + directory.exists());
         if (directory.exists() && directory.isDirectory()) {
         	File[] files = directory.listFiles(new FilenameFilter() {
                 @Override
@@ -20,11 +19,9 @@ public class FileChecker {
                     return name.toLowerCase().endsWith(".bin");
                 }
             });
-            System.out.println("dans if de isBinFilePresent");
             
             return files != null && files.length > 0;
         }
-        System.out.println("dans else de isBinFilePresent");
         return false;
     }
 }

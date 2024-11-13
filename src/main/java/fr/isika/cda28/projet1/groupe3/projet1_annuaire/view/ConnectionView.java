@@ -111,10 +111,8 @@ public class ConnectionView extends WireframeBasic {
 					user.setConnected(true);
 					buttonValidateForm.getScene().setRoot(new WireframeBasic(user));
 					boolean binFileExists = FileChecker.isBinFilePresent();
-					System.out.println("Bin file present: " + binFileExists);
 					if (binFileExists) {
 						// new WireframeBasic(user);
-						System.out.println("connectionView user : " + user);
 						try {
 							informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
 						} catch (IOException e) {
