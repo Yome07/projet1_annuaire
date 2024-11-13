@@ -92,19 +92,18 @@ public class Node {
 	 */
 	public void deleteNode(Node nodeToDelete, RandomAccessFile raf, int indexParent) throws IOException {
 
-		File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
+		File file = new File("src/main/java/ressources/STAGIAIRES.bin");
 		raf = binaryTreeToFile.createRaf();
 		if (file.exists() && file.length() > 0) {
 
 			Node node = binaryTreeToFile.readNode(indexParent);
-			System.out.println("poition " + raf.getFilePointer());
 			indexParent = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
 			if (this.compareTo(nodeToDelete) < 0) {
 				if (this.getRightSon() == -1) {
 					return;
 				}
-				System.out.println("je suis à droite" + this.compareTo(nodeToDelete));
-				raf.seek(raf.getFilePointer() - 4);
+				raf.seek(raf.getFilePointer()  - 4);
+
 				int rightSon = raf.readInt();
 
 				binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, rightSon);
@@ -112,24 +111,17 @@ public class Node {
 				if (this.getLeftSon() == -1) {
 					return;
 				}
-				System.out.println("je suis à gauche" + this.compareTo(nodeToDelete));
-
-				raf.seek(raf.getFilePointer() - 8);
+				
+				raf.seek(raf.getFilePointer()  - 8);
 				int leftSon = raf.readInt();
-				System.out.println("leftSon : " + leftSon);
 				raf.seek(raf.getFilePointer() + 4);
 				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, leftSon);
-			} else {
-				System.out.println("j’ai trouvé le noeud");
+			} else { 
 				if (this.right == -1 && this.left == -1) {
-					System.out.println("je suis une feuille");
-					int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
-					System.out.println("index enfant " + indexEnfant);
-
+					int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE)/ Node.BYTE_LENGTH_NODE;
+					
 					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4);
 					int indexALire = raf.readInt();
-					System.out.println("index a lire " + indexALire);
-					System.out.println("raf " + raf.getFilePointer());
 					if (indexEnfant == indexALire) {
 						raf.seek(raf.getFilePointer() - 4);
 						raf.writeInt(-1);

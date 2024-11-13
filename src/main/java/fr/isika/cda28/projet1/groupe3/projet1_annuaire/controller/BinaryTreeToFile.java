@@ -16,14 +16,14 @@ public class BinaryTreeToFile extends ListInterns {
 	// ******************************
 	// Attribute
 	// ******************************
-	
+
 	public Node root;
 	public RandomAccessFile raf;
 
 	// ******************************
 	// Constructor
 	// ******************************
-	
+
 	public BinaryTreeToFile() {
 		super();
 		this.root = null;
@@ -33,7 +33,7 @@ public class BinaryTreeToFile extends ListInterns {
 	// ******************************
 	// Public Method
 	// ******************************
-	
+
 	/**
 	 * Crée un fichier RandomAccessFile en mode lecture-écriture pour accéder aux
 	 * données des stagiaires. Le fichier est situé à l'emplacement spécifié et est
@@ -96,20 +96,12 @@ public class BinaryTreeToFile extends ListInterns {
 	 * @param node          Le nœud représentant l'intern à insérer.
 	 */
 	public void insertNode(int currentIndex, int indexToInsert, Intern intern, Node node) {
-		System.out.println("intern avant readNode : " + intern);
 
 		Node nodeToInsert = new Node(intern, -1, -1);
 		Intern internToInsert = nodeToInsert.getIntern();
-		System.out.println("internToInsert avant appel de la methode read node : " + internToInsert);
 
 		Node currentNode = readNode(currentIndex);
 		Intern currentIntern = currentNode.getIntern();
-		System.out.println(intern);
-		System.out.println("Le currentIntern est  : " + currentIntern);
-		System.out.println(
-				"FG currentNode : " + currentNode.getLeftSon() + " FD currentNode : " + currentNode.getRightSon());
-		System.out.println("firstname currentIntern : " + currentIntern.getLastname());
-		System.out.println("firstname InternToInsert : " + internToInsert.getLastname());
 
 		if (internToInsert.getLastname().compareTo(currentIntern.getLastname()) < 0
 
@@ -125,56 +117,30 @@ public class BinaryTreeToFile extends ListInterns {
 				|| (internToInsert.getTraining() == currentIntern.getTraining()
 						&& internToInsert.getYear() < currentIntern.getYear())) {
 
-			System.out.println("Je suis a gauche");
-
 			if (currentNode.getLeftSon() == -1) {
 
-				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon()
-						+ " FD currentNode : " + currentNode.getRightSon());
 				writeIndex(indexToInsert, currentIndex, 8);
 				writeNode(nodeToInsert, indexToInsert);
-				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " "
-						+ currentIntern.getFirstname() + " du " + currentIntern.getDepartment() + ". Il est en "
-						+ currentIntern.getTraining() + " de " + currentIntern.getYear());
-				System.out.println("Methode insertNode - Le internToInsert s'appelle " + internToInsert.getLastname()
-						+ " " + internToInsert.getFirstname() + " du " + internToInsert.getDepartment() + ". Il est en "
-						+ internToInsert.getTraining() + " de " + internToInsert.getYear());
-				System.out.println("Index à insérer à gauche " + indexToInsert);
-				System.out.println("Après writeNode - FG currentNode : " + currentNode.getLeftSon()
-						+ " FD currentNode : " + currentNode.getRightSon());
 
 			} else {
 				insertNode(currentNode.getLeftSon(), indexToInsert, intern, node);
 			}
 		} else {
 
-			System.out.println("Je suis a droite");
-
 			if (currentNode.getRightSon() == -1) {
 
-				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon()
-						+ " FD currentNode : " + currentNode.getRightSon());
 				writeIndex(indexToInsert, currentIndex, 4);
 				writeNode(nodeToInsert, indexToInsert);
-				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " "
-						+ currentIntern.getFirstname() + " du " + currentIntern.getDepartment() + ". Il est en "
-						+ currentIntern.getTraining() + " de " + currentIntern.getYear());
-				System.out.println("Methode insertNode - Le stagiaire s'appelle " + internToInsert.getLastname() + " "
-						+ internToInsert.getFirstname() + " du " + internToInsert.getDepartment() + ". Il est en "
-						+ internToInsert.getTraining() + " de " + internToInsert.getYear());
-				System.out.println("Index à insérer à droite " + indexToInsert);
-				System.out.println("Après writeIndex - FG currentNode : " + currentNode.getLeftSon()
-						+ " FD currentNode : " + currentNode.getRightSon());
 			} else {
 				insertNode(currentNode.getRightSon(), indexToInsert, intern, node);
 			}
 		}
 	}
 
-	
 	/**
-	 * Lit un nœud depuis le fichier à l'index spécifié.
-	 * Les informations du stagiaire (nom, prénom, département, formation, année) ainsi que les indices des fils gauche et droit sont récupérées.
+	 * Lit un nœud depuis le fichier à l'index spécifié. Les informations du
+	 * stagiaire (nom, prénom, département, formation, année) ainsi que les indices
+	 * des fils gauche et droit sont récupérées.
 	 * 
 	 * @param index L'index du nœud à lire.
 	 * @return Le nœud lu avec les données du stagiaire.
@@ -206,11 +172,12 @@ public class BinaryTreeToFile extends ListInterns {
 
 	/**
 	 * Écrit l'index du nœud à insérer à la position spécifiée dans le fichier.
-	 * Utilise la position du nœud courant pour déterminer où insérer l'index dans le fichier.
+	 * Utilise la position du nœud courant pour déterminer où insérer l'index dans
+	 * le fichier.
 	 * 
 	 * @param indexToInsert L'index du nœud à insérer.
-	 * @param currentIndex L'index du nœud courant à partir duquel on insère.
-	 * @param position La position dans le nœud où l'index doit être écrit.
+	 * @param currentIndex  L'index du nœud courant à partir duquel on insère.
+	 * @param position      La position dans le nœud où l'index doit être écrit.
 	 * @throws IOException Si une erreur survient lors de l'écriture des données.
 	 */
 	public void writeIndex(int indexToInsert, int currentIndex, int position) {
@@ -222,11 +189,13 @@ public class BinaryTreeToFile extends ListInterns {
 			e.printStackTrace();
 		}
 	}
+
 	/**
-	 * Écrit un nœud (stagiaire) dans le fichier à l'index spécifié.
-	 * Les informations du stagiaire (nom, prénom, département, formation, année) ainsi que les indices des fils gauche et droit sont enregistrées.
+	 * Écrit un nœud (stagiaire) dans le fichier à l'index spécifié. Les
+	 * informations du stagiaire (nom, prénom, département, formation, année) ainsi
+	 * que les indices des fils gauche et droit sont enregistrées.
 	 * 
-	 * @param node Le nœud à écrire dans le fichier.
+	 * @param node  Le nœud à écrire dans le fichier.
 	 * @param index L'index à la position duquel le nœud doit être écrit.
 	 * @throws IOException Si une erreur survient lors de l'écriture des données.
 	 */
@@ -254,8 +223,9 @@ public class BinaryTreeToFile extends ListInterns {
 	}
 
 	/**
-	 * Lit une chaîne de caractères à partir du fichier, avec une longueur fixe.
-	 * Les caractères sont lus un par un jusqu'à ce que la chaîne atteigne la longueur maximale définie.
+	 * Lit une chaîne de caractères à partir du fichier, avec une longueur fixe. Les
+	 * caractères sont lus un par un jusqu'à ce que la chaîne atteigne la longueur
+	 * maximale définie.
 	 * 
 	 * @return La chaîne de caractères lue, sans espaces superflus.
 	 * @throws IOException Si une erreur survient lors de la lecture des caractères.
@@ -275,8 +245,9 @@ public class BinaryTreeToFile extends ListInterns {
 	}
 
 	/**
-	 * Calcule le nombre de stagiaires dans un fichier en fonction de sa taille.
-	 * Le nombre d'éléments est déterminé en divisant la taille du fichier par la longueur d'un nœud.
+	 * Calcule le nombre de stagiaires dans un fichier en fonction de sa taille. Le
+	 * nombre d'éléments est déterminé en divisant la taille du fichier par la
+	 * longueur d'un nœud.
 	 * 
 	 * @param file Le fichier à analyser.
 	 * @return Le nombre de stagiaires (nœuds) présents dans le fichier.
