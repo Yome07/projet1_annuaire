@@ -23,20 +23,35 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-
 public class ViewListInternEmpty extends VBox {
+
+	// ******************************
+	// Attribute
+	// ******************************
 
 	private Node root;
 
+	// ******************************
+	// Constructor
+	// ******************************
+
 	public ViewListInternEmpty() {
-
 		super();
-
 		this.root = null;
-
 	}
 
+	// ******************************
+	// Public Method
+	// ******************************
 
+	/**
+	 * Crée et configure un formulaire permettant de charger une liste de stagiaires
+	 * depuis un fichier. Si un fichier est sélectionné, il est copié dans le
+	 * répertoire de ressources et un arbre binaire est créé. Affiche un message
+	 * d'erreur en cas de problème.
+	 * 
+	 * @return VBox contenant le bouton pour charger la liste de stagiaires.
+	 */
 	public VBox modScene() {
 
 		VBox centerComponentsVbox = new VBox();
@@ -50,15 +65,13 @@ public class ViewListInternEmpty extends VBox {
 
 				File selectedFile = fileChooser.showOpenDialog(null);
 
-				// Vérifier si un fichier a été sélectionné
 				if (selectedFile != null) {
 					Path destinationDirPath = Paths.get("src/main/java/ressources/").toAbsolutePath();
 
 					try {
-						//centerComponentsVbox.getChildren().remove(1);
-						
+
 						Files.createDirectories(destinationDirPath);
-						
+
 						Path destinationFilePath = destinationDirPath.resolve(selectedFile.getName());
 						Files.copy(selectedFile.toPath(), destinationFilePath);
 
@@ -70,8 +83,7 @@ public class ViewListInternEmpty extends VBox {
 					}
 					BinaryTreeToFile binaryTree = new BinaryTreeToFile();
 					binaryTree.createBinaryTree();
-			        
-					
+
 				} else {
 					Label noSuchFile = new Label("Aucun fichier sélectionné");
 					if (centerComponentsVbox.getChildren().size() == 1) {
@@ -83,15 +95,13 @@ public class ViewListInternEmpty extends VBox {
 
 		uploadListInterns.setMinSize(140, 65);
 		uploadListInterns.setStyle("-fx-background-color: #F87A53; -fx-font-size: 16;");
-		uploadListInterns.setWrapText(true); // to center
+		uploadListInterns.setWrapText(true);
 
-//		Label test = new Label("Hello John Doe");
 		centerComponentsVbox.getChildren().add(uploadListInterns);
 		centerComponentsVbox.setAlignment(Pos.CENTER);
-		
+
 		return centerComponentsVbox;
 
 	}
-	
 
 }

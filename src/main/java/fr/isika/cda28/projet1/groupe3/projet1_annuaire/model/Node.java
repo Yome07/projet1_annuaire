@@ -10,13 +10,25 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.BinaryTreeToFi
 
 public class Node {
 
+	// ******************************
+	// Constant
+	// ******************************
+
 	public final static int BYTE_LENGTH_NODE = Intern.BYTE_LENGTH_INTERN + 8;
 
+	// ******************************
+	// Attribute
+	// ******************************
+	
 	private Intern intern;
 	private int left;
 	private int right;
 	private BinaryTreeToFile binaryTreeToFile = new BinaryTreeToFile();
 	private RandomAccessFile raf;
+
+	// ******************************
+	// Constructor
+	// ******************************
 
 	public Node(Intern intern, int left, int right) {
 		super();
@@ -29,6 +41,10 @@ public class Node {
 	public Node() {
 		super();
 	}
+
+	// *******************************************
+	// Getters & Setters
+	// *******************************************
 
 	public Intern getIntern() {
 		return intern;
@@ -59,84 +75,59 @@ public class Node {
 		return "Node [intern=" + intern + ", left=" + left + ", right=" + right + "]";
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Node node = (Node) obj;
-		return intern.equals(node.intern);
+	// *******************************************
+	// Public method
+	// *******************************************
 
-	}
-
-	public int compareTo(Node node) {
-		if (this.intern.getLastname().compareTo(node.intern.getLastname()) < 0) {
-			return -1;
-		}// else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) < 0) {
-//			return -1;
-//		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) < 0) {
-//			return -1;
-//		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) < 0) {
-//			return -1;
-//		} else if (this.intern.getYear() < node.intern.getYear()) {
-//			return -1;
-//		}
-
-		if (this.intern.getLastname().compareTo(node.intern.getLastname()) > 0) {
-			return 1;
-		} //else if (this.intern.getFirstname().compareTo(node.intern.getFirstname()) > 0) {
-//			return 1;
-//		} else if (this.intern.getDepartment().compareTo(node.intern.getDepartment()) > 0) {
-//			return 1;
-//		} else if (this.intern.getTraining().compareTo(node.intern.getTraining()) > 0) {
-//			return 1;
-//		} else if (this.intern.getYear() < node.intern.getYear()) {
-//			return 1;
-//		}
-
-		return 0;
-
-	}
-
+	/**
+	 * Supprime un nœud de l'arbre binaire dans le fichier en fonction de sa
+	 * position (feuille, un enfant ou deux enfants). Parcourt l'arbre à partir du
+	 * nœud parent pour trouver le nœud à supprimer, et met à jour les liens des
+	 * nœuds parents.
+	 *
+	 * @param nodeToDelete Le nœud à supprimer.
+	 * @param raf          Le fichier contenant l'arbre binaire.
+	 * @param indexParent  L'index du parent du nœud à supprimer.
+	 * @throws IOException En cas d'erreur d'entrée/sortie.
+	 */
 	public void deleteNode(Node nodeToDelete, RandomAccessFile raf, int indexParent) throws IOException {
 
 		File file = new File("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin");
 		raf = binaryTreeToFile.createRaf();
 		if (file.exists() && file.length() > 0) {
-			
-			Node node = binaryTreeToFile.readNode(indexParent); // on lit la racine i= 0
-			System.out.println("poition " +raf.getFilePointer());
+
+			Node node = binaryTreeToFile.readNode(indexParent);
+			System.out.println("poition " + raf.getFilePointer());
 			indexParent = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
-			if (this.compareTo(nodeToDelete) < 0) { // negatif -> droite
+			if (this.compareTo(nodeToDelete) < 0) {
 				if (this.getRightSon() == -1) {
 					return;
 				}
 				System.out.println("je suis à droite" + this.compareTo(nodeToDelete));
-				raf.seek(raf.getFilePointer()  - 4);
+				raf.seek(raf.getFilePointer() - 4);
 				int rightSon = raf.readInt();
-				
+
 				binaryTreeToFile.readNode(rightSon).deleteNode(nodeToDelete, raf, rightSon);
-			} else if (this.compareTo(nodeToDelete) > 0) { // positif -> gauche
+			} else if (this.compareTo(nodeToDelete) > 0) {
 				if (this.getLeftSon() == -1) {
 					return;
 				}
 				System.out.println("je suis à gauche" + this.compareTo(nodeToDelete));
-				
-				raf.seek(raf.getFilePointer()  - 8);
+
+				raf.seek(raf.getFilePointer() - 8);
 				int leftSon = raf.readInt();
 				System.out.println("leftSon : " + leftSon);
 				raf.seek(raf.getFilePointer() + 4);
 				binaryTreeToFile.readNode(leftSon).deleteNode(nodeToDelete, raf, leftSon);
-			} else { // 0 -> a supprimer
+			} else {
 				System.out.println("j’ai trouvé le noeud");
-				if (this.right == -1 && this.left == -1) { // feuille
+				if (this.right == -1 && this.left == -1) {
 					System.out.println("je suis une feuille");
-					int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE)/ Node.BYTE_LENGTH_NODE;
+					int indexEnfant = (int) (raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE;
 					System.out.println("index enfant " + indexEnfant);
-					
-					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4); // position pere
-					int indexALire = raf.readInt(); // j ai avance de 4 octets
+
+					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4);
+					int indexALire = raf.readInt();
 					System.out.println("index a lire " + indexALire);
 					System.out.println("raf " + raf.getFilePointer());
 					if (indexEnfant == indexALire) {
@@ -147,9 +138,9 @@ public class Node {
 						raf.writeInt(-1);
 					}
 
-				} else if (this.right == -1 || this.left == -1) {// un enfant
+				} else if (this.right == -1 || this.left == -1) {
 					int indexEnfant = (int) raf.getFilePointer() / Node.BYTE_LENGTH_NODE;
-					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4); // position pere
+					raf.seek((indexParent + 1) * Node.BYTE_LENGTH_NODE - 4);
 					int indexALire = raf.readInt();
 					if (indexALire == -1) {
 						raf.seek(raf.getFilePointer() - 8);
@@ -159,10 +150,9 @@ public class Node {
 						raf.writeInt(-1);
 					}
 
-				} else { // 2 enfants -> appel deleteRoot
-					// appel deleteRoot
+				} else {
 
-//					this.deleteRoot(nodeToDelete, raf, indexParent);
+					this.deleteRoot(nodeToDelete, raf, indexParent);
 				}
 			}
 		} else {
@@ -170,12 +160,17 @@ public class Node {
 		}
 	}
 
+	/**
+	 * Récupère le nœud suivant en suivant les fils gauches à partir du fils droit.
+	 *
+	 * @return Le nœud suivant dans l'arbre binaire.
+	 * @throws IOException En cas d'erreur d'entrée/sortie.
+	 */
 	public Node nextNode() throws IOException {
 		RandomAccessFile raf = new RandomAccessFile("src/main/java/ressources/STAGIAIREs_EXTRAIT.bin", "rw");
 		raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 4);
 		int rightSon = raf.readInt();
-		
-		
+
 		Node currentNode = binaryTreeToFile.readNode(rightSon);
 		while (currentNode.left != -1) {
 			raf.seek(raf.getFilePointer() + Node.BYTE_LENGTH_NODE - 8);
@@ -186,13 +181,24 @@ public class Node {
 		return currentNode;
 	}
 
+	/**
+	 * Supprime la racine de l'arbre en la remplaçant par le nœud suivant. Met à
+	 * jour les informations du stagiaire dans le fichier, puis supprime le nœud
+	 * suivant.
+	 *
+	 * @param currentNode Le nœud à supprimer (racine).
+	 * @param raf         Le fichier contenant les nœuds.
+	 * @param indexParent L'index du parent dans le fichier.
+	 * @return L'instance actuelle pour enchaîner les appels.
+	 * @throws IOException En cas d'erreur d'entrée/sortie.
+	 */
 	public Node deleteRoot(Node currentNode, RandomAccessFile raf, int indexParent) throws IOException {
-		// 2 enfants
+
 		Node nextNode = nextNode();
-		currentNode = nextNode; // on remplace les infos stagiaire, pas les index
+		currentNode = nextNode;
 		int currentIndex = (int) ((raf.getFilePointer() - Node.BYTE_LENGTH_NODE) / Node.BYTE_LENGTH_NODE);
 		raf.seek(currentIndex);
-		
+
 		String lastname = currentNode.getIntern().getLastnameLong();
 		raf.writeChars(lastname);
 		String firstname = currentNode.getIntern().getFirstnameLong();
@@ -203,14 +209,48 @@ public class Node {
 		raf.writeChars(training);
 		int year = currentNode.getIntern().getYear();
 		raf.writeInt(year);
-		
+
 		raf.seek(raf.getFilePointer() + 8);
 		deleteNode(nextNode(), raf, indexParent);
-		
-		return this; 
-	}
-	
 
+		return this;
+	}
+
+	// ******************************
+	// Override Methods
+	// ******************************
+
+	/**
+	 * Vérifie l'égalité entre deux nœuds en comparant leurs objets `intern`.
+	 *
+	 * @param obj L'objet à comparer.
+	 * @return true si les nœuds sont égaux, false sinon.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Node node = (Node) obj;
+		return intern.equals(node.intern);
+	}
+
+	/**
+	 * Compare deux nœuds en fonction du nom de famille de leur stagiaire.
+	 *
+	 * @param node Le nœud à comparer.
+	 * @return -1 si le nom de famille du nœud actuel est avant, 1 s'il est après, 0
+	 *         s'ils sont égaux.
+	 */
+	public int compareTo(Node node) {
+		if (this.intern.getLastname().compareTo(node.intern.getLastname()) < 0) {
+			return -1;
+		}
+		if (this.intern.getLastname().compareTo(node.intern.getLastname()) > 0) {
+			return 1;
+		}
+		return 0;
+	}
 
 }
-

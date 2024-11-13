@@ -7,11 +7,19 @@ import java.io.RandomAccessFile;
 
 public class User {
 
+	// ******************************
+	// Attributes
+	// ******************************
+	
 	private String email;
 
 	private String password;
 
-	private Boolean connected;	
+	private Boolean connected;
+
+	// ******************************
+	// Constructor
+	// ******************************
 	
 	public User(String email, String password) {
 		super();
@@ -20,6 +28,10 @@ public class User {
 		this.connected = false;
 	}
 
+	// ******************************
+	// Getter & Setter
+	// ******************************
+	
 	public String getEmail() {
 		return email;
 	}
@@ -35,7 +47,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 
 	public Boolean getConnected() {
 		return connected;
@@ -45,21 +56,29 @@ public class User {
 		this.connected = connected;
 	}
 
+	// ******************************
+	// Public Method
+	// ******************************
+	
+	/**
+	 * Vérifie si l'email et le mot de passe fournis correspondent à ceux enregistrés dans le fichier "user.txt".
+	 * 
+	 * @return `true` si les identifiants sont valides, sinon `false`.
+	 */
 	public Boolean connection() {
 		try (FileReader fr = new FileReader("src/main/java/ressources/user.txt")) {
-            BufferedReader br = new BufferedReader(fr);
-            
-          
-    		if (this.email.equals(br.readLine()) && this.password.equals(br.readLine())) {
-    			
-    			return true;
-    		}
-    		
-    		br.close();
-    		fr.close();
-    		
-        } catch (Exception e) {
-			// TODO: handle exception
+			BufferedReader br = new BufferedReader(fr);
+
+			if (this.email.equals(br.readLine()) && this.password.equals(br.readLine())) {
+
+				return true;
+			}
+
+			br.close();
+			fr.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

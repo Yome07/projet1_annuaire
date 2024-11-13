@@ -36,10 +36,18 @@ import javafx.scene.control.Button;
 
 public class InternsTableView extends VBox {
 
+	// ******************************
+	// Attribute
+	// ******************************
+
 	private List<Intern> internsList = new ArrayList<>();
 	private List<Node> nodesInterns;
 	public TableView<Intern> internTableView;
 	private PDFExportService pdfExportService;
+
+	// ******************************
+	// Constructor
+	// ******************************
 
 	public InternsTableView() throws IOException {
 		super();
@@ -52,9 +60,22 @@ public class InternsTableView extends VBox {
 		modScene();
 	}
 
+	// ******************************
+	// Public Method
+	// ******************************
+
+	/**
+	 * Crée et retourne une scène avec une table affichant la liste des stagiaires,
+	 * permettant l'édition des informations (nom, prénom, département, formation,
+	 * année) et l'exportation en PDF.
+	 * 
+	 * @return VBox contenant la table des stagiaires et un bouton pour l'export
+	 *         PDF.
+	 * @throws IOException Si une erreur survient lors de la gestion des fichiers ou
+	 *         de l'export.
+	 */
 	public VBox modScene() throws IOException {
 		this.pdfExportService = new PDFExportService();
-//		this.internsList = internsList;
 		VBox conteneurVBox = new VBox();
 		Label internsListLabel = new Label("Liste des Stagiaires");
 
@@ -67,158 +88,109 @@ public class InternsTableView extends VBox {
 		this.internTableView = new TableView<Intern>();
 		internTableView.setEditable(false);
 
-		// Création de la liste des stagiaires
-//		createInternsList();
 		ServiceNodeList nodeList = new ServiceNodeList();
 		nodesInterns = nodeList.createListAlpha(0);
 		for (Node node : nodesInterns) {
 			internsList.add(node.getIntern());
 		}
 
-		// colonne nom
 		TableColumn<Intern, String> lastnameColumn = new TableColumn<Intern, String>("Nom");
 
-		// largeur colonne
 		lastnameColumn.setMinWidth(100);
 
-//		lastnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("lastname"));
-		lastnameColumn.setCellValueFactory(cellData -> 
-	    new SimpleStringProperty(cellData.getValue().getLastname()));
+		lastnameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastname()));
 
-
-
-		// ajouter la colonne à la table view
 		internTableView.getColumns().add(lastnameColumn);
 
-		// gestionnaire d'évènement pour les cellules
 		lastnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
-				// Je récupère l'objet qui correspond à la ligne modifiée
+
 				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
-						.setLastname(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+						.setLastname(event.getNewValue());
 			}
 		});
-//		lastnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-		// Textfield
-		lastnameColumn.setEditable(true);// on autorise la modification des colonnes
+		lastnameColumn.setEditable(true);
 
-		// colonne prenom
 		TableColumn<Intern, String> firstnameColumn = new TableColumn<Intern, String>("Prénom");
 
 		firstnameColumn.setMinWidth(100);
 
-//		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("firstname"));
-		firstnameColumn.setCellValueFactory(cellData -> 
-	    new SimpleStringProperty(cellData.getValue().getFirstname()));
+		firstnameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstname()));
 
-
-		// ajouter la colonne à la table view
 		internTableView.getColumns().add(firstnameColumn);
 
-		// gestionnaire d'évènement pour les cellules
 		firstnameColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
-				// Je récupère l'objet qui correspond à la ligne modifiée
 				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
-						.setFirstname(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+						.setFirstname(event.getNewValue());
 			}
 		});
 
-		firstnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+		firstnameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		// Textfield
-		firstnameColumn.setEditable(true);// on autorise la modification des colonnes
+		firstnameColumn.setEditable(true);
 
-		// colonne department
 		TableColumn<Intern, String> departmentColumn = new TableColumn<Intern, String>("Département");
 
 		departmentColumn.setMinWidth(100);
 
-//		departmentColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("department"));
-		departmentColumn.setCellValueFactory(cellData -> 
-	    new SimpleStringProperty(cellData.getValue().getDepartment()));
+		departmentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDepartment()));
 
-
-		// ajouter la colonne à la table view
 		internTableView.getColumns().add(departmentColumn);
 
-		// gestionnaire d'évènement pour les cellules
 		departmentColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
-				// Je récupère l'objet qui correspond à la ligne modifiée
 				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
-						.setDepartment(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+						.setDepartment(event.getNewValue());
 			}
 		});
-		departmentColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+		departmentColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		// Textfield
-		departmentColumn.setEditable(true);// on autorise la modification des colonnes
+		departmentColumn.setEditable(true);
 
-		// colonne training
 		TableColumn<Intern, String> trainingColumn = new TableColumn<Intern, String>("Formation");
 
 		trainingColumn.setMinWidth(100);
 
-//		trainingColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("training"));
-		trainingColumn.setCellValueFactory(cellData -> 
-	    new SimpleStringProperty(cellData.getValue().getTraining()));
+		trainingColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTraining()));
 
-
-		// ajouter la colonne à la table view
 		internTableView.getColumns().add(trainingColumn);
 
-		// gestionnaire d'évènement pour les cellules
 		trainingColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, String>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, String> event) {
-				// Je récupère l'objet qui correspond à la ligne modifiée
 				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
-						.setTraining(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+						.setTraining(event.getNewValue());
 			}
 		});
-		trainingColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
-		// Textfield
-		trainingColumn.setEditable(true);// on autorise la modification des colonnes
+		trainingColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		trainingColumn.setEditable(true);
 
-		// colonne année
 		TableColumn<Intern, Integer> yearColumn = new TableColumn<Intern, Integer>("Année");
 
 		yearColumn.setMinWidth(100);
 
-//		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("year"));
-		yearColumn.setCellValueFactory(cellData -> 
-	    new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
+		yearColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
 
-
-
-		// ajouter la colonne à la table view
 		internTableView.getColumns().add(yearColumn);
 
-		// gestionnaire d'évènement pour les cellules
 		yearColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Intern, Integer>>() {
 			@Override
 			public void handle(CellEditEvent<Intern, Integer> event) {
-				// Je récupère l'objet qui correspond à la ligne modifiée
 				((Intern) internTableView.getItems().get((event.getTablePosition().getRow())))
-						.setYear(event.getNewValue());// On récupère la nouvelle valeur dans l'event
+						.setYear(event.getNewValue());
 			}
 		});
 
 		yearColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
-		yearColumn.setEditable(true);// on autorise la modification des colonnes
+		yearColumn.setEditable(true);
 
-		// colonne supprimer
 		TableColumn<Intern, Void> deleteColumn = new TableColumn<>("Supprimer");
 
-
-		// Je donne à mon tableau la liste de stagiaires à afficher
-		// observable list permet de lever des alertes quand la liste est modifier. Si
-		// il y a une modification dans la liste le tableau sera modifié
 		internTableView.setItems(FXCollections.observableArrayList(this.internsList));
 
 		Button printButton = new Button("Imprimer en PDF");
@@ -238,13 +210,14 @@ public class InternsTableView extends VBox {
 		buttonHBox.setAlignment(Pos.CENTER_RIGHT);
 		buttonHBox.setPadding(new Insets(30, 30, 30, 0));
 
-		// this.getChildren().add(internTableView);
 		conteneurVBox.getChildren().addAll(titleHBox, internTableView, buttonHBox);
-//		informationsDisplay.setCenter(conteneurVBox);
 		return conteneurVBox;
 	}
 
-	// création de la liste des stagiaires
+	/**
+	 * Crée une liste de stagiaires triée par ordre alphabétique à partir des nœuds
+	 * et l'ajoute à la liste des stagiaires.
+	 */
 	public void createInternsList() throws IOException {
 		ServiceNodeList nodeList = new ServiceNodeList();
 		nodesInterns = nodeList.createListAlpha(0);
@@ -254,10 +227,15 @@ public class InternsTableView extends VBox {
 
 	}
 
+	/**
+	 * Gère l'exportation de la liste des stagiaires vers un fichier PDF. Demande à
+	 * l'utilisateur de saisir un nom de fichier et de choisir un dossier
+	 * d'enregistrement. En cas de succès, affiche une alerte de confirmation, sinon
+	 * une alerte d'erreur.
+	 */
 	private void handleExport() {
 		try {
 
-			// Demander le nom du fichier
 			TextInputDialog dialog = new TextInputDialog("stagiaires.pdf");
 			dialog.setTitle("Nom du fichier");
 			dialog.setHeaderText(null);
@@ -271,16 +249,13 @@ public class InternsTableView extends VBox {
 			DirectoryChooser directoryChooser = new DirectoryChooser();
 			directoryChooser.setTitle("Choisir le dossier d’enregistrement");
 
-			// Sélection du dossier
 			File directory = directoryChooser.showDialog((Window) internTableView.getScene().getWindow());
 
 			if (directory != null) {
-				// Création du fichier dans le dossier sélectionné
 				File file = new File(directory, fileName.get());
 
 				pdfExportService.exportInterns(internsList, file);
 
-				// Afficher une confirmation
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("Export réussi");
 				alert.setHeaderText(null);
@@ -289,7 +264,6 @@ public class InternsTableView extends VBox {
 				alert.showAndWait();
 			}
 		} catch (Exception e) {
-			// Afficher une erreur
 			e.printStackTrace();
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setTitle("Erreur");

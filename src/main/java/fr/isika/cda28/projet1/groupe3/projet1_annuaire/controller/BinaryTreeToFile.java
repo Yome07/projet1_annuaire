@@ -13,17 +13,34 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
  */
 public class BinaryTreeToFile extends ListInterns {
 
+	// ******************************
+	// Attribute
+	// ******************************
+	
 	public Node root;
 	public RandomAccessFile raf;
 
+	// ******************************
+	// Constructor
+	// ******************************
+	
 	public BinaryTreeToFile() {
 		super();
 		this.root = null;
 		createRaf();
 	}
 
-	/*
-	 * méthode pour créer le fichier binaire
+	// ******************************
+	// Public Method
+	// ******************************
+	
+	/**
+	 * Crée un fichier RandomAccessFile en mode lecture-écriture pour accéder aux
+	 * données des stagiaires. Le fichier est situé à l'emplacement spécifié et est
+	 * ouvert en mode "rw".
+	 * 
+	 * @return Le fichier RandomAccessFile ouvert pour manipulation des données.
+	 * @throws IOException Si une erreur survient lors de l'ouverture du fichier.
 	 */
 	public RandomAccessFile createRaf() {
 		try {
@@ -31,56 +48,55 @@ public class BinaryTreeToFile extends ListInterns {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return raf;
 	}
 
-	/*
-	 * méthode pour créer un arbre binaire
+	/**
+	 * Crée un arbre binaire à partir des données des stagiaires. Chaque stagiaire
+	 * est inséré dans l'arbre en utilisant la méthode insertNode pour déterminer sa
+	 * position. Chaque nœud est ensuite écrit dans le fichier après son insertion.
+	 * 
+	 * @throws IOException Si une erreur survient lors de la lecture ou de
+	 *                     l'écriture des données.
 	 */
 	public void createBinaryTree() {
 		try {
-			// Lecture du fichier fourni
 			readDonFile();
 
-			// On parcourt la liste de stagiaires
 			for (int i = 0; i < interns.size(); i++) {
-				// Création du nœud avec le stagiaire n°i et les index de nœud sans fils
 				Node node = new Node(interns.get(i), -1, -1); // creation du node a inserer
 
-				// Si ce n’est pas le premier stagiaire, on doit l’insérer dans l’arbre.
-				// appel de la méthode inserNode permettant de déterminer à quel endroit il sera
-				// insérer
 				if (i > 0) {
 					insertNode(0, i, interns.get(i), node);
 				}
 
-				// Écriture du nœud à la fin du fichier
 				writeNode(node, i);
 
 			}
 
-			// Fermeture du fichier
 			raf.close();
 
 		} catch (IOException e) {
-			// System.out.println("Erreur de creation d'arbre binaire : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
-	/*
-	 * méthode pour insérer un nœud dans l’arbre
+	/**
+	 * Insère un nouveau nœud dans l'arbre binaire en fonction de la comparaison des
+	 * informations de l'intern. Si l'intern à insérer est "plus petit" que l'intern
+	 * du nœud courant, il est inséré à gauche, sinon à droite. L'insertion se fait
+	 * récursivement jusqu'à ce qu'une position libre (fils gauche ou droit) soit
+	 * trouvée.
 	 * 
-	 * @param currentNode position du nœud actuel dans le fichier
-	 * 
-	 * @param indexToInsert position du nouveau nœud à insérer
-	 * 
-	 * @param intern stagiaire
+	 * @param currentIndex  L'indice du nœud courant à partir duquel l'insertion
+	 *                      doit commencer.
+	 * @param indexToInsert L'indice du nœud à insérer.
+	 * @param intern        L'intern à insérer dans l'arbre.
+	 * @param node          Le nœud représentant l'intern à insérer.
 	 */
-
 	public void insertNode(int currentIndex, int indexToInsert, Intern intern, Node node) {
-		System.out.println("intern avant readNode : " + intern); // Intern ok
+		System.out.println("intern avant readNode : " + intern);
 
 		Node nodeToInsert = new Node(intern, -1, -1);
 		Intern internToInsert = nodeToInsert.getIntern();
@@ -115,7 +131,6 @@ public class BinaryTreeToFile extends ListInterns {
 
 				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon()
 						+ " FD currentNode : " + currentNode.getRightSon());
-//				currentNode.setLeftSon(indexToInsert);
 				writeIndex(indexToInsert, currentIndex, 8);
 				writeNode(nodeToInsert, indexToInsert);
 				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " "
@@ -139,7 +154,6 @@ public class BinaryTreeToFile extends ListInterns {
 
 				System.out.println("Avant writeNode --- FG currentNode : " + currentNode.getLeftSon()
 						+ " FD currentNode : " + currentNode.getRightSon());
-//				currentNode.setLeftSon(indexToInsert);
 				writeIndex(indexToInsert, currentIndex, 4);
 				writeNode(nodeToInsert, indexToInsert);
 				System.out.println("Méthose inserNode - Le currentIntern s'appelle " + currentIntern.getLastname() + " "
@@ -157,12 +171,20 @@ public class BinaryTreeToFile extends ListInterns {
 		}
 	}
 
+	
+	/**
+	 * Lit un nœud depuis le fichier à l'index spécifié.
+	 * Les informations du stagiaire (nom, prénom, département, formation, année) ainsi que les indices des fils gauche et droit sont récupérées.
+	 * 
+	 * @param index L'index du nœud à lire.
+	 * @return Le nœud lu avec les données du stagiaire.
+	 * @throws IOException Si une erreur survient lors de la lecture des données.
+	 */
 	public Node readNode(int index) {
 		Node node = new Node();
 		Intern intern = new Intern();
 		try {
 
-			
 			raf.seek(index * Node.BYTE_LENGTH_NODE);
 			node.setIntern(intern);
 
@@ -174,8 +196,7 @@ public class BinaryTreeToFile extends ListInterns {
 
 			node.setLeftSon(raf.readInt());
 			node.setRightSon(raf.readInt());
-		
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -183,17 +204,32 @@ public class BinaryTreeToFile extends ListInterns {
 
 	}
 
+	/**
+	 * Écrit l'index du nœud à insérer à la position spécifiée dans le fichier.
+	 * Utilise la position du nœud courant pour déterminer où insérer l'index dans le fichier.
+	 * 
+	 * @param indexToInsert L'index du nœud à insérer.
+	 * @param currentIndex L'index du nœud courant à partir duquel on insère.
+	 * @param position La position dans le nœud où l'index doit être écrit.
+	 * @throws IOException Si une erreur survient lors de l'écriture des données.
+	 */
 	public void writeIndex(int indexToInsert, int currentIndex, int position) {
 		try {
 
 			raf.seek((currentIndex + 1) * Node.BYTE_LENGTH_NODE - position);
 			raf.writeInt(indexToInsert);
 		} catch (IOException e) {
-			// System.out.println("Erreur d’écriture : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Écrit un nœud (stagiaire) dans le fichier à l'index spécifié.
+	 * Les informations du stagiaire (nom, prénom, département, formation, année) ainsi que les indices des fils gauche et droit sont enregistrées.
+	 * 
+	 * @param node Le nœud à écrire dans le fichier.
+	 * @param index L'index à la position duquel le nœud doit être écrit.
+	 * @throws IOException Si une erreur survient lors de l'écriture des données.
+	 */
 	public void writeNode(Node node, int index) {
 		try {
 			raf.seek(index * Node.BYTE_LENGTH_NODE);
@@ -208,16 +244,22 @@ public class BinaryTreeToFile extends ListInterns {
 			raf.writeChars(training);
 			int year = node.getIntern().getYear();
 			raf.writeInt(year);
-			
+
 			raf.writeInt(node.getLeftSon());
 			raf.writeInt(node.getRightSon());
 
 		} catch (IOException e) {
-			// System.out.println("Erreur d’écriture : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Lit une chaîne de caractères à partir du fichier, avec une longueur fixe.
+	 * Les caractères sont lus un par un jusqu'à ce que la chaîne atteigne la longueur maximale définie.
+	 * 
+	 * @return La chaîne de caractères lue, sans espaces superflus.
+	 * @throws IOException Si une erreur survient lors de la lecture des caractères.
+	 */
 	public String readString() {
 		char[] chars = new char[Intern.STRING_MAX_LENGTH];
 		try {
@@ -225,7 +267,6 @@ public class BinaryTreeToFile extends ListInterns {
 				chars[i] = raf.readChar();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -233,6 +274,13 @@ public class BinaryTreeToFile extends ListInterns {
 		return myAttribute;
 	}
 
+	/**
+	 * Calcule le nombre de stagiaires dans un fichier en fonction de sa taille.
+	 * Le nombre d'éléments est déterminé en divisant la taille du fichier par la longueur d'un nœud.
+	 * 
+	 * @param file Le fichier à analyser.
+	 * @return Le nombre de stagiaires (nœuds) présents dans le fichier.
+	 */
 	public int numbersInternsFile(File file) {
 		int lengthFile = (int) file.length();
 		int index = lengthFile / Node.BYTE_LENGTH_NODE;

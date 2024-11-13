@@ -13,10 +13,24 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 
 public class ListInterns {
 
-	// Attributs
+	// ******************************
+	// Attribute
+	// ******************************
+
 	public List<Intern> interns;
 
-	// Methods
+	// ******************************
+	// Public Method
+	// ******************************
+
+	/**
+	 * Lit les données des stagiaires à partir du fichier STAGIAIRES.DON et les ajoute à une liste d'objets Intern.
+	 * Chaque ligne du fichier est lue, les informations sont extraites et utilisées pour créer des objets Intern.
+	 * Les objets Intern sont ensuite ajoutés à la liste interns.
+	 * 
+	 * @return La liste des stagiaires (Intern) extraits du fichier.
+	 * @throws IOException Si une erreur survient lors de la lecture du fichier.
+	 */
 	public List<Intern> readDonFile() {
 		String filePath = "src/main/java/ressources/STAGIAIRES.DON";
 		interns = new ArrayList<Intern>();
@@ -36,7 +50,7 @@ public class ListInterns {
 
 				// Add intern to list
 				interns.add(new Intern(firstname, lastname, department, training, year));
-				
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

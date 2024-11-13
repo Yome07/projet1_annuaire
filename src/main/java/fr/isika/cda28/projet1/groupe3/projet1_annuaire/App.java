@@ -16,21 +16,26 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-
-
+	/**
+     * Initialise et affiche la scène principale.
+     * 
+     * @param stage Fenêtre principale.
+     * @throws IOException Si une erreur survient lors de la création de la scène.
+     */
 	@Override
 	public void start(Stage stage) throws IOException {
 
 		WireframeBasic wireframe = new WireframeBasic(new User(null, null));
 		Scene scene = new Scene(wireframe, 1000, 800);
 
-
-
 		stage.setTitle("Stud'Index");
 		stage.setScene(scene);
 		stage.show();
 	}
 
+    /**
+     * Point d'entrée de l'application.
+     */
 	public static void main(String[] args) {
 		launch();
 	}

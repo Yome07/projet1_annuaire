@@ -29,37 +29,36 @@ import javafx.scene.text.Text;
 public class ViewAddIntern extends WireframeBasic {
 
 	// ******************************
-	// Attributes
+	// Attribute
 	// ******************************
 
 	VBox infoVBox = new VBox(5);
 	Label errorIsEmpty = new Label("Veuillez remplir tous les champs en respectant les cases.");
 	Label infoAdd = new Label();
 	BinaryTreeToFile instance = new BinaryTreeToFile();
-	
-	
-
 
 	// *******************************************
 	// Constructor
 	// *******************************************
+
 	public ViewAddIntern() {
 		super(new User(null, null));
 		modScene();
 	}
 
 	// *******************************************
-	// Public methods
+	// Public method
 	// *******************************************
 
 	/**
-	 * Converts the first letter of the input string to uppercase and the rest to
-	 * lowercase, after verifying that the input is not empty.
+	 * Convertit la première lettre de la chaîne d'entrée en majuscule et le reste
+	 * en minuscule, après avoir vérifié que l'entrée n'est pas vide.
 	 * 
-	 * @param firstnameGetText The input string to be modified.
-	 * @return A string with the first letter capitalized and the rest in lowercase.
-	 *         Returns an empty string if the input is empty.
+	 * @param firstnameGetText La chaîne d'entrée à modifier.
+	 * @return Une chaîne avec la première lettre en majuscule et le reste en
+	 *         minuscule. Retourne une chaîne vide si l'entrée est vide.
 	 */
+
 	public String toUpperCaseFirst(String firstnameGetText) {
 		firstnameGetText.trim();
 
@@ -77,11 +76,13 @@ public class ViewAddIntern extends WireframeBasic {
 	}
 
 	/**
-	 * Tests whether the given string matches the provided regular expression.
+	 * Vérifie si la chaîne donnée correspond à l'expression régulière fournie.
 	 * 
-	 * @param regex           The regular expression to test the string against.
-	 * @param variableGetText The string input to be matched.
-	 * @return boolean True if the string matches the regex, false otherwise.
+	 * @param regex           L'expression régulière contre laquelle tester la
+	 *                        chaîne.
+	 * @param variableGetText La chaîne d'entrée à comparer.
+	 * @return boolean Vrai si la chaîne correspond à l'expression régulière, faux
+	 *         sinon.
 	 */
 	public boolean testRegex(String regex, String variableGetText) {
 		Pattern compiledVariablePattern = Pattern.compile(regex);
@@ -95,10 +96,12 @@ public class ViewAddIntern extends WireframeBasic {
 	}
 
 	/**
-	 * Creates a form for adding a new intern and sets up the scene for user input.
+	 * Crée un formulaire pour ajouter un nouveau stagiaire et configure la scène
+	 * pour l'entrée utilisateur.
 	 * 
-	 * @return VVBox containing the form for adding a new intern.
+	 * @return VBox contenant le formulaire pour ajouter un nouveau stagiaire.
 	 */
+
 	public VBox modScene() {
 		VBox formVBox = new VBox();
 		GridPane formGridPane = new GridPane();
@@ -156,7 +159,6 @@ public class ViewAddIntern extends WireframeBasic {
 		buttonHBox.setPadding(new Insets(50, 0, 0, 0));
 
 		infoVBox.setAlignment(Pos.CENTER);
-//		infoVBox.getChildren().add(infoAdd);
 
 		// errorHandle when you try to validate the entry
 		Label errorLastname = new Label(
@@ -174,8 +176,6 @@ public class ViewAddIntern extends WireframeBasic {
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
 		formVBox.getChildren().addAll(titleHBox, formGridPane, infoVBox, buttonHBox);
-		
-		
 
 		buttonValidateForm.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -286,9 +286,6 @@ public class ViewAddIntern extends WireframeBasic {
 					}
 				}
 
-				
-				
-				
 				// CREATE NEW INTERN
 				if (lastnameVerified != "" && firstnameVerified != "" && departmentVerified != ""
 						&& trainingVerified != "" && yearVerified != 0) {
@@ -297,18 +294,17 @@ public class ViewAddIntern extends WireframeBasic {
 					Intern newIntern = new Intern(lastnameVerified, firstnameVerified, departmentVerified,
 							trainingVerified, yearVerified);
 					Node newNode = new Node(newIntern, -1, -1);
-					
-					
-					
+
 					try {
-						 File file = new File("src/main/java/ressources/STAGIAIRES.bin"); 
+						File file = new File("src/main/java/ressources/STAGIAIRES.bin");
 						int index = instance.numbersInternsFile(file);
 						instance.insertNode(0, index, newIntern, newNode);
 						infoAdd.setText("Stagiaire ajouté avec succès !");
 					} catch (Exception e) {
-						infoAdd.setText("Les donnees sont correctes mais il y a eu une erreur pendant l'ajout :\n le stagiaire n'a pas ete ajouté.");
+						infoAdd.setText(
+								"Les donnees sont correctes mais il y a eu une erreur pendant l'ajout :\n le stagiaire n'a pas ete ajouté.");
 					}
-					
+
 					System.out.println(newIntern);
 
 				} else {

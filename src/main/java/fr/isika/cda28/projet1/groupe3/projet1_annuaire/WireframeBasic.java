@@ -37,27 +37,23 @@ public class WireframeBasic extends BorderPane {
 //	898121 kaki
 //	4C4B16 kaki foncé
 
-	// protected BorderPane root;
+	// ******************************
+	// Attribute
+	// ******************************
+
 	protected BorderPane informationsDisplay;
 	User user;
 	ConnectionView connectionView;
 
-	/*
-	 * public WireframeBasic(User user) { super(); this.user = user; this(); }
-	 */
+	// ******************************
+	// Constant
+	// ******************************
 
 	public User getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public WireframeBasic(User user) {
-
-		// ----- ROOT -----
-		// root = new BorderPane();
 
 		this.user = user;
 
@@ -83,8 +79,6 @@ public class WireframeBasic extends BorderPane {
 			button.setWrapText(true); // to center
 
 		}
-		// connectionView.getUser();
-		// System.out.println("Wireframbasic user : " + user);
 		if (user.getConnected() == true) {
 			navBarMenu.getChildren().addAll(home, handleUsers, searchInterns, connectedInternsList, addInterns);
 		} else {
@@ -106,8 +100,7 @@ public class WireframeBasic extends BorderPane {
 
 		// Default content
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
-		
-		
+
 		informationsDisplay.setCenter(defaultContent);
 
 		// layout anchorPane
@@ -128,7 +121,7 @@ public class WireframeBasic extends BorderPane {
 
 		// -----NAVIGATION -----
 
-		// toHome
+		// button to Home
 		home.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -138,7 +131,7 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 
-		// toHandleUsers
+		// button to HandleUsers
 		handleUsers.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -148,7 +141,7 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 
-		// toSearchInterns
+		// button to SearchInterns
 		searchInterns.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -158,7 +151,7 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 
-		// toViewInternsList
+		// button to ViewInternsList
 		internsList.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -182,7 +175,7 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 
-		// toViewInternsList
+		// button to ViewInternsList
 		connectedInternsList.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -206,7 +199,7 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 
-		// toAddInterns
+		// button t oAddInterns
 		addInterns.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -216,7 +209,7 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 
-		// connection
+		// button to connection
 		connection.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -226,6 +219,18 @@ public class WireframeBasic extends BorderPane {
 			}
 		});
 	}
+
+	// ******************************
+	// Getter & Setter
+	// ******************************
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	// ******************************
+	// Public Method
+	// ******************************
 
 	public Scene createScene() {
 		return new Scene(this, 1000, 800);

@@ -43,9 +43,18 @@ public class ConnectionView extends WireframeBasic {
 	// *******************************************
 	// Constructor
 	// *******************************************
+
 	public ConnectionView() {
 		super(new User(null, null));
 		modScene();
+	}
+
+	// *******************************************
+	// Getters & Setters
+	// *******************************************
+
+	public User getUser() {
+		return this.user;
 	}
 
 	// *******************************************
@@ -53,9 +62,10 @@ public class ConnectionView extends WireframeBasic {
 	// *******************************************
 
 	/**
-	 * Creates a form for adding a new intern and sets up the scene for user input.
+	 * Crée un formulaire pour ajouter un nouveau stagiaire et prépare la scène pour
+	 * la saisie des informations par l'utilisateur.
 	 * 
-	 * @return VVBox containing the form for adding a new intern.
+	 * @return VBox contenant le formulaire pour ajouter
 	 */
 	public VBox modScene() {
 		VBox formVBox = new VBox();
@@ -94,9 +104,7 @@ public class ConnectionView extends WireframeBasic {
 		buttonHBox.setPadding(new Insets(50, 0, 0, 0));
 
 		infoVBox.setAlignment(Pos.CENTER);
-//		infoVBox.getChildren().add(infoAdd);
 
-		// layout general
 		formVBox.setAlignment(Pos.CENTER);
 		formVBox.setPadding(new Insets(50));
 		formVBox.getChildren().addAll(titleHBox, formGridPane, infoVBox, buttonHBox);
@@ -113,12 +121,10 @@ public class ConnectionView extends WireframeBasic {
 					boolean binFileExists = FileChecker.isBinFilePresent();
 					System.out.println("Bin file present: " + binFileExists);
 					if (binFileExists) {
-						// new WireframeBasic(user);
 						System.out.println("connectionView user : " + user);
 						try {
 							informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else {
@@ -133,10 +139,6 @@ public class ConnectionView extends WireframeBasic {
 
 		return formVBox;
 
-	}
-
-	public User getUser() {
-		return this.user;
 	}
 
 }

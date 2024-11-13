@@ -8,6 +8,17 @@ import java.nio.file.Paths;
 
 public class FileChecker {
 
+	// ******************************
+	// Public Method
+	// ******************************
+	
+	/**
+	 * Vérifie si un fichier binaire (.bin) est présent dans le répertoire "ressources".
+	 * La méthode examine le répertoire spécifié pour rechercher des fichiers avec l'extension ".bin".
+	 * Si des fichiers .bin sont trouvés, elle retourne true, sinon false.
+	 * 
+	 * @return true si au moins un fichier .bin est présent dans le répertoire "ressources", false sinon.
+	 */
 	public static boolean isBinFilePresent() {
         File directory = new File("src/main/java/ressources");
         Path path = Paths.get("../src/main/java/ressources");
