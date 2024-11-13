@@ -1,6 +1,7 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,18 +43,18 @@ public class ConnectedInternsTableView extends VBox {
 	private PDFExportService pdfExportService;
 	User user;
 
-	public ConnectedInternsTableView() {
+	public ConnectedInternsTableView() throws IOException {
 		super();
 		modScene();
 	}
 
-	public ConnectedInternsTableView(List<Intern> internsList) {
+	public ConnectedInternsTableView(List<Intern> internsList) throws IOException {
 		super();
 		this.internsList = internsList;
 		modScene();
 	}
 
-	public VBox modScene() {
+	public VBox modScene() throws IOException {
 		this.pdfExportService = new PDFExportService();
 //		this.internsList = internsList;
 		VBox conteneurVBox = new VBox();
@@ -271,7 +272,7 @@ public class ConnectedInternsTableView extends VBox {
 	}
 
 	// création de la liste des stagiaires
-	public void createInternsList() {
+	public void createInternsList() throws IOException {
 		ServiceNodeList nodeList = new ServiceNodeList();
 		nodesInterns = nodeList.createListAlpha(0);
 		for (Node node : nodesInterns) {

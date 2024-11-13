@@ -165,7 +165,6 @@ public class Intern {
 	public int getYear() {
 		return year;
 	}
-	
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
@@ -182,15 +181,26 @@ public class Intern {
 	public void setTraining(String training) {
 		this.training = training;
 	}
-	
+
 	public void setYear(int year) {
 		this.year = year;
 	}
 
 	@Override
 	public String toString() {
-		return "toString Intern : " + lastname + " " + firstname + ", departement : " + department + ", promo : " + training
-				+ " en " + year;
+		return "toString Intern : " + lastname + " " + firstname + ", departement : " + department + ", promo : "
+				+ training + " en " + year;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
+		Intern intern = (Intern) obj;
+		return lastname.equals(intern.lastname) && firstname.equals(intern.firstname)
+				&& department.equals(intern.department) && training.equals(intern.training) && year == intern.year;
 	}
 
 }

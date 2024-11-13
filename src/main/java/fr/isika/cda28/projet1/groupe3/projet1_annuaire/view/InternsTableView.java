@@ -1,6 +1,7 @@
 package fr.isika.cda28.projet1.groupe3.projet1_annuaire.view;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,18 +41,18 @@ public class InternsTableView extends VBox {
 	public TableView<Intern> internTableView;
 	private PDFExportService pdfExportService;
 
-	public InternsTableView() {
+	public InternsTableView() throws IOException {
 		super();
 		modScene();
 	}
 
-	public InternsTableView(List<Intern> internsList) {
+	public InternsTableView(List<Intern> internsList) throws IOException {
 		super();
 		this.internsList = internsList;
 		modScene();
 	}
 
-	public VBox modScene() {
+	public VBox modScene() throws IOException {
 		this.pdfExportService = new PDFExportService();
 //		this.internsList = internsList;
 		VBox conteneurVBox = new VBox();
@@ -85,6 +86,7 @@ public class InternsTableView extends VBox {
 	    new SimpleStringProperty(cellData.getValue().getLastname()));
 
 
+
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(lastnameColumn);
 
@@ -97,7 +99,7 @@ public class InternsTableView extends VBox {
 						.setLastname(event.getNewValue());// On récupère la nouvelle valeur dans l'event
 			}
 		});
-		lastnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
+//		lastnameColumn.setCellFactory(TextFieldTableCell.forTableColumn()); // On autotrise à transformer la case en
 		// Textfield
 		lastnameColumn.setEditable(true);// on autorise la modification des colonnes
 
@@ -109,6 +111,7 @@ public class InternsTableView extends VBox {
 //		firstnameColumn.setCellValueFactory(new PropertyValueFactory<Intern, String>("firstname"));
 		firstnameColumn.setCellValueFactory(cellData -> 
 	    new SimpleStringProperty(cellData.getValue().getFirstname()));
+
 
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(firstnameColumn);
@@ -137,6 +140,7 @@ public class InternsTableView extends VBox {
 		departmentColumn.setCellValueFactory(cellData -> 
 	    new SimpleStringProperty(cellData.getValue().getDepartment()));
 
+
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(departmentColumn);
 
@@ -163,6 +167,7 @@ public class InternsTableView extends VBox {
 		trainingColumn.setCellValueFactory(cellData -> 
 	    new SimpleStringProperty(cellData.getValue().getTraining()));
 
+
 		// ajouter la colonne à la table view
 		internTableView.getColumns().add(trainingColumn);
 
@@ -187,6 +192,7 @@ public class InternsTableView extends VBox {
 //		yearColumn.setCellValueFactory(new PropertyValueFactory<Intern, Integer>("year"));
 		yearColumn.setCellValueFactory(cellData -> 
 	    new SimpleIntegerProperty(cellData.getValue().getYear()).asObject());
+
 
 
 		// ajouter la colonne à la table view
@@ -239,7 +245,7 @@ public class InternsTableView extends VBox {
 	}
 
 	// création de la liste des stagiaires
-	public void createInternsList() {
+	public void createInternsList() throws IOException {
 		ServiceNodeList nodeList = new ServiceNodeList();
 		nodesInterns = nodeList.createListAlpha(0);
 		for (Node node : nodesInterns) {
@@ -271,7 +277,6 @@ public class InternsTableView extends VBox {
 			if (directory != null) {
 				// Création du fichier dans le dossier sélectionné
 				File file = new File(directory, fileName.get());
-
 
 				pdfExportService.exportInterns(internsList, file);
 

@@ -115,7 +115,12 @@ public class ConnectionView extends WireframeBasic {
 					if (binFileExists) {
 						// new WireframeBasic(user);
 						System.out.println("connectionView user : " + user);
-						informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
+						try {
+							informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					} else {
 						informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 					}

@@ -3,6 +3,8 @@ package fr.isika.cda28.projet1.groupe3.projet1_annuaire;
 import java.util.List;
 
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.FileChecker;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.controller.ServiceNodeList;
+import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Intern;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.Node;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.model.User;
 import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ConnectedInternsTableView;
@@ -13,6 +15,7 @@ import fr.isika.cda28.projet1.groupe3.projet1_annuaire.view.ViewListInternEmpty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import java.io.File;
+import java.io.IOException;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -103,7 +106,8 @@ public class WireframeBasic extends BorderPane {
 
 		// Default content
 		Label defaultContent = new Label("Bienvenue sur Stud'Index !");
-
+		
+		
 		informationsDisplay.setCenter(defaultContent);
 
 		// layout anchorPane
@@ -165,7 +169,12 @@ public class WireframeBasic extends BorderPane {
 
 				boolean binFileExists = FileChecker.isBinFilePresent();
 				if (binFileExists) {
-					informationsDisplay.setCenter(new InternsTableView().modScene());
+					try {
+						informationsDisplay.setCenter(new InternsTableView().modScene());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 				}
@@ -184,7 +193,12 @@ public class WireframeBasic extends BorderPane {
 
 				boolean binFileExists = FileChecker.isBinFilePresent();
 				if (binFileExists) {
-					informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
+					try {
+						informationsDisplay.setCenter(new ConnectedInternsTableView().modScene());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					informationsDisplay.setCenter(new ViewListInternEmpty().modScene());
 				}
