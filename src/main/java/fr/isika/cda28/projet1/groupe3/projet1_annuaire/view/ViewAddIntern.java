@@ -50,13 +50,13 @@ public class ViewAddIntern extends WireframeBasic {
 	// Public method
 	// *******************************************
 
-	/**
-	 * Convertit la première lettre de la chaîne d'entrée en majuscule et le reste
-	 * en minuscule, après avoir vérifié que l'entrée n'est pas vide.
+		/**
+	 * Converts the first letter of the input string to uppercase and the rest to lowercase,
+	 * after checking that the input is not empty.
 	 * 
-	 * @param firstnameGetText La chaîne d'entrée à modifier.
-	 * @return Une chaîne avec la première lettre en majuscule et le reste en
-	 *         minuscule. Retourne une chaîne vide si l'entrée est vide.
+	 * @param firstnameGetText The input string to modify.
+	 * @return A string with the first letter in uppercase and the rest in lowercase.
+	 *         Returns an empty string if the input is empty.
 	 */
 
 	public String toUpperCaseFirst(String firstnameGetText) {
@@ -76,14 +76,13 @@ public class ViewAddIntern extends WireframeBasic {
 	}
 
 	/**
-	 * Vérifie si la chaîne donnée correspond à l'expression régulière fournie.
+	 * Checks whether the given string matches the provided regular expression.
 	 * 
-	 * @param regex           L'expression régulière contre laquelle tester la
-	 *                        chaîne.
-	 * @param variableGetText La chaîne d'entrée à comparer.
-	 * @return boolean Vrai si la chaîne correspond à l'expression régulière, faux
-	 *         sinon.
+	 * @param regex           The regular expression to test the string against.
+	 * @param variableGetText The input string to be compared.
+	 * @return boolean True if the string matches the regular expression, false otherwise.
 	 */
+
 	public boolean testRegex(String regex, String variableGetText) {
 		Pattern compiledVariablePattern = Pattern.compile(regex);
 		Matcher matcherVariable = compiledVariablePattern.matcher(variableGetText);
