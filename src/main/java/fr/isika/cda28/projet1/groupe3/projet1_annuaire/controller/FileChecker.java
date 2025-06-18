@@ -13,11 +13,11 @@ public class FileChecker {
 	// ******************************
 	
 	/**
-	 * Vérifie si un fichier binaire (.bin) est présent dans le répertoire "ressources".
-	 * La méthode examine le répertoire spécifié pour rechercher des fichiers avec l'extension ".bin".
-	 * Si des fichiers .bin sont trouvés, elle retourne true, sinon false.
+	 * Checks whether a binary file (.bin) is present in the "ressources" directory.
+	 * The method scans the specified directory for files with the ".bin" extension.
+	 * If any .bin files are found, it returns true; otherwise, it returns false.
 	 * 
-	 * @return true si au moins un fichier .bin est présent dans le répertoire "ressources", false sinon.
+	 * @return true if at least one .bin file is present in the "ressources" directory, false otherwise.
 	 */
 	public static boolean isBinFilePresent() {
         File directory = new File("src/main/java/ressources");
